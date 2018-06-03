@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet library="css" name="base.css" />
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.css" />
+    </h:head>
+
+    <h:body>
+        <div id="page-content">
+            <ui:insert name="content">Content</ui:insert>
+        </div>
+        <div id="page-bottom">
+            <ui:include src="./bottom.xhtml"/>
+        </div>
+    </h:body>
+
+</html>

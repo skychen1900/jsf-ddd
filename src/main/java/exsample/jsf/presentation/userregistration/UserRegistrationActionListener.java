@@ -11,13 +11,13 @@ public class UserRegistrationActionListener implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private UserRegistrationForm registrationForm;
+    private UserRegistrationPage registrationForm;
 
     public UserRegistrationActionListener() {
     }
 
     @Inject
-    public UserRegistrationActionListener(UserRegistrationForm registrationForm) {
+    public UserRegistrationActionListener(UserRegistrationPage registrationForm) {
         this.registrationForm = registrationForm;
     }
 

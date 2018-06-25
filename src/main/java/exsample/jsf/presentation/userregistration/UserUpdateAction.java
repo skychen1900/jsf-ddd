@@ -15,7 +15,7 @@ public class UserUpdateAction implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private UserRegistrationForm registrationForm;
+    private UserRegistrationPage registrationForm;
 
     private UserService userService;
 
@@ -23,7 +23,7 @@ public class UserUpdateAction implements Serializable {
     }
 
     @Inject
-    public UserUpdateAction(UserRegistrationForm registrationForm, UserService userService) {
+    public UserUpdateAction(UserRegistrationPage registrationForm, UserService userService) {
         this.registrationForm = registrationForm;
         this.userService = userService;
     }

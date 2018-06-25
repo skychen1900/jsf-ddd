@@ -14,7 +14,7 @@ public class UserSearchAction implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private UserSearchForm searchForm;
+    private UserSearchPage searchForm;
 
     private UserService userService;
 
@@ -22,7 +22,7 @@ public class UserSearchAction implements Serializable {
     }
 
     @Inject
-    public UserSearchAction(UserSearchForm searchForm, UserService userService) {
+    public UserSearchAction(UserSearchPage searchForm, UserService userService) {
         this.searchForm = searchForm;
         this.userService = userService;
     }

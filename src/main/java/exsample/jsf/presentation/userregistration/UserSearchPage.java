@@ -29,7 +29,7 @@ import javax.inject.Named;
  */
 @Named
 @SessionScoped
-public class UserSearchForm implements Serializable {
+public class UserSearchPage implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

@@ -15,7 +15,7 @@ public class UserRemovalAction implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private UserRegistrationForm registrationForm;
+    private UserRegistrationPage registrationForm;
 
     private UserService userService;
 
@@ -23,7 +23,7 @@ public class UserRemovalAction implements Serializable {
     }
 
     @Inject
-    public UserRemovalAction(UserRegistrationForm registrationForm, UserService userService) {
+    public UserRemovalAction(UserRegistrationPage registrationForm, UserService userService) {
         this.registrationForm = registrationForm;
         this.userService = userService;
     }

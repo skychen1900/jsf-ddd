@@ -23,31 +23,31 @@
                 <h1 class="ui header">利用者情報の変更</h1>
             </div>
 
-            <form id="custom-form" class="ui form" jsfc="h:form">
+            <form id="f" class="ui form" jsfc="h:form">
 
                 <div class="ui vertical segment">
                     <div class="field">
                         <label>利用者ID</label>
-                        <input class="short-input" type="text" placeholder="someone@example.com" jsf:value="#{userRegistrationForm.email}"/>
+                        <input class="short-input" type="text" placeholder="someone@example.com" jsf:id="email" jsf:value="#{userRegistrationForm.email}"/>
 
                     </div>
 
 
                     <div class="field">
                         <label>名前</label>
-                        <input class="short-input" type="text" placeholder="名前" pt:placeholder="名前" jsf:value="#{userRegistrationForm.name}"/>
+                        <input class="short-input" type="text" placeholder="名前" pt:placeholder="名前" jsf:id="userName" jsf:value="#{userRegistrationForm.name}"/>
 
                     </div>
 
                     <div class="field">
                         <label>生年月日</label>
-                        <input class="short-input" type="text" placeholder="2000-01-01" jsf:value="#{userRegistrationForm.dateOfBirth}"/>
+                        <input class="short-input" type="text" placeholder="2000-01-01" jsf:id="dateOfBirth" jsf:value="#{userRegistrationForm.dateOfBirth}"/>
 
                     </div>
 
                     <div class="field">
                         <label>電話番号</label>
-                        <input class="short-input" type="text" placeholder="03-1234-5678" jsf:value="#{userRegistrationForm.phoneNumber}"/>
+                        <input class="short-input" type="text" placeholder="03-1234-5678" jsf:id="phoneNumber" jsf:value="#{userRegistrationForm.phoneNumber}"/>
                     </div>
 
                     <div class="inline fields">
@@ -87,7 +87,7 @@
                 </div>
 
                 <div class="ui basic segment">
-                    <button class="ui positive basic button" jsf:action="#{userUpdateAction.confirm()}">確認する</button>
+                    <button class="ui positive basic button" jsf:id="confirmButton" jsf:action="#{userUpdateAction.confirm()}">確認する</button>
                     <a href="#" onclick="history.go(-1);return false;">一覧に戻る</a>
                 </div>
 

@@ -24,27 +24,27 @@
 
             <div class="ui form vertical segment">
 
-                <div class="field">
+                <div class="field" id="email">
                     <label>利用者ID</label>
                     <p>#{userRegistrationForm.email}</p>
                 </div>
 
-                <div class="field">
+                <div class="field" id="userName">
                     <label>名前</label>
                     <p>#{userRegistrationForm.name}</p>
                 </div>
 
-                <div class="field">
+                <div class="field" id="dateOfBirth">
                     <label>生年月日</label>
                     <p>#{userRegistrationForm.dateOfBirth}</p>
                 </div>
 
-                <div class="field">
+                <div class="field" id="phoneNumber">
                     <label>電話番号</label>
                     <p>#{userRegistrationForm.phoneNumber}</p>
                 </div>
 
-                <div class="field">
+                <div class="field" id="gender">
                     <label>性別</label>
                     <p>#{userRegistrationForm.gender}</p>
                 </div>
@@ -53,7 +53,7 @@
 
             <h:form>
                 <div class="ui basic segment">
-                    <button class="ui secondary basic button" jsf:action="#{userRemovalAction.remove()}">
+                    <button id="registerButton" class="ui secondary basic button" jsf:action="#{userRemovalAction.remove()}">
                         削除する
                     </button>
                     <a href="#" onclick="history.go(-1);return false;">一覧に戻る</a>

@@ -22,12 +22,12 @@
                 <h1 class="ui header">利用者削除の完了</h1>
             </div>
 
-            <div class="ui inverted segment">
+            <div id="completeMessage" class="ui inverted segment">
                 <p>#{userRegistrationForm.name}(#{userRegistrationForm.email}) さんを削除しました。</p>
             </div>
 
             <div class="ui basic segment">
-                <a href="#{userSearchAction.search()}">利用者一覧へ</a>
+                <a href="#{userSearchAction.search()}" id="fwSearchPage">利用者一覧へ</a>
             </div>
 
         </div>

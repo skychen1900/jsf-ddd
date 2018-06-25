@@ -22,12 +22,12 @@
                 <h1 class="ui header">利用者情報の更新完了</h1>
             </div>
 
-            <div class="ui inverted segment">
-                <p>#{userRegistrationForm.name}(#{userRegistrationForm.email}) さんを更新しました。</p>
+            <div id="completeMessage" class="ui inverted segment">
+                <p>#{userRegistrationForm.name}(#{userRegistrationForm.email}) さんの情報を更新しました。</p>
             </div>
 
             <div class="ui basic segment">
-                <a href="#{userSearchAction.search()}">利用者一覧へ</a>
+                <a href="#{userSearchAction.search()}" id="fwSearchPage">利用者一覧へ</a>
             </div>
 
         </div>

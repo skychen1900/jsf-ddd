@@ -18,7 +18,7 @@
 
     <body jsfc="h:body">
 
-        <form jsfc="h:form">
+        <form jsfc="h:form" id="f">
             <f:metadata>
                 <f:event type="preRenderView" listener="#{userSearchAction.search()}"/>
             </f:metadata>
@@ -30,7 +30,7 @@
                     <h1 class="ui header">利用者一覧</h1>
                 </div>
 
-                <button class="ui positive basic button" jsf:action="#{userRegistrationAction.fwPersist()}">
+                <button class="ui positive basic button" jsf:id="persistButton" jsf:action="#{userRegistrationAction.fwPersist()}">
                     利用者の新規登録
                 </button>
 
@@ -47,17 +47,17 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr jsfc="ui:repeat" value="#{userSearchForm.items}" var="items">
+                            <tr jsfc="ui:repeat" value="#{userSearchForm.items}" var="items"  id="items">
                                 <td>#{items.userEmail}</td>
                                 <td>#{items.name}</td>
                                 <td>#{items.age}</td>
                                 <td>
-                                    <button class="ui secondary basic button" jsf:action="#{userUpdateAction.fwUpdate(items.userId)}">
+                                    <button class="ui secondary basic button" jsf:id="updateButton" jsf:action="#{userUpdateAction.fwUpdate(items.userId)}">
                                         変更
                                     </button>
                                 </td>
                                 <td>
-                                    <button class="ui negative basic button" jsf:action="#{userRemovalAction.fwRemove(items.userId)}">
+                                    <button class="ui negative basic button" jsf:id="removeButton" jsf:action="#{userRemovalAction.fwRemove(items.userId)}">
                                         削除
                                     </button>
                                 </td>

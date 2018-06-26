@@ -16,9 +16,9 @@
  */
 package exsample.jsf.presentation.userregistration;
 
+import exsample.jsf.domain.model.user.Age;
 import exsample.jsf.domain.model.user.User;
 import exsample.jsf.domain.model.user.UserId;
-import exsample.jsf.presentation.userregistration.form.AgeForm;
 import exsample.jsf.presentation.userregistration.form.EmailForm;
 import exsample.jsf.presentation.userregistration.form.NameForm;
 
@@ -30,13 +30,13 @@ public class SearchedUser {
 
     private final NameForm name;
 
-    private final AgeForm age;
+    private final Age age;
 
     public SearchedUser(User user) {
         this.userId = user.getUserId();
         this.userEmail = new EmailForm(user.getUserEmail().getValue());
         this.name = new NameForm(user.getName().getValue());
-        this.age = new AgeForm(user.getAge());
+        this.age = user.getAge();
     }
 
     public String getUserId() {
@@ -51,8 +51,8 @@ public class SearchedUser {
         return name.display();
     }
 
-    public String getAge() {
-        return age.display();
+    public Integer getAge() {
+        return age.getValue();
     }
 
 }

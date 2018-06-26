@@ -24,6 +24,7 @@ import exsample.jsf.domain.model.user.User;
 import exsample.jsf.domain.model.user.UserEmail;
 import exsample.jsf.domain.model.user.UserId;
 import exsample.jsf.domain.model.user.UserName;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -31,14 +32,16 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.SessionScoped;
 
 /**
  *
  * @author Yamashita,Takahiro
  */
-@ApplicationScoped
-public class UserTable {
+@SessionScoped
+public class UserTable implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private List<User> users;
 

@@ -16,31 +16,38 @@
  */
 package exsample.jsf.presentation.userregistration.form;
 
-import ddd.presantation.Form;
+import ddd.presentation.Form;
 import exsample.jsf.domain.model.user.UserName;
 
 /**
+ * ユーザー名を表示するFormです
  *
  * @author Yamashita,Takahiro
  */
-public class NameForm implements Form {
+public class NameForm implements Form<UserName> {
 
-    private final UserName value;
+    private String value = "";
 
     public NameForm() {
-        this.value = new UserName("");
     }
 
     public NameForm(String userName) {
-        this.value = new UserName(userName);
+        this.value = userName;
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public String display() {
-        return value.getValue();
+        return this.getValue().getValue();
     }
 
+    /**
+     * @inheritDoc
+     */
+    @Override
     public UserName getValue() {
-        return this.value;
+        return new UserName(this.value);
     }
 }

@@ -14,30 +14,29 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package exsample.jsf.presentation.userregistration.form;
-
-import ddd.presantation.Form;
-import exsample.jsf.domain.model.user.Age;
+package ddd.presentation;
 
 /**
+ * ValueObjectを包含した表示に関するにPresenterとなるクラス（Form）に使用するインターフェースです.
  *
+ * @param <ValueObjectType> Formが包含するValueObjectの型
  * @author Yamashita,Takahiro
  */
-public class AgeForm implements Form {
+public interface Form<ValueObjectType> {
 
-    private final Age value;
-
-    public AgeForm(Age age) {
-        this.value = age;
+    /**
+     * 表示情報を返却します.
+     *
+     * @return 表示情報
+     */
+    default public String display() {
+        return "";
     }
 
-    @Override
-    public String display() {
-        return value.getValue().toString();
-    }
-
-    public Age getValue() {
-        return this.value;
-    }
-
+    /**
+     * 包含しているValueObjectを返却します.
+     *
+     * @return 包含しているValueObject
+     */
+    public ValueObjectType getValue();
 }

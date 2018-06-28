@@ -16,35 +16,39 @@
  */
 package exsample.jsf.presentation.userregistration.form;
 
-import ddd.presantation.Form;
+import ddd.presentation.Form;
 import exsample.jsf.domain.model.user.DateOfBirth;
 
 /**
+ * 誕生日を表示するFormです.
  *
  * @author Yamashita,Takahiro
  */
-public class DateOfBirthForm implements Form {
+public class DateOfBirthForm implements Form<DateOfBirth> {
 
-    private final DateOfBirth value;
+    private String value = "";
 
     public DateOfBirthForm() {
-        this.value = null;
     }
 
     public DateOfBirthForm(String dateOfBirth) {
-        this.value = new DateOfBirth(dateOfBirth);
+        this.value = dateOfBirth;
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public String display() {
-        if (this.value == null) {
-            return "";
-        }
-        return this.value.getValue();
+        return this.getValue().getValue();
     }
 
+    /**
+     * @inheritDoc
+     */
+    @Override
     public DateOfBirth getValue() {
-        return this.value;
+        return new DateOfBirth(this.value);
     }
 
 }

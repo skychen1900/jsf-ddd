@@ -16,15 +16,16 @@
  */
 package exsample.jsf.presentation.userregistration.form;
 
-import ddd.presantation.Form;
+import ddd.presentation.Form;
 import exsample.jsf.domain.model.user.Gender;
 import exsample.jsf.domain.model.user.GenderType;
 
 /**
+ * 性別を表示するFormです
  *
  * @author Yamashita,Takahiro
  */
-public class GenderForm implements Form {
+public class GenderForm implements Form<Gender> {
 
     private final Gender value;
 
@@ -36,16 +37,29 @@ public class GenderForm implements Form {
         this.value = new Gender(value);
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public String display() {
         return value.getValue().getValue();
     }
 
+    /**
+     * @inheritDoc
+     */
+    @Override
+    public Gender getValue() {
+        return this.value;
+    }
+
+    /**
+     *
+     * @param genderType
+     * @return
+     */
     public Boolean isSameType(GenderType genderType) {
         return this.value.getValue().equals(genderType);
     }
 
-    public Gender getValue() {
-        return this.value;
-    }
 }

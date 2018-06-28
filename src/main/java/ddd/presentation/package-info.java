@@ -14,16 +14,7 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ddd.presantation;
-
 /**
- *
- * @author Yamashita,Takahiro
+ * Presentationに関するインターフェースを提供します
  */
-public interface Form {
-
-    default public String display() {
-        return "";
-    }
-
-}
+package ddd.presentation;

@@ -16,31 +16,37 @@
  */
 package exsample.jsf.presentation.userregistration.form;
 
-import ddd.presantation.Form;
+import ddd.presentation.Form;
 import exsample.jsf.domain.model.user.PhoneNumber;
 
 /**
  *
  * @author Yamashita,Takahiro
  */
-public class PhoneNumberForm implements Form {
+public class PhoneNumberForm implements Form<PhoneNumber> {
 
-    private final PhoneNumber value;
+    private String value = "";
 
     public PhoneNumberForm() {
-        this.value = new PhoneNumber("");
     }
 
     public PhoneNumberForm(String phoneNumber) {
-        this.value = new PhoneNumber(phoneNumber);
+        this.value = phoneNumber;
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public String display() {
-        return value.getValue();
+        return this.getValue().getValue();
     }
 
+    /**
+     * @inheritDoc
+     */
+    @Override
     public PhoneNumber getValue() {
-        return this.value;
+        return new PhoneNumber(this.value);
     }
 }

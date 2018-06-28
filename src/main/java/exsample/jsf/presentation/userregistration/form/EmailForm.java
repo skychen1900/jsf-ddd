@@ -16,32 +16,39 @@
  */
 package exsample.jsf.presentation.userregistration.form;
 
-import ddd.presantation.Form;
+import ddd.presentation.Form;
 import exsample.jsf.domain.model.user.UserEmail;
 
 /**
+ * Emailを表示するFormです.
  *
  * @author Yamashita,Takahiro
  */
-public class EmailForm implements Form {
+public class EmailForm implements Form<UserEmail> {
 
-    private final UserEmail value;
+    private String value = "";
 
     public EmailForm() {
-        this.value = new UserEmail("");
     }
 
     public EmailForm(String userEmail) {
-        this.value = new UserEmail(userEmail);
+        this.value = userEmail;
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public String display() {
-        return value.getValue();
+        return this.getValue().getValue();
     }
 
+    /**
+     * @inheritDoc
+     */
+    @Override
     public UserEmail getValue() {
-        return this.value;
+        return new UserEmail(this.value);
     }
 
 }

@@ -16,7 +16,7 @@
  */
 package exsample.jsf.presentation.userregistration.form;
 
-import ddd.presentation.Form;
+import ddd.presentation.DefaultForm;
 import exsample.jsf.domain.model.user.Gender;
 import exsample.jsf.domain.model.user.GenderType;
 
@@ -25,7 +25,7 @@ import exsample.jsf.domain.model.user.GenderType;
  *
  * @author Yamashita,Takahiro
  */
-public class GenderForm implements Form<Gender> {
+public class GenderForm implements DefaultForm<Gender> {
 
     private final Gender value;
 

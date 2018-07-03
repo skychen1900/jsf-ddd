@@ -16,7 +16,7 @@
  */
 package exsample.jsf.presentation.userregistration.form;
 
-import ddd.presentation.Form;
+import ddd.presentation.DefaultForm;
 import exsample.jsf.domain.model.user.UserEmail;
 
 /**
@@ -24,7 +24,7 @@ import exsample.jsf.domain.model.user.UserEmail;
  *
  * @author Yamashita,Takahiro
  */
-public class EmailForm implements Form<UserEmail> {
+public class EmailForm implements DefaultForm<UserEmail> {
 
     private String value = "";
 

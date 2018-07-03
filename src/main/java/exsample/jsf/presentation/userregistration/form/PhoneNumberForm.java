@@ -16,14 +16,14 @@
  */
 package exsample.jsf.presentation.userregistration.form;
 
-import ddd.presentation.Form;
+import ddd.presentation.DefaultForm;
 import exsample.jsf.domain.model.user.PhoneNumber;
 
 /**
  *
  * @author Yamashita,Takahiro
  */
-public class PhoneNumberForm implements Form<PhoneNumber> {
+public class PhoneNumberForm implements DefaultForm<PhoneNumber> {
 
     private String value = "";
 

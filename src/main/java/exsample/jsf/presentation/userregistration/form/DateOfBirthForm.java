@@ -16,7 +16,7 @@
  */
 package exsample.jsf.presentation.userregistration.form;
 
-import ddd.presentation.Form;
+import ddd.presentation.DefaultForm;
 import exsample.jsf.domain.model.user.DateOfBirth;
 
 /**
@@ -24,7 +24,7 @@ import exsample.jsf.domain.model.user.DateOfBirth;
  *
  * @author Yamashita,Takahiro
  */
-public class DateOfBirthForm implements Form<DateOfBirth> {
+public class DateOfBirthForm implements DefaultForm<DateOfBirth> {
 
     private String value = "";
 

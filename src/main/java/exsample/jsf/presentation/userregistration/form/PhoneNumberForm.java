@@ -18,12 +18,15 @@ package exsample.jsf.presentation.userregistration.form;
 
 import ddd.presentation.DefaultForm;
 import exsample.jsf.domain.model.user.PhoneNumber;
+import java.io.Serializable;
 
 /**
  *
  * @author Yamashita,Takahiro
  */
-public class PhoneNumberForm implements DefaultForm<PhoneNumber> {
+public class PhoneNumberForm implements DefaultForm<PhoneNumber>, Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private String value = "";
 

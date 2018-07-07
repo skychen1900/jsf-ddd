@@ -18,13 +18,16 @@ package exsample.jsf.presentation.userregistration.form;
 
 import ddd.presentation.DefaultForm;
 import exsample.jsf.domain.model.user.UserEmail;
+import java.io.Serializable;
 
 /**
  * Emailを表示するFormです.
  *
  * @author Yamashita,Takahiro
  */
-public class EmailForm implements DefaultForm<UserEmail> {
+public class EmailForm implements DefaultForm<UserEmail>, Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private String value = "";
 

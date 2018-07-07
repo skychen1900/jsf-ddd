@@ -19,13 +19,16 @@ package exsample.jsf.presentation.userregistration.form;
 import ddd.presentation.DefaultForm;
 import exsample.jsf.domain.model.user.Gender;
 import exsample.jsf.domain.model.user.GenderType;
+import java.io.Serializable;
 
 /**
  * 性別を表示するFormです
  *
  * @author Yamashita,Takahiro
  */
-public class GenderForm implements DefaultForm<Gender> {
+public class GenderForm implements DefaultForm<Gender>, Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private final Gender value;
 

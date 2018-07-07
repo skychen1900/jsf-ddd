@@ -16,6 +16,7 @@
  */
 package dummy.datastore;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import exsample.jsf.domain.model.user.DateOfBirth;
 import exsample.jsf.domain.model.user.Gender;
 import exsample.jsf.domain.model.user.GenderType;
@@ -34,15 +35,12 @@ import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 
-/**
- *
- * @author Yamashita,Takahiro
- */
 @SessionScoped
 public class UserTable implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @SuppressFBWarnings("SE_BAD_FIELD")
     private List<User> users;
 
     @PostConstruct

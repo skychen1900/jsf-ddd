@@ -3,7 +3,6 @@ package exsample.jsf.presentation.userregistration;
 import exsample.jsf.application.service.UserService;
 import exsample.jsf.domain.model.user.User;
 import exsample.jsf.domain.model.user.UserId;
-import java.io.Serializable;
 import java.util.Optional;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -11,9 +10,7 @@ import javax.inject.Named;
 
 @Named
 @RequestScoped
-public class UserRemovalAction implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class UserRemovalAction {
 
     private UserRegistrationPage registrationForm;
 

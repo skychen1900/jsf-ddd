@@ -16,6 +16,7 @@
  */
 package exsample.jsf.domain.model.user;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
@@ -24,7 +25,9 @@ import java.util.Objects;
  *
  * @author Yamashita,Takahiro
  */
-public class Age {
+public class Age implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private final Integer value;
 

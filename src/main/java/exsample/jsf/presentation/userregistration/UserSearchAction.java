@@ -2,7 +2,6 @@ package exsample.jsf.presentation.userregistration;
 
 import exsample.jsf.application.service.UserService;
 import exsample.jsf.domain.model.user.User;
-import java.io.Serializable;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -10,9 +9,7 @@ import javax.inject.Named;
 
 @Named
 @RequestScoped
-public class UserSearchAction implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class UserSearchAction {
 
     private UserSearchPage searchForm;
 

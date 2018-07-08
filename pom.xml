@@ -9,12 +9,26 @@
 
     <name>jsf-ddd</name>
 
+
+    <parent>
+        <groupId>org.vermeerlab</groupId>
+        <artifactId>parentpom</artifactId>
+        <version>0.1.0</version>
+        <relativePath>../</relativePath>
+    </parent>
+
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.vermeerlab</groupId>
+            <artifactId>beanvalidation</artifactId>
+            <version>0.3.2</version>
+        </dependency>
+
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>

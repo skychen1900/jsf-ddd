@@ -16,13 +16,16 @@
  */
 package exsample.jsf.domain.model.user;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  *
  * @author Yamashita,Takahiro
  */
-public class UserId {
+public class UserId implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private final String value;
 

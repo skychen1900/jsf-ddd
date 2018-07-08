@@ -17,6 +17,7 @@
 package exsample.jsf.presentation.userregistration;
 
 import exsample.jsf.domain.model.user.User;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -26,7 +27,9 @@ import java.util.stream.Collectors;
  *
  * @author Yamashita,Takahiro
  */
-public class SearchedUsers {
+public class SearchedUsers implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private final List<SearchedUser> items;
 

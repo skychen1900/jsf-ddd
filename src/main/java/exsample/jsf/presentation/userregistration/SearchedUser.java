@@ -21,8 +21,11 @@ import exsample.jsf.domain.model.user.User;
 import exsample.jsf.domain.model.user.UserId;
 import exsample.jsf.presentation.userregistration.form.EmailForm;
 import exsample.jsf.presentation.userregistration.form.NameForm;
+import java.io.Serializable;
 
-public class SearchedUser {
+public class SearchedUser implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private final UserId userId;
 

@@ -16,15 +16,18 @@
  */
 package exsample.jsf.presentation.userregistration.form;
 
-import ddd.presentation.Form;
+import ddd.presentation.DefaultForm;
 import exsample.jsf.domain.model.user.DateOfBirth;
+import java.io.Serializable;
 
 /**
  * 誕生日を表示するFormです.
  *
  * @author Yamashita,Takahiro
  */
-public class DateOfBirthForm implements Form<DateOfBirth> {
+public class DateOfBirthForm implements DefaultForm<DateOfBirth>, Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private String value = "";
 

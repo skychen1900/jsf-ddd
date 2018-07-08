@@ -18,7 +18,6 @@ package exsample.jsf.application.service;
 
 import exsample.jsf.domain.model.user.User;
 import exsample.jsf.domain.model.user.UserRepository;
-import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 import javax.enterprise.context.RequestScoped;
@@ -29,9 +28,7 @@ import javax.inject.Inject;
  * @author Yamashita,Takahiro
  */
 @RequestScoped
-public class UserService implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class UserService {
 
     private UserRepository userRepository;
 

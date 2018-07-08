@@ -16,15 +16,18 @@
  */
 package exsample.jsf.presentation.userregistration.form;
 
-import ddd.presentation.Form;
+import ddd.presentation.DefaultForm;
 import exsample.jsf.domain.model.user.UserName;
+import java.io.Serializable;
 
 /**
  * ユーザー名を表示するFormです
  *
  * @author Yamashita,Takahiro
  */
-public class NameForm implements Form<UserName> {
+public class NameForm implements DefaultForm<UserName>, Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private String value = "";
 

@@ -39,7 +39,7 @@
 
     <build>
 
-        <finalName>jsf-base-paraya-ee8</finalName>
+        <finalName>jsf-ddd</finalName>
 
         <plugins>
             <plugin>

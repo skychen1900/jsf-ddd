@@ -4,7 +4,7 @@
 
     <groupId>org.vermeer.sample</groupId>
     <artifactId>jsf-ddd</artifactId>
-    <version>0.1.0</version>
+    <version>0.2.0</version>
     <packaging>war</packaging>
 
     <name>jsf-ddd</name>
@@ -26,20 +26,20 @@
         <dependency>
             <groupId>org.vermeerlab</groupId>
             <artifactId>beanvalidation</artifactId>
-            <version>0.3.2</version>
+            <version>0.4.0</version>
         </dependency>
 
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
-            <version>8.0</version>
+            <version>7.0</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
 
     <build>
 
-        <finalName>jsf-base-paraya-ee8</finalName>
+        <finalName>jsf-ddd</finalName>
 
         <plugins>
             <plugin>
@@ -81,6 +81,33 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>findbugs-maven-plugin</artifactId>
+                <version>3.0.4</version>
+                <executions>
+                    <execution>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <effort>Max</effort> <!-- 検査強度 -->
+                    <threshold>Low</threshold> <!-- 任意 -->
+                    <failOnError>false</failOnError> <!-- Error で build failure にする -->
+                    <!-- ファイル出力関連 start -->
+                    <xmlOutput>true</xmlOutput>
+                    <outputEncoding>${project.build.sourceEncoding}</outputEncoding>
+                    <xmlOutputDirectory>target/site/findbugs</xmlOutputDirectory>
+                    <findbugsXmlOutputDirectory>target/site/findbugs</findbugsXmlOutputDirectory>
+                    <!-- ファイル出力関連 end -->
+                </configuration>
+            </plugin>
+
+
 
         </plugins>
     </build>

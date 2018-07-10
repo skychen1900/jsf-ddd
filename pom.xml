@@ -25,6 +25,12 @@
     <dependencies>
         <dependency>
             <groupId>org.vermeerlab</groupId>
+            <artifactId>vermeerlab-base</artifactId>
+            <version>0.3.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.vermeerlab</groupId>
             <artifactId>beanvalidation</artifactId>
             <version>0.4.0</version>
         </dependency>

@@ -42,10 +42,8 @@ public class UserRegistrationAction {
 
         Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
-        //validateしても、対象のクラスフィールドに @Validと記述しても無視される
-        //理由は、コンテナで生成したインスタンスのフィールドが nullだから。
-        //ただし、アクセッサを経由したら値は取得できることは デバッグモードで確認済み
-        Set<ConstraintViolation<Object>> results = validator.validate(registrationForm, ValidationPriority.class);
+        //CDI管理外のインスタンスを引数として検証を行えば @Valid が有効（普通のBeanValidationの挙動）
+        Set<ConstraintViolation<Object>> results = validator.validate(registrationForm.getValidationPersistUser(), ValidationPriority.class);
         this.viewMessage.appendMessage(results);
         if (results.isEmpty() == false) {
             return "persistedit.xhtml?faces-redirect=true";

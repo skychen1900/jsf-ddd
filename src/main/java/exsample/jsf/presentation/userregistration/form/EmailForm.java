@@ -16,9 +16,11 @@
  */
 package exsample.jsf.presentation.userregistration.form;
 
+import ddd.domain.validation.ValidationGroups;
 import ddd.presentation.DefaultForm;
 import exsample.jsf.domain.model.user.UserEmail;
 import java.io.Serializable;
+import javax.validation.constraints.NotBlank;
 
 /**
  * Emailを表示するFormです.
@@ -29,6 +31,7 @@ public class EmailForm implements DefaultForm<UserEmail>, Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @NotBlank(groups = ValidationGroups.Form.class)
     private String value = "";
 
     public EmailForm() {

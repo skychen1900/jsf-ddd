@@ -30,6 +30,7 @@ import java.util.Map;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.inject.Named;
+import javax.validation.Valid;
 
 /**
  *
@@ -54,6 +55,15 @@ public class UserRegistrationPage implements Serializable {
     private GenderForm gender;
 
     public UserRegistrationPage() {
+    }
+
+    public UserRegistrationPage(UserRegistrationPage me) {
+        this.userId = me.userId;
+        this.userEmail = me.userEmail;
+        this.name = me.name;
+        this.dateOfBirth = me.dateOfBirth;
+        this.phoneNumber = me.phoneNumber;
+        this.gender = me.gender;
     }
 
     public void init() {
@@ -93,6 +103,31 @@ public class UserRegistrationPage implements Serializable {
 
     public User toUser() {
         return new User(this.userId, userEmail.getValue(), name.getValue(), dateOfBirth.getValue(), phoneNumber.getValue(), gender.getValue());
+    }
+
+    public Object getValidationPersistUser() {
+        ValidationPersistUser obj = new ValidationPersistUser();
+        obj.userEmail = userEmail;
+        obj.name = name;
+        obj.dateOfBirth = dateOfBirth;
+        obj.phoneNumber = phoneNumber;
+        return obj;
+    }
+
+    private static class ValidationPersistUser {
+
+        @Valid
+        private EmailForm userEmail;
+
+        @Valid
+        private NameForm name;
+
+        @Valid
+        private DateOfBirthForm dateOfBirth;
+
+        @Valid
+        private PhoneNumberForm phoneNumber;
+
     }
 
     public void setEmail(String email) {

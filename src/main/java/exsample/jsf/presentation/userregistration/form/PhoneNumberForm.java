@@ -16,9 +16,11 @@
  */
 package exsample.jsf.presentation.userregistration.form;
 
+import ddd.domain.validation.ValidationGroups;
 import ddd.presentation.DefaultForm;
 import exsample.jsf.domain.model.user.PhoneNumber;
 import java.io.Serializable;
+import javax.validation.constraints.NotBlank;
 
 /**
  *
@@ -28,6 +30,7 @@ public class PhoneNumberForm implements DefaultForm<PhoneNumber>, Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @NotBlank(groups = ValidationGroups.Form.class)
     private String value = "";
 
     public PhoneNumberForm() {

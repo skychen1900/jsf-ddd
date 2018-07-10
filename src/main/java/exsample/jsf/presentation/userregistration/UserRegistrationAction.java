@@ -10,8 +10,8 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
 import javax.validation.Validator;
-import org.vermeerlab.beanvalidation.validator.GroupSequenceValidator;
 
 @Named
 @RequestScoped
@@ -39,8 +39,13 @@ public class UserRegistrationAction {
     }
 
     public String confirm() {
-        Validator validator = new GroupSequenceValidator(ValidationPriority.class);
-        Set<ConstraintViolation<Object>> results = validator.validate(registrationForm.getValidationPersistUser());
+
+        Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+
+        //validateしても、対象のクラスフィールドに @Validと記述しても無視される
+        //理由は、コンテナで生成したインスタンスのフィールドが nullだから。
+        //ただし、アクセッサを経由したら値は取得できることは デバッグモードで確認済み
+        Set<ConstraintViolation<Object>> results = validator.validate(registrationForm, ValidationPriority.class);
         this.viewMessage.appendMessage(results);
         if (results.isEmpty() == false) {
             return "persistedit.xhtml?faces-redirect=true";

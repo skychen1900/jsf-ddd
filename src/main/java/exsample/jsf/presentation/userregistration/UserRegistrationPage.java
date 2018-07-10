@@ -44,12 +44,16 @@ public class UserRegistrationPage implements Serializable {
 
     private UserId userId;
 
+    @Valid
     private EmailForm userEmail;
 
+    @Valid
     private NameForm name;
 
+    @Valid
     private DateOfBirthForm dateOfBirth;
 
+    @Valid
     private PhoneNumberForm phoneNumber;
 
     private GenderForm gender;
@@ -105,31 +109,30 @@ public class UserRegistrationPage implements Serializable {
         return new User(this.userId, userEmail.getValue(), name.getValue(), dateOfBirth.getValue(), phoneNumber.getValue(), gender.getValue());
     }
 
-    public Object getValidationPersistUser() {
-        ValidationPersistUser obj = new ValidationPersistUser();
-        obj.userEmail = userEmail;
-        obj.name = name;
-        obj.dateOfBirth = dateOfBirth;
-        obj.phoneNumber = phoneNumber;
-        return obj;
-    }
-
-    private static class ValidationPersistUser {
-
-        @Valid
-        private EmailForm userEmail;
-
-        @Valid
-        private NameForm name;
-
-        @Valid
-        private DateOfBirthForm dateOfBirth;
-
-        @Valid
-        private PhoneNumberForm phoneNumber;
-
-    }
-
+//    public Object getValidationPersistUser() {
+//        ValidationPersistUser obj = new ValidationPersistUser();
+//        obj.userEmail = userEmail;
+//        obj.name = name;
+//        obj.dateOfBirth = dateOfBirth;
+//        obj.phoneNumber = phoneNumber;
+//        return obj;
+//    }
+//
+//    private static class ValidationPersistUser {
+//
+//        @Valid
+//        private EmailForm userEmail;
+//
+//        @Valid
+//        private NameForm name;
+//
+//        @Valid
+//        private DateOfBirthForm dateOfBirth;
+//
+//        @Valid
+//        private PhoneNumberForm phoneNumber;
+//
+//    }
     public void setEmail(String email) {
         this.userEmail = new EmailForm(email);
     }

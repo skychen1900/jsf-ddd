@@ -1,6 +1,5 @@
 package exsample.jsf.presentation.userregistration;
 
-import ddd.domain.validation.ValidationPriority;
 import ddd.presentation.ViewMessage;
 import exsample.jsf.application.service.UserService;
 import exsample.jsf.domain.model.user.User;
@@ -11,8 +10,8 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
 import javax.validation.Validator;
-import org.vermeerlab.beanvalidation.validator.GroupSequenceValidator;
 
 @Named
 @RequestScoped
@@ -46,8 +45,12 @@ public class UserUpdateAction {
     }
 
     public String confirm() {
-        Validator validator = new GroupSequenceValidator(ValidationPriority.class);
-        Set<ConstraintViolation<Object>> results = validator.validate(registrationForm.getValidationPersistUser());
+        Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+
+        //validateしても、対象のクラスフィールドに @Validと記述しても無視される
+        //理由は、コンテナで生成したインスタンスのフィールドが nullだから。
+        //ただし、アクセッサを経由したら値は取得できることは デバッグモードで確認済み
+        Set<ConstraintViolation<Object>> results = validator.validate(registrationForm);
         this.viewMessage.appendMessage(results);
         if (results.isEmpty() == false) {
             return "updateedit.xhtml?faces-redirect=true";

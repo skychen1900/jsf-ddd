@@ -1,7 +1,7 @@
 package exsample.jsf.presentation.userregistration;
 
+import ddd.domain.validation.BeanValidationException;
 import ddd.domain.validation.ValidationPriority;
-import ddd.presentation.ViewMessage;
 import exsample.jsf.application.service.UserService;
 import exsample.jsf.domain.model.user.User;
 import java.util.Optional;
@@ -21,16 +21,13 @@ public class UserRegistrationAction {
 
     private UserService userService;
 
-    private ViewMessage viewMessage;
-
     public UserRegistrationAction() {
     }
 
     @Inject
-    public UserRegistrationAction(UserRegistrationPage registrationForm, UserService userService, ViewMessage viewMessage) {
+    public UserRegistrationAction(UserRegistrationPage registrationForm, UserService userService) {
         this.registrationPage = registrationForm;
         this.userService = userService;
-        this.viewMessage = viewMessage;
     }
 
     public String fwPersist() {
@@ -41,9 +38,8 @@ public class UserRegistrationAction {
     public String confirm() {
         Validator validator = new GroupSequenceValidator(ValidationPriority.class);
         Set<ConstraintViolation<Object>> results = validator.validate(registrationPage.getValidationForm());
-        this.viewMessage.appendMessage(results);
         if (results.isEmpty() == false) {
-            return "persistedit.xhtml?faces-redirect=true";
+            throw new BeanValidationException(results);
         }
 
         return "persistconfirm.xhtml?faces-redirect=true";

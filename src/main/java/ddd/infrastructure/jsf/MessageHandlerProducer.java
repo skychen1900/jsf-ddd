@@ -14,20 +14,24 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ddd.presentation;
+package ddd.infrastructure.jsf;
 
-import java.util.Set;
-import javax.validation.ConstraintViolation;
+import ddd.domain.validation.MessageHandler;
+import javax.enterprise.context.Dependent;
+import javax.enterprise.inject.Produces;
+import javax.inject.Named;
 
 /**
  *
  * @author Yamashita,Takahiro
  */
-public interface ViewMessage {
+@Named
+@Dependent
+public class MessageHandlerProducer {
 
-    /**
-     *
-     * @param validatedResults
-     */
-    public void appendMessage(Set<ConstraintViolation<Object>> validatedResults);
+    @Produces
+    public MessageHandler getViewMessage() {
+        return new JsfMessageHandler();
+    }
+
 }

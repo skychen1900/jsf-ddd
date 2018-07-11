@@ -16,32 +16,20 @@
  */
 package ddd.domain.validation;
 
-import java.util.Collections;
 import java.util.Set;
 import javax.validation.ConstraintViolation;
 
 /**
- * 検証実行時例外
+ * クライアントにメッセージを出力する機能を提供します
  *
  * @author Yamashita,Takahiro
  */
-public class BeanValidationException extends RuntimeException {
-
-    private static final long serialVersionUID = 1L;
-
-    private final Set<ConstraintViolation<Object>> validatedResults;
-
-    public BeanValidationException(Set<ConstraintViolation<Object>> validatedResults) {
-        this.validatedResults = validatedResults;
-    }
+public interface MessageHandler {
 
     /**
-     * 検証結果を返却します.
+     * クライアントのメッセージ領域に検証結果を出力します.
      *
-     * @return 検証結果
+     * @param validatedResults 検証結果
      */
-    public Set<ConstraintViolation<Object>> getValidatedResults() {
-        return Collections.unmodifiableSet(validatedResults);
-    }
-
+    public void appendMessage(Set<ConstraintViolation<Object>> validatedResults);
 }

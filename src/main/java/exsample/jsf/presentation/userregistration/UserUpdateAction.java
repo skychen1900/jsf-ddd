@@ -47,7 +47,7 @@ public class UserUpdateAction {
 
     public String confirm() {
         Validator validator = new GroupSequenceValidator(ValidationPriority.class);
-        Set<ConstraintViolation<Object>> results = validator.validate(registrationForm.getValidationPersistUser());
+        Set<ConstraintViolation<Object>> results = validator.validate(registrationForm.getValidationForm());
         this.viewMessage.appendMessage(results);
         if (results.isEmpty() == false) {
             return "updateedit.xhtml?faces-redirect=true";

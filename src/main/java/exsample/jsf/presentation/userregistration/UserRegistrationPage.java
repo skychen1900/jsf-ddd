@@ -105,8 +105,8 @@ public class UserRegistrationPage implements Serializable {
         return new User(this.userId, userEmail.getValue(), name.getValue(), dateOfBirth.getValue(), phoneNumber.getValue(), gender.getValue());
     }
 
-    public Object getValidationPersistUser() {
-        ValidationPersistUser obj = new ValidationPersistUser();
+    public Object getValidationForm() {
+        ValidationForm obj = new ValidationForm();
         obj.userEmail = userEmail;
         obj.name = name;
         obj.dateOfBirth = dateOfBirth;
@@ -114,7 +114,7 @@ public class UserRegistrationPage implements Serializable {
         return obj;
     }
 
-    private static class ValidationPersistUser {
+    private static class ValidationForm {
 
         @Valid
         private EmailForm userEmail;

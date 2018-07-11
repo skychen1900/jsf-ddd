@@ -17,7 +17,7 @@ import org.vermeerlab.beanvalidation.validator.GroupSequenceValidator;
 @RequestScoped
 public class UserRegistrationAction {
 
-    private UserRegistrationPage registrationForm;
+    private UserRegistrationPage registrationPage;
 
     private UserService userService;
 
@@ -28,19 +28,19 @@ public class UserRegistrationAction {
 
     @Inject
     public UserRegistrationAction(UserRegistrationPage registrationForm, UserService userService, ViewMessage viewMessage) {
-        this.registrationForm = registrationForm;
+        this.registrationPage = registrationForm;
         this.userService = userService;
         this.viewMessage = viewMessage;
     }
 
     public String fwPersist() {
-        this.registrationForm.init();
+        this.registrationPage.init();
         return "persistedit.xhtml?faces-redirect=true";
     }
 
     public String confirm() {
         Validator validator = new GroupSequenceValidator(ValidationPriority.class);
-        Set<ConstraintViolation<Object>> results = validator.validate(registrationForm.getValidationPersistUser());
+        Set<ConstraintViolation<Object>> results = validator.validate(registrationPage.getValidationForm());
         this.viewMessage.appendMessage(results);
         if (results.isEmpty() == false) {
             return "persistedit.xhtml?faces-redirect=true";
@@ -50,7 +50,7 @@ public class UserRegistrationAction {
     }
 
     public String register() {
-        User requestUser = this.registrationForm.toUser();
+        User requestUser = this.registrationPage.toUser();
         this.userService.register(requestUser);
 
         Optional<User> responseUser = this.userService.findByKey(requestUser);
@@ -60,7 +60,7 @@ public class UserRegistrationAction {
             return null;
         }
 
-        this.registrationForm.update(responseUser.get());
+        this.registrationPage.update(responseUser.get());
         return "persistcomplete.xhtml?faces-redirect=true";
     }
 }

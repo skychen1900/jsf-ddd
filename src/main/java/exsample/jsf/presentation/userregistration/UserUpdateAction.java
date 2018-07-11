@@ -1,34 +1,32 @@
 package exsample.jsf.presentation.userregistration;
 
-import ddd.domain.validation.BeanValidationException;
-import ddd.domain.validation.ValidationPriority;
+import ddd.infrastructure.validation.BeanValidator;
 import exsample.jsf.application.service.UserService;
 import exsample.jsf.domain.model.user.User;
 import exsample.jsf.domain.model.user.UserId;
 import java.util.Optional;
-import java.util.Set;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.validation.ConstraintViolation;
-import javax.validation.Validator;
-import org.vermeerlab.beanvalidation.validator.GroupSequenceValidator;
 
 @Named
 @RequestScoped
 public class UserUpdateAction {
 
-    private UserRegistrationPage registrationForm;
+    private UserRegistrationPage registrationPage;
 
     private UserService userService;
+
+    private BeanValidator validator;
 
     public UserUpdateAction() {
     }
 
     @Inject
-    public UserUpdateAction(UserRegistrationPage registrationForm, UserService userService) {
-        this.registrationForm = registrationForm;
+    public UserUpdateAction(UserRegistrationPage registrationForm, UserService userService, BeanValidator validator) {
+        this.registrationPage = registrationForm;
         this.userService = userService;
+        this.validator = validator;
     }
 
     public String fwUpdate(String userId) {
@@ -38,21 +36,17 @@ public class UserUpdateAction {
         if (requestUser.isPresent() == false) {
             return null;
         }
-        this.registrationForm.update(requestUser.get());
+        this.registrationPage.update(requestUser.get());
         return "updateedit.xhtml?faces-redirect=true";
     }
 
     public String confirm() {
-        Validator validator = new GroupSequenceValidator(ValidationPriority.class);
-        Set<ConstraintViolation<Object>> results = validator.validate(registrationForm.getValidationForm());
-        if (results.isEmpty() == false) {
-            throw new BeanValidationException(results);
-        }
+        validator.validate(registrationPage.getValidationForm());
         return "updateconfirm.xhtml?faces-redirect=true";
     }
 
     public String register() {
-        User requestUser = this.registrationForm.toUser();
+        User requestUser = this.registrationPage.toUser();
         this.userService.register(requestUser);
 
         Optional<User> responseUser = this.userService.findByKey(requestUser);
@@ -62,7 +56,7 @@ public class UserUpdateAction {
             return null;
         }
 
-        this.registrationForm.update(responseUser.get());
+        this.registrationPage.update(responseUser.get());
         return "updatecomplete.xhtml?faces-redirect=true";
     }
 }

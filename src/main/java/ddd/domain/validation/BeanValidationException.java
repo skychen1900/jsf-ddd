@@ -16,6 +16,9 @@
  */
 package ddd.domain.validation;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Collections;
 import java.util.Set;
 import javax.validation.ConstraintViolation;
@@ -29,7 +32,7 @@ public class BeanValidationException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
-    private final Set<ConstraintViolation<Object>> validatedResults;
+    private final transient Set<ConstraintViolation<Object>> validatedResults;
 
     public BeanValidationException(Set<ConstraintViolation<Object>> validatedResults) {
         this.validatedResults = validatedResults;
@@ -44,4 +47,11 @@ public class BeanValidationException extends RuntimeException {
         return Collections.unmodifiableSet(validatedResults);
     }
 
+    private void writeObject(ObjectOutputStream stream) throws IOException {
+        stream.defaultWriteObject();
+    }
+
+    private void readObject(ObjectInputStream stream) throws IOException, ClassNotFoundException {
+        stream.defaultReadObject();
+    }
 }

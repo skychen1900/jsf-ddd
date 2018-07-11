@@ -16,6 +16,7 @@
  */
 package exsample.jsf.presentation.userregistration;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import exsample.jsf.domain.model.user.GenderType;
 import exsample.jsf.domain.model.user.User;
 import exsample.jsf.domain.model.user.UserId;
@@ -114,6 +115,7 @@ public class UserRegistrationPage implements Serializable {
         return obj;
     }
 
+    @SuppressFBWarnings("URF_UNREAD_FIELD")
     private static class ValidationForm {
 
         @Valid

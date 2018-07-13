@@ -1,6 +1,6 @@
 package exsample.jsf.presentation.userregistration;
 
-import ddd.infrastructure.validation.BeanValidator;
+import ddd.domain.validation.Validator;
 import exsample.jsf.application.service.UserService;
 import exsample.jsf.domain.model.user.User;
 import java.util.Optional;
@@ -16,13 +16,13 @@ public class UserRegistrationAction {
 
     private UserService userService;
 
-    private BeanValidator validator;
+    private Validator validator;
 
     public UserRegistrationAction() {
     }
 
     @Inject
-    public UserRegistrationAction(UserRegistrationPage registrationForm, UserService userService, BeanValidator validator) {
+    public UserRegistrationAction(UserRegistrationPage registrationForm, UserService userService, Validator validator) {
         this.registrationPage = registrationForm;
         this.userService = userService;
         this.validator = validator;

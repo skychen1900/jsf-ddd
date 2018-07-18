@@ -14,7 +14,7 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ddd.infrastructure.jsf;
+package ee.infrastructure.jsf;
 
 import ddd.domain.validation.MessageHandler;
 import java.util.Set;

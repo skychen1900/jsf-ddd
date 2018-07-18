@@ -1,15 +1,14 @@
 package exsample.jsf.presentation.userregistration;
 
 import ddd.domain.validation.Validator;
+import ee.domain.annotation.controller.Controller;
+import ee.domain.annotation.controller.EndConversation;
 import exsample.jsf.application.service.UserService;
 import exsample.jsf.domain.model.user.User;
 import java.util.Optional;
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import javax.inject.Named;
 
-@Named
-@RequestScoped
+@Controller
 public class UserRegistrationAction {
 
     private UserRegistrationPage registrationPage;
@@ -30,14 +29,15 @@ public class UserRegistrationAction {
 
     public String fwPersist() {
         this.registrationPage.init();
-        return "persistedit.xhtml?faces-redirect=true";
+        return "persistedit.xhtml";
     }
 
     public String confirm() {
         validator.validate(registrationPage.getValidationForm());
-        return "persistconfirm.xhtml?faces-redirect=true";
+        return "persistconfirm.xhtml";
     }
 
+    @EndConversation
     public String register() {
         User requestUser = this.registrationPage.toUser();
         this.userService.register(requestUser);
@@ -50,6 +50,6 @@ public class UserRegistrationAction {
         }
 
         this.registrationPage.update(responseUser.get());
-        return "persistcomplete.xhtml?faces-redirect=true";
+        return "persistcomplete.xhtml";
     }
 }

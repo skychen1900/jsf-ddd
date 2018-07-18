@@ -2,7 +2,7 @@
  * Copyright(C) 2016 Sanyu Academy All rights reserved.
  *
  */
-package ddd.infrastructure.exceptionhandler.jsf;
+package ee.infrastructure.jsf;
 
 import ddd.domain.validation.BeanValidationException;
 import ddd.domain.validation.MessageHandler;
@@ -30,9 +30,11 @@ public class CustomExceptionHandler extends ExceptionHandlerWrapper {
 
     private final MessageHandler messageHandler;
 
+    //private final Conversation conversation;
     CustomExceptionHandler(ExceptionHandler exception, MessageHandler messageHandler) {
         this.wrapped = exception;
         this.messageHandler = messageHandler;
+        //this.conversation = conversation;
     }
 
     @Override

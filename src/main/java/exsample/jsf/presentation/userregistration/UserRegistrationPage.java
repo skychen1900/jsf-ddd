@@ -17,6 +17,7 @@
 package exsample.jsf.presentation.userregistration;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import ee.domain.annotation.view.View;
 import exsample.jsf.domain.model.user.GenderType;
 import exsample.jsf.domain.model.user.User;
 import exsample.jsf.domain.model.user.UserId;
@@ -28,17 +29,14 @@ import exsample.jsf.presentation.userregistration.form.PhoneNumberForm;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
-import javax.inject.Named;
 import javax.validation.Valid;
 
 /**
  *
  * @author Yamashita,Takahiro
  */
-@Named
-@SessionScoped
+@View
 public class UserRegistrationPage implements Serializable {
 
     private static final long serialVersionUID = 1L;

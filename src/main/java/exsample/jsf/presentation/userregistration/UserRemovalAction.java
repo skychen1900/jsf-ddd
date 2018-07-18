@@ -1,15 +1,16 @@
 package exsample.jsf.presentation.userregistration;
 
+import ee.domain.annotation.controller.Action;
+import ee.domain.annotation.controller.Controller;
+import ee.domain.annotation.controller.EndConversation;
 import exsample.jsf.application.service.UserService;
 import exsample.jsf.domain.model.user.User;
 import exsample.jsf.domain.model.user.UserId;
 import java.util.Optional;
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import javax.inject.Named;
 
-@Named
-@RequestScoped
+@Controller
+@Action
 public class UserRemovalAction {
 
     private UserRegistrationPage registrationForm;
@@ -33,14 +34,15 @@ public class UserRemovalAction {
             return null;
         }
         this.registrationForm.update(requestUser.get());
-        return "removeconfirm.xhtml?faces-redirect=true";
+        return "removeconfirm.xhtml";
     }
 
+    @EndConversation
     public String remove() {
         User requestUser = this.registrationForm.toUser();
         this.userService.remove(requestUser);
         this.registrationForm.update(requestUser);
-        return "removecomplete.xhtml?faces-redirect=true";
+        return "removecomplete.xhtml";
     }
 
 }

@@ -14,7 +14,7 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ddd.infrastructure.jsf;
+package ee.infrastructure.jsf;
 
 import ddd.domain.validation.MessageHandler;
 import javax.enterprise.context.Dependent;
@@ -22,6 +22,7 @@ import javax.enterprise.inject.Produces;
 import javax.inject.Named;
 
 /**
+ * メッセージ出力する機能の依存性の注入をします.
  *
  * @author Yamashita,Takahiro
  */
@@ -30,7 +31,7 @@ import javax.inject.Named;
 public class MessageHandlerProducer {
 
     @Produces
-    public MessageHandler getViewMessage() {
+    public MessageHandler getViewMessageHandler() {
         return new JsfMessageHandler();
     }
 

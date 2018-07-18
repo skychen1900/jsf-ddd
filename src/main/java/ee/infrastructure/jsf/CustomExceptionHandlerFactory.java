@@ -2,7 +2,7 @@
  * Copyright(C) 2016 Sanyu Academy All rights reserved.
  *
  */
-package ddd.infrastructure.exceptionhandler.jsf;
+package ee.infrastructure.jsf;
 
 import ddd.domain.validation.MessageHandler;
 import javax.faces.context.ExceptionHandler;

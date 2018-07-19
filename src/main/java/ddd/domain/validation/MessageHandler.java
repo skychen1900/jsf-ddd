@@ -14,34 +14,22 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package exsample.jsf.presentation.userregistration;
+package ddd.domain.validation;
 
-import ee.domain.annotation.view.View;
-import exsample.jsf.domain.model.user.User;
-import java.io.Serializable;
-import java.util.Collections;
-import java.util.List;
+import java.util.Set;
+import javax.validation.ConstraintViolation;
 
 /**
+ * クライアントにメッセージを出力する機能を提供します
  *
  * @author Yamashita,Takahiro
  */
-@View
-public class UserSearchPage implements Serializable {
+public interface MessageHandler {
 
-    private static final long serialVersionUID = 1L;
-
-    private SearchedUsers items;
-
-    void init(List<User> users) {
-        this.items = new SearchedUsers(users);
-    }
-
-    public List<SearchedUser> getItems() {
-        if (this.items == null) {
-            return Collections.emptyList();
-        }
-        return this.items.getItems();
-    }
-
+    /**
+     * クライアントのメッセージ領域に検証結果を出力します.
+     *
+     * @param validatedResults 検証結果
+     */
+    public void appendMessage(Set<ConstraintViolation<Object>> validatedResults);
 }

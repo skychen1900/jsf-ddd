@@ -16,6 +16,8 @@
  */
 package exsample.jsf.presentation.userregistration;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import ee.domain.annotation.view.View;
 import exsample.jsf.domain.model.user.GenderType;
 import exsample.jsf.domain.model.user.User;
 import exsample.jsf.domain.model.user.UserId;
@@ -27,17 +29,14 @@ import exsample.jsf.presentation.userregistration.form.PhoneNumberForm;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
-import javax.inject.Named;
 import javax.validation.Valid;
 
 /**
  *
  * @author Yamashita,Takahiro
  */
-@Named
-@SessionScoped
+@View
 public class UserRegistrationPage implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -105,8 +104,8 @@ public class UserRegistrationPage implements Serializable {
         return new User(this.userId, userEmail.getValue(), name.getValue(), dateOfBirth.getValue(), phoneNumber.getValue(), gender.getValue());
     }
 
-    public Object getValidationPersistUser() {
-        ValidationPersistUser obj = new ValidationPersistUser();
+    public Object getValidationForm() {
+        ValidationForm obj = new ValidationForm();
         obj.userEmail = userEmail;
         obj.name = name;
         obj.dateOfBirth = dateOfBirth;
@@ -114,7 +113,8 @@ public class UserRegistrationPage implements Serializable {
         return obj;
     }
 
-    private static class ValidationPersistUser {
+    @SuppressFBWarnings("URF_UNREAD_FIELD")
+    private static class ValidationForm {
 
         @Valid
         private EmailForm userEmail;

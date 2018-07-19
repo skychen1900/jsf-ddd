@@ -1,56 +1,45 @@
 package exsample.jsf.presentation.userregistration;
 
-import ddd.domain.validation.ValidationPriority;
-import ddd.presentation.ViewMessage;
+import ddd.domain.validation.Validator;
+import ee.domain.annotation.controller.Controller;
+import ee.domain.annotation.controller.EndConversation;
 import exsample.jsf.application.service.UserService;
 import exsample.jsf.domain.model.user.User;
 import java.util.Optional;
-import java.util.Set;
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import javax.inject.Named;
-import javax.validation.ConstraintViolation;
-import javax.validation.Validator;
-import org.vermeerlab.beanvalidation.validator.GroupSequenceValidator;
 
-@Named
-@RequestScoped
+@Controller
 public class UserRegistrationAction {
 
-    private UserRegistrationPage registrationForm;
+    private UserRegistrationPage registrationPage;
 
     private UserService userService;
 
-    private ViewMessage viewMessage;
+    private Validator validator;
 
     public UserRegistrationAction() {
     }
 
     @Inject
-    public UserRegistrationAction(UserRegistrationPage registrationForm, UserService userService, ViewMessage viewMessage) {
-        this.registrationForm = registrationForm;
+    public UserRegistrationAction(UserRegistrationPage registrationForm, UserService userService, Validator validator) {
+        this.registrationPage = registrationForm;
         this.userService = userService;
-        this.viewMessage = viewMessage;
+        this.validator = validator;
     }
 
     public String fwPersist() {
-        this.registrationForm.init();
-        return "persistedit.xhtml?faces-redirect=true";
+        this.registrationPage.init();
+        return "persistedit.xhtml";
     }
 
     public String confirm() {
-        Validator validator = new GroupSequenceValidator(ValidationPriority.class);
-        Set<ConstraintViolation<Object>> results = validator.validate(registrationForm.getValidationPersistUser());
-        this.viewMessage.appendMessage(results);
-        if (results.isEmpty() == false) {
-            return "persistedit.xhtml?faces-redirect=true";
-        }
-
-        return "persistconfirm.xhtml?faces-redirect=true";
+        validator.validate(registrationPage.getValidationForm());
+        return "persistconfirm.xhtml";
     }
 
+    @EndConversation
     public String register() {
-        User requestUser = this.registrationForm.toUser();
+        User requestUser = this.registrationPage.toUser();
         this.userService.register(requestUser);
 
         Optional<User> responseUser = this.userService.findByKey(requestUser);
@@ -60,7 +49,7 @@ public class UserRegistrationAction {
             return null;
         }
 
-        this.registrationForm.update(responseUser.get());
-        return "persistcomplete.xhtml?faces-redirect=true";
+        this.registrationPage.update(responseUser.get());
+        return "persistcomplete.xhtml";
     }
 }

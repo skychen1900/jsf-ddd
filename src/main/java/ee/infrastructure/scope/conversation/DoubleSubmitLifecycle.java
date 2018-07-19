@@ -14,34 +14,37 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package exsample.jsf.presentation.userregistration;
+package ee.infrastructure.scope.conversation;
 
-import ee.domain.annotation.view.View;
-import exsample.jsf.domain.model.user.User;
+import ee.domain.scope.conversation.DoubleSubmitState;
 import java.io.Serializable;
-import java.util.Collections;
-import java.util.List;
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.ConversationScoped;
+import javax.inject.Named;
 
 /**
  *
  * @author Yamashita,Takahiro
  */
-@View
-public class UserSearchPage implements Serializable {
+@Named
+@ConversationScoped
+public class DoubleSubmitLifecycle implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private SearchedUsers items;
+    private DoubleSubmitState doubleSubmitState;
 
-    void init(List<User> users) {
-        this.items = new SearchedUsers(users);
+    @PostConstruct
+    void init() {
+        this.doubleSubmitState = DoubleSubmitState.INIT;
     }
 
-    public List<SearchedUser> getItems() {
-        if (this.items == null) {
-            return Collections.emptyList();
-        }
-        return this.items.getItems();
+    public boolean isSubmitted() {
+        return this.doubleSubmitState.isSubmitted();
+    }
+
+    public void nextState() {
+        this.doubleSubmitState = this.doubleSubmitState.nextState();
     }
 
 }

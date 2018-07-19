@@ -1,12 +1,12 @@
 package exsample.jsf.presentation.userregistration;
 
+import ee.domain.annotation.controller.Action;
+import ee.domain.annotation.controller.Controller;
 import java.io.Serializable;
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import javax.inject.Named;
 
-@Named
-@RequestScoped
+@Controller
+@Action
 public class UserRegistrationActionListener implements Serializable {
 
     private static final long serialVersionUID = 1L;

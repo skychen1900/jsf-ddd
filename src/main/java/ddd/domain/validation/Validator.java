@@ -14,20 +14,20 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ddd.presentation;
-
-import java.util.Set;
-import javax.validation.ConstraintViolation;
+package ddd.domain.validation;
 
 /**
+ * Validator.
  *
  * @author Yamashita,Takahiro
  */
-public interface ViewMessage {
+public interface Validator {
 
     /**
+     * 検証を行います.
      *
-     * @param validatedResults
+     * @param validateTarget 検証対象
+     * @throws BeanValidationException 検証不正があった場合
      */
-    public void appendMessage(Set<ConstraintViolation<Object>> validatedResults);
+    public void validate(Object validateTarget);
 }

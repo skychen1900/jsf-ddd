@@ -14,34 +14,24 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package exsample.jsf.presentation.userregistration;
+package ee.infrastructure.validation;
 
-import ee.domain.annotation.view.View;
-import exsample.jsf.domain.model.user.User;
-import java.io.Serializable;
-import java.util.Collections;
-import java.util.List;
+import javax.enterprise.context.Dependent;
+import javax.enterprise.inject.Produces;
+import javax.inject.Named;
 
 /**
+ * {@link ddd.domain.validation.Validator}の実装を提供します.
  *
  * @author Yamashita,Takahiro
  */
-@View
-public class UserSearchPage implements Serializable {
+@Named
+@Dependent
+public class BeanValidatorProducer {
 
-    private static final long serialVersionUID = 1L;
-
-    private SearchedUsers items;
-
-    void init(List<User> users) {
-        this.items = new SearchedUsers(users);
-    }
-
-    public List<SearchedUser> getItems() {
-        if (this.items == null) {
-            return Collections.emptyList();
-        }
-        return this.items.getItems();
+    @Produces
+    public BeanValidator getBeanValidator() {
+        return new BeanValidator();
     }
 
 }

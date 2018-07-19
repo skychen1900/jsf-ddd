@@ -1,14 +1,12 @@
 package exsample.jsf.presentation.userregistration;
 
+import ee.domain.annotation.controller.Controller;
 import exsample.jsf.application.service.UserService;
 import exsample.jsf.domain.model.user.User;
 import java.util.List;
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import javax.inject.Named;
 
-@Named
-@RequestScoped
+@Controller
 public class UserSearchAction {
 
     private UserSearchPage searchForm;
@@ -27,7 +25,7 @@ public class UserSearchAction {
     public String search() {
         List<User> users = this.userService.findAll();
         this.searchForm.init(users);
-        return "index.xhtml?faces-redirect=true";
+        return "index.xhtml";
     }
 
 }

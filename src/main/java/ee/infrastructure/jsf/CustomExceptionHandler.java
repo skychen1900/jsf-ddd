@@ -30,11 +30,9 @@ public class CustomExceptionHandler extends ExceptionHandlerWrapper {
 
     private final MessageHandler messageHandler;
 
-    //private final Conversation conversation;
     CustomExceptionHandler(ExceptionHandler exception, MessageHandler messageHandler) {
         this.wrapped = exception;
         this.messageHandler = messageHandler;
-        //this.conversation = conversation;
     }
 
     @Override

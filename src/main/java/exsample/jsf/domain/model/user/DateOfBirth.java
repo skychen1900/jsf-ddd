@@ -16,6 +16,7 @@
  */
 package exsample.jsf.domain.model.user;
 
+import ddd.domain.validation.annotation.DateTimeFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
@@ -26,6 +27,7 @@ import java.util.Objects;
  */
 public class DateOfBirth {
 
+    @DateTimeFormat
     private final String value;
 
     public DateOfBirth(String value) {

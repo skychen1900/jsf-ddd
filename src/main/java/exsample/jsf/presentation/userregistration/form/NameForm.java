@@ -20,6 +20,7 @@ import ddd.domain.validation.ValidationGroups;
 import ddd.presentation.DefaultForm;
 import exsample.jsf.domain.model.user.UserName;
 import java.io.Serializable;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 
 /**
@@ -52,6 +53,7 @@ public class NameForm implements DefaultForm<UserName>, Serializable {
     /**
      * @inheritDoc
      */
+    @Valid
     @Override
     public UserName getValue() {
         return new UserName(this.value);

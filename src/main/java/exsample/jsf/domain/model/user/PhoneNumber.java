@@ -17,6 +17,8 @@
 package exsample.jsf.domain.model.user;
 
 import java.util.Objects;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -24,6 +26,8 @@ import java.util.Objects;
  */
 public class PhoneNumber {
 
+    @Pattern(regexp = "([0-9]{2,4}-[0-9]{2,4}-[0-9]{2,4})?", message = "{exsample.jsf.domain.model.user.PhoneNumber.message}")
+    @Size(min = 8, max = 13)
     private final String value;
 
     public PhoneNumber(String value) {

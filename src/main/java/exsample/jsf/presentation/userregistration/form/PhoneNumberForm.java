@@ -20,6 +20,7 @@ import ddd.domain.validation.ValidationGroups;
 import ddd.presentation.DefaultForm;
 import exsample.jsf.domain.model.user.PhoneNumber;
 import java.io.Serializable;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 
 /**
@@ -51,6 +52,7 @@ public class PhoneNumberForm implements DefaultForm<PhoneNumber>, Serializable {
     /**
      * @inheritDoc
      */
+    @Valid
     @Override
     public PhoneNumber getValue() {
         return new PhoneNumber(this.value);

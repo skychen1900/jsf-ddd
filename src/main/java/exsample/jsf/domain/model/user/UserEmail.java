@@ -17,6 +17,7 @@
 package exsample.jsf.domain.model.user;
 
 import java.util.Objects;
+import javax.validation.constraints.Email;
 
 /**
  *
@@ -24,6 +25,7 @@ import java.util.Objects;
  */
 public class UserEmail {
 
+    @Email
     private final String value;
 
     public UserEmail(String value) {

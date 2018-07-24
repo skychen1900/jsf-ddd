@@ -37,7 +37,10 @@ public class UserRegistrationAction {
         return "persistconfirm.xhtml";
     }
 
-    @EndConversation
+    public String modify() {
+        return "persistedit.xhtml";
+    }
+
     public String register() {
         User requestUser = this.registrationPage.toUser();
         this.userService.register(requestUser);
@@ -52,4 +55,10 @@ public class UserRegistrationAction {
         this.registrationPage.update(responseUser.get());
         return "persistcomplete.xhtml";
     }
+
+    @EndConversation
+    public String fwTop() {
+        return "index.xhtml";
+    }
+
 }

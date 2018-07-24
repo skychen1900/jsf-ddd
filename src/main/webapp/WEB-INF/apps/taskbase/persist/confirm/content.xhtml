@@ -56,7 +56,7 @@
                     <button id="registerButton" class="ui secondary basic button" jsf:action="#{userRegistrationAction.register()}">
                         登録する
                     </button>
-                    <a href="#" onclick="history.go(-1);return false;">修正する</a>
+                    <a href="#" jsf:id="modify" jsf:action="#{userRegistrationAction.modify()}">修正する</a>
                 </div>
             </h:form>
         </div>

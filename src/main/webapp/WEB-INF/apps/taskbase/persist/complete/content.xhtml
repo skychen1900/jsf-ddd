@@ -26,9 +26,11 @@
                 <p>#{userRegistrationPage.name}(#{userRegistrationPage.email}) さんを登録しました。</p>
             </div>
 
-            <div class="ui basic segment">
-                <a href="#{userSearchAction.search()}" id="fwSearchPage">利用者一覧へ</a>
-            </div>
+            <h:form id="f">
+                <div class="ui basic segment">
+                    <a href="#" jsf:action="#{userRegistrationAction.fwTop()}" jsf:id="fwTopPage">利用者一覧へ</a>
+                </div>
+            </h:form>
 
         </div>
 

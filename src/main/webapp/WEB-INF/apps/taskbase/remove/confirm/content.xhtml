@@ -51,12 +51,12 @@
 
             </div>
 
-            <h:form>
+            <h:form id="f">
                 <div class="ui basic segment">
                     <button id="registerButton" class="ui secondary basic button" jsf:action="#{userRemovalAction.remove()}">
                         削除する
                     </button>
-                    <a href="#" onclick="history.go(-1);return false;">一覧に戻る</a>
+                    <a href="#" jsf:id="fwTopPage" jsf:action="#{userRemovalAction.fwTop()}">一覧に戻る</a>
                 </div>
             </h:form>
         </div>

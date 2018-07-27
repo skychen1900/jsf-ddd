@@ -20,6 +20,7 @@ import ddd.domain.validation.ValidationGroups;
 import ddd.presentation.DefaultForm;
 import exsample.jsf.domain.model.user.UserEmail;
 import java.io.Serializable;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 
 /**
@@ -52,6 +53,7 @@ public class EmailForm implements DefaultForm<UserEmail>, Serializable {
     /**
      * @inheritDoc
      */
+    @Valid
     @Override
     public UserEmail getValue() {
         return new UserEmail(this.value);

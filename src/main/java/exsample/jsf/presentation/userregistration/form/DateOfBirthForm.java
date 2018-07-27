@@ -20,6 +20,7 @@ import ddd.domain.validation.ValidationGroups;
 import ddd.presentation.DefaultForm;
 import exsample.jsf.domain.model.user.DateOfBirth;
 import java.io.Serializable;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 
 /**
@@ -52,6 +53,7 @@ public class DateOfBirthForm implements DefaultForm<DateOfBirth>, Serializable {
     /**
      * @inheritDoc
      */
+    @Valid
     @Override
     public DateOfBirth getValue() {
         return new DateOfBirth(this.value);

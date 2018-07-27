@@ -51,12 +51,12 @@
 
             </div>
 
-            <h:form>
+            <h:form id="f">
                 <div class="ui basic segment">
                     <button id="registerButton" class="ui secondary basic button" jsf:action="#{userUpdateAction.register()}">
                         更新する
                     </button>
-                    <a href="#" onclick="history.go(-1);return false;">修正する</a>
+                    <a href="#" jsf:id="modify" jsf:action="#{userUpdateAction.modify()}">修正する</a>
                 </div>
             </h:form>
         </div>

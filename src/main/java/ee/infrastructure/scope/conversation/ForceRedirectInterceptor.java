@@ -31,7 +31,6 @@ public class ForceRedirectInterceptor {
         if (resultViewId == null) {
             resultViewId = currentViewId;
         }
-        urlContext.responseViewId(resultViewId);
-        return resultViewId;
+        return urlContext.responseViewId(resultViewId);
     }
 }

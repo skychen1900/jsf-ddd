@@ -44,7 +44,10 @@ public class UserUpdateAction {
         return "updateconfirm.xhtml";
     }
 
-    @EndConversation
+    public String modify() {
+        return "updateedit.xhtml";
+    }
+
     public String register() {
         User requestUser = this.registrationPage.toUser();
         this.userService.register(requestUser);
@@ -58,5 +61,10 @@ public class UserUpdateAction {
 
         this.registrationPage.update(responseUser.get());
         return "updatecomplete.xhtml";
+    }
+
+    @EndConversation
+    public String fwTop() {
+        return "index.xhtml";
     }
 }

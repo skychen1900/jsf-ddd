@@ -47,10 +47,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr jsfc="ui:repeat" value="#{userSearchPage.items}" var="items"  id="items">
-                                <td>#{items.userEmail}</td>
-                                <td>#{items.name}</td>
-                                <td>#{items.age}</td>
+                            <tr jsfc="ui:repeat" value="#{userSearchPage.items}" var="items" id="items">
+                                <td jsf:id="userEmail">#{items.userEmail}</td>
+                                <td jsf:id="userName">#{items.name}</td>
+                                <td jsf:id="userAge">#{items.age}</td>
                                 <td>
                                     <button class="ui secondary basic button" jsf:id="updateButton" jsf:action="#{userUpdateAction.fwUpdate(items.userId)}">
                                         変更

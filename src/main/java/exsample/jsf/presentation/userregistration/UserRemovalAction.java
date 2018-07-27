@@ -37,12 +37,16 @@ public class UserRemovalAction {
         return "removeconfirm.xhtml";
     }
 
-    @EndConversation
     public String remove() {
         User requestUser = this.registrationForm.toUser();
         this.userService.remove(requestUser);
         this.registrationForm.update(requestUser);
         return "removecomplete.xhtml";
+    }
+
+    @EndConversation
+    public String fwTop() {
+        return "index.xhtml";
     }
 
 }

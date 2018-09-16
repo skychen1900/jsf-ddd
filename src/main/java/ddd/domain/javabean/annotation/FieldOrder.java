@@ -14,22 +14,23 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ddd.domain.validation;
+package ddd.domain.javabean.annotation;
 
-import java.util.Set;
-import javax.validation.ConstraintViolation;
+import static java.lang.annotation.ElementType.FIELD;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * クライアントにメッセージを出力する機能を提供します
+ * ClassのFieldの順序を指定します.
+ * <p>
+ * Javaの仕様としてFieldの順序は保証されないため、ClassのFiled順序を指定するためのAnnotationです.
  *
  * @author Yamashita,Takahiro
  */
-public interface MessageHandler {
+@Target({FIELD})
+@Retention(RetentionPolicy.RUNTIME)
+public @interface FieldOrder {
 
-    /**
-     * クライアントのメッセージ領域に検証結果を出力します.
-     *
-     * @param validatedResults 検証結果
-     */
-    public void appendMessage(Set<ConstraintViolation<?>> validatedResults);
+    short value() default Short.MAX_VALUE;
 }

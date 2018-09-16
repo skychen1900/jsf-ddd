@@ -75,7 +75,7 @@ public class CustomExceptionHandler extends ExceptionHandlerWrapper {
 
         BeanValidationException ex = (BeanValidationException) th;
 
-        Set<ConstraintViolation<Object>> results = ex.getValidatedResults();
+        Set<ConstraintViolation<?>> results = ex.getValidatedResults();
 
         messageHandler.appendMessage(results);
 

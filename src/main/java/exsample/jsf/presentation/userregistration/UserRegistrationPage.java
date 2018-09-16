@@ -16,6 +16,7 @@
  */
 package exsample.jsf.presentation.userregistration;
 
+import ddd.domain.javabean.annotation.FieldOrder;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import ee.domain.annotation.view.View;
 import exsample.jsf.domain.model.user.GenderType;
@@ -117,15 +118,19 @@ public class UserRegistrationPage implements Serializable {
     private static class ValidationForm {
 
         @Valid
+        @FieldOrder(1)
         private EmailForm userEmail;
 
         @Valid
+        @FieldOrder(2)
         private NameForm name;
 
         @Valid
+        @FieldOrder(3)
         private DateOfBirthForm dateOfBirth;
 
         @Valid
+        @FieldOrder(4)
         private PhoneNumberForm phoneNumber;
 
     }

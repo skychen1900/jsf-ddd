@@ -43,7 +43,7 @@ public class BeanValidationException extends RuntimeException {
      *
      * @return 検証結果
      */
-    public Set<ConstraintViolation<Object>> getValidatedResults() {
+    public Set<ConstraintViolation<?>> getValidatedResults() {
         return Collections.unmodifiableSet(validatedResults);
     }
 

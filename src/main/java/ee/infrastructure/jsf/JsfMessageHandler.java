@@ -17,12 +17,14 @@
 package ee.infrastructure.jsf;
 
 import ddd.domain.validation.MessageHandler;
+import java.util.List;
 import java.util.Set;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.validation.ConstraintViolation;
 import org.vermeerlab.beanvalidation.messageinterpolator.MessageInterpolator;
 import org.vermeerlab.beanvalidation.messageinterpolator.MessageInterpolatorFactory;
+import org.vermeerlab.beanvalidation.sorting.ConstraintViolationSorting;
 
 /**
  * メッセージ出力する機能を提供します.
@@ -35,7 +37,7 @@ public class JsfMessageHandler implements MessageHandler {
      * {@inheritDoc }
      */
     @Override
-    public void appendMessage(Set<ConstraintViolation<Object>> validatedResults) {
+    public void appendMessage(Set<ConstraintViolation<?>> validatedResults) {
 
         FacesContext facesContext = FacesContext.getCurrentInstance();
 
@@ -44,12 +46,14 @@ public class JsfMessageHandler implements MessageHandler {
 
         MessageInterpolator interpolator = interpolatorFactory.create();
 
-        validatedResults.stream()
+        List<ConstraintViolation<?>> sortedValidatedResults = ConstraintViolationSorting.of(validatedResults).toList();
+
+        sortedValidatedResults.stream()
                 .map(result -> {
                     return interpolator.toMessage(result);
                 })
                 .distinct()
-                .forEach(message -> {
+                .forEachOrdered(message -> {
 
                     FacesMessage facemsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null);
                     facesContext.addMessage(null, facemsg);

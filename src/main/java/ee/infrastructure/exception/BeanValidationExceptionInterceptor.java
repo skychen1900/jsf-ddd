@@ -37,7 +37,7 @@ public class BeanValidationExceptionInterceptor {
         try {
             return ic.proceed();
         } catch (BeanValidationException ex) {
-            Set<ConstraintViolation<Object>> results = ex.getValidatedResults();
+            Set<ConstraintViolation<?>> results = ex.getValidatedResults();
             messageHandler.appendMessage(results);
             return currentViewId;
         }

@@ -16,44 +16,47 @@
  */
 package exsample.jsf.application.service;
 
+import ddd.domain.validation.Validator;
 import exsample.jsf.domain.model.user.User;
 import exsample.jsf.domain.model.user.UserRepository;
-import java.util.List;
-import java.util.Optional;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.validation.constraints.AssertTrue;
 
 /**
  *
  * @author Yamashita,Takahiro
  */
 @RequestScoped
-public class UserService {
+public class RegisterUser {
+
+    private User user;
 
     private UserRepository userRepository;
+    private Validator validator;
 
-    public UserService() {
+    public RegisterUser() {
     }
 
     @Inject
-    public UserService(UserRepository userRepository) {
+    public RegisterUser(UserRepository userRepository, Validator validator) {
         this.userRepository = userRepository;
+        this.validator = validator;
     }
 
-    public List<User> findAll() {
-        return this.userRepository.findAll();
+    public void validatePreCondition(User user) {
+        this.user = user;
+        validator.validate(this);
     }
 
-    public Optional<User> findById(User user) {
-        return this.userRepository.findById(user);
+    public void execute(User user) {
+        validatePreCondition(user);
+        userRepository.register(user);
     }
 
-    public Optional<User> findByKey(User user) {
-        return this.userRepository.findByKey(user);
-    }
-
-    public void remove(User user) {
-        this.userRepository.remove(user);
+    @AssertTrue(message = "{same.email.user.already.exist}")
+    boolean isNotExistSameEmail() {
+        return userRepository.findByKey(user).isPresent() == false;
     }
 
 }

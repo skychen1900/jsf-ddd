@@ -3,6 +3,7 @@ package exsample.jsf.presentation.userregistration;
 import ddd.domain.validation.Validator;
 import ee.domain.annotation.controller.Controller;
 import ee.domain.annotation.controller.EndConversation;
+import exsample.jsf.application.service.RegisterUser;
 import exsample.jsf.application.service.UserService;
 import exsample.jsf.domain.model.user.User;
 import exsample.jsf.domain.model.user.UserId;
@@ -16,15 +17,18 @@ public class UserUpdateAction {
 
     private UserService userService;
 
+    private RegisterUser registerUser;
+
     private Validator validator;
 
     public UserUpdateAction() {
     }
 
     @Inject
-    public UserUpdateAction(UserRegistrationPage registrationForm, UserService userService, Validator validator) {
+    public UserUpdateAction(UserRegistrationPage registrationForm, UserService userService, RegisterUser registerUser, Validator validator) {
         this.registrationPage = registrationForm;
         this.userService = userService;
+        this.registerUser = registerUser;
         this.validator = validator;
     }
 
@@ -41,6 +45,8 @@ public class UserUpdateAction {
 
     public String confirm() {
         validator.validate(registrationPage.getValidationForm());
+        User requestUser = this.registrationPage.toUser();
+        registerUser.validatePreCondition(requestUser);
         return "updateconfirm.xhtml";
     }
 
@@ -50,7 +56,7 @@ public class UserUpdateAction {
 
     public String register() {
         User requestUser = this.registrationPage.toUser();
-        this.userService.register(requestUser);
+        registerUser.execute(requestUser);
 
         Optional<User> responseUser = this.userService.findByKey(requestUser);
 

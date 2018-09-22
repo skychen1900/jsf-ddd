@@ -3,6 +3,7 @@ package exsample.jsf.presentation.userregistration;
 import ee.domain.annotation.controller.Action;
 import ee.domain.annotation.controller.Controller;
 import ee.domain.annotation.controller.EndConversation;
+import exsample.jsf.application.service.RemoveUser;
 import exsample.jsf.application.service.UserService;
 import exsample.jsf.domain.model.user.User;
 import exsample.jsf.domain.model.user.UserId;
@@ -17,13 +18,16 @@ public class UserRemovalAction {
 
     private UserService userService;
 
+    private RemoveUser removeUser;
+
     public UserRemovalAction() {
     }
 
     @Inject
-    public UserRemovalAction(UserRegistrationPage registrationForm, UserService userService) {
+    public UserRemovalAction(UserRegistrationPage registrationForm, UserService userService, RemoveUser removeUser) {
         this.registrationForm = registrationForm;
         this.userService = userService;
+        this.removeUser = removeUser;
     }
 
     public String fwRemove(String userId) {
@@ -39,7 +43,7 @@ public class UserRemovalAction {
 
     public String remove() {
         User requestUser = this.registrationForm.toUser();
-        this.userService.remove(requestUser);
+        this.removeUser.execute(requestUser);
         this.registrationForm.update(requestUser);
         return "removecomplete.xhtml";
     }

@@ -16,40 +16,47 @@
  */
 package exsample.jsf.application.service;
 
+import ddd.domain.validation.Validator;
 import exsample.jsf.domain.model.user.User;
 import exsample.jsf.domain.model.user.UserRepository;
-import java.util.List;
-import java.util.Optional;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.validation.constraints.AssertTrue;
 
 /**
  *
  * @author Yamashita,Takahiro
  */
 @RequestScoped
-public class UserService {
+public class RemoveUser {
+
+    private User user;
 
     private UserRepository userRepository;
+    private Validator validator;
 
-    public UserService() {
+    public RemoveUser() {
     }
 
     @Inject
-    public UserService(UserRepository userRepository) {
+    public RemoveUser(UserRepository userRepository, Validator validator) {
         this.userRepository = userRepository;
+        this.validator = validator;
     }
 
-    public List<User> findAll() {
-        return this.userRepository.findAll();
+    public void validatePreCondition(User user) {
+        this.user = user;
+        validator.validate(this);
     }
 
-    public Optional<User> findById(User user) {
-        return this.userRepository.findById(user);
+    public void execute(User user) {
+        validatePreCondition(user);
+        userRepository.remove(user);
     }
 
-    public Optional<User> findByKey(User user) {
-        return this.userRepository.findByKey(user);
+    @AssertTrue(message = "{user.doesnot.exist}")
+    boolean isExistUser() {
+        return userRepository.findById(user).isPresent();
     }
 
 }

@@ -53,13 +53,4 @@ public class UserService {
         return this.userRepository.findByKey(user)
                 .orElseThrow(() -> new UnexpectedApplicationException("user.doesnot.exist.findbyEmail"));
     }
-
-    public boolean isExistById(User user) {
-        return this.userRepository.isExistById(user);
-    }
-
-    public boolean isExistByEmail(User user) {
-        return this.userRepository.isExistByEmail(user);
-    }
-
 }

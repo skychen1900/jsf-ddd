@@ -4,7 +4,7 @@
  */
 package ee.infrastructure.jsf;
 
-import ddd.domain.exception.EntityNotExistException;
+import ddd.domain.exception.UnexpectedApplicationException;
 import ddd.domain.validation.BeanValidationException;
 import ddd.domain.validation.MessageHandler;
 import java.io.IOException;
@@ -94,11 +94,11 @@ public class CustomExceptionHandler extends ExceptionHandlerWrapper {
 
     //
     void handleEntityNotExistException(Throwable th) throws IOException {
-        if (th instanceof EntityNotExistException == false) {
+        if (th instanceof UnexpectedApplicationException == false) {
             return;
         }
 
-        EntityNotExistException ex = (EntityNotExistException) th;
+        UnexpectedApplicationException ex = (UnexpectedApplicationException) th;
 
         String message = ex.getMessage();
 

@@ -16,7 +16,7 @@
  */
 package exsample.jsf.application.service;
 
-import ddd.domain.exception.EntityNotExistException;
+import ddd.domain.exception.UnexpectedApplicationException;
 import exsample.jsf.domain.model.user.User;
 import exsample.jsf.domain.model.user.UserRepository;
 import java.util.List;
@@ -46,12 +46,12 @@ public class UserService {
 
     public User registeredUser(User user) {
         return this.userRepository.findById(user)
-                .orElseThrow(() -> new EntityNotExistException("user.doesnot.exist.findbyid"));
+                .orElseThrow(() -> new UnexpectedApplicationException("user.doesnot.exist.findbyid"));
     }
 
     public User persistedUser(User user) {
         return this.userRepository.findByKey(user)
-                .orElseThrow(() -> new EntityNotExistException("user.doesnot.exist.findbyEmail"));
+                .orElseThrow(() -> new UnexpectedApplicationException("user.doesnot.exist.findbyEmail"));
     }
 
     public boolean isExistById(User user) {

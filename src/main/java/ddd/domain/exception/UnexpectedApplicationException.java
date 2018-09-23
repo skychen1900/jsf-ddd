@@ -20,26 +20,26 @@ package ddd.domain.exception;
  *
  * @author Yamashita,Takahiro
  */
-public class EntityNotExistException extends RuntimeException {
+public class UnexpectedApplicationException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
-    public EntityNotExistException() {
+    public UnexpectedApplicationException() {
     }
 
-    public EntityNotExistException(String message) {
+    public UnexpectedApplicationException(String message) {
         super(message);
     }
 
-    public EntityNotExistException(String message, Throwable cause) {
+    public UnexpectedApplicationException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public EntityNotExistException(Throwable cause) {
+    public UnexpectedApplicationException(Throwable cause) {
         super(cause);
     }
 
-    public EntityNotExistException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    public UnexpectedApplicationException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 

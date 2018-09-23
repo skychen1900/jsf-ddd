@@ -31,15 +31,14 @@ public class UserRemovalAction {
 
     public String fwRemove(String userId) {
         User user = new User(new UserId(userId));
-
-        User requestUser = userService.findById(user);
+        User requestUser = userService.registeredUser(user);
         this.registrationForm.update(requestUser);
         return "removeconfirm.xhtml";
     }
 
     public String remove() {
         User requestUser = this.registrationForm.toUser();
-        this.removeUser.execute(requestUser);
+        removeUser.with(requestUser);
         return "removecomplete.xhtml";
     }
 

@@ -16,6 +16,7 @@
  */
 package exsample.jsf.application.service;
 
+import ddd.domain.exception.EntityNotExistException;
 import exsample.jsf.domain.model.user.User;
 import exsample.jsf.domain.model.user.UserRepository;
 import java.util.List;
@@ -43,12 +44,14 @@ public class UserService {
         return this.userRepository.findAll();
     }
 
-    public User findById(User user) {
-        return this.userRepository.findById(user);
+    public User registeredUser(User user) {
+        return this.userRepository.findById(user)
+                .orElseThrow(() -> new EntityNotExistException("user.doesnot.exist.findbyid"));
     }
 
-    public User findByKey(User user) {
-        return this.userRepository.findByKey(user);
+    public User persistedUser(User user) {
+        return this.userRepository.findByKey(user)
+                .orElseThrow(() -> new EntityNotExistException("user.doesnot.exist.findbyEmail"));
     }
 
     public boolean isExistById(User user) {

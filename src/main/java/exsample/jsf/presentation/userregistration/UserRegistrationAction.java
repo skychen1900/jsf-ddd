@@ -48,9 +48,8 @@ public class UserRegistrationAction {
 
     public String register() {
         User requestUser = this.registrationPage.toUser();
-        registerUser.execute(requestUser);
-
-        User responseUser = userService.findByKey(requestUser);
+        registerUser.with(requestUser);
+        User responseUser = userService.persistedUser(requestUser);
         this.registrationPage.update(responseUser);
         return "persistcomplete.xhtml";
     }

@@ -34,7 +34,7 @@ public class UserUpdateAction {
     public String fwUpdate(String userId) {
         User user = new User(new UserId(userId));
 
-        User requestUser = this.userService.findById(user);
+        User requestUser = this.userService.registeredUser(user);
         this.registrationPage.update(requestUser);
         return "updateedit.xhtml";
     }
@@ -52,9 +52,9 @@ public class UserUpdateAction {
 
     public String register() {
         User requestUser = this.registrationPage.toUser();
-        updateUser.execute(requestUser);
+        updateUser.with(requestUser);
 
-        User responseUser = userService.findById(requestUser);
+        User responseUser = userService.registeredUser(requestUser);
         this.registrationPage.update(responseUser);
         return "updatecomplete.xhtml";
     }

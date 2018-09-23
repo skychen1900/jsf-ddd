@@ -49,7 +49,7 @@ public class UpdateUser {
         validator.validate(this);
     }
 
-    public void execute(User user) {
+    public void with(User user) {
         validatePreCondition(user);
         userRepository.register(user);
     }

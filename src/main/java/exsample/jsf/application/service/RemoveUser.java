@@ -49,7 +49,7 @@ public class RemoveUser {
         validator.validate(this);
     }
 
-    public void execute(User user) {
+    public void with(User user) {
         validatePreCondition(user);
         userRepository.remove(user);
     }

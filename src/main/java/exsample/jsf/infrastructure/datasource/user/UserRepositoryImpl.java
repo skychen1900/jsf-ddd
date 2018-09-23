@@ -16,12 +16,12 @@
  */
 package exsample.jsf.infrastructure.datasource.user;
 
-import ddd.domain.exception.EntityNotExistException;
 import dummy.datastore.UserTable;
 import exsample.jsf.domain.model.user.User;
 import exsample.jsf.domain.model.user.UserRepository;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -39,13 +39,13 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User findById(User user) {
-        return this.userTable.findById(user).orElseThrow(() -> new EntityNotExistException("user.doesnot.exist.findbyid"));
+    public Optional<User> findById(User user) {
+        return this.userTable.findById(user);
     }
 
     @Override
-    public User findByKey(User user) {
-        return this.userTable.findByKey(user).orElseThrow(() -> new EntityNotExistException("user.doesnot.exist.findbyEmail"));
+    public Optional<User> findByKey(User user) {
+        return this.userTable.findByKey(user);
     }
 
     @Override

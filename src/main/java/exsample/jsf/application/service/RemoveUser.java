@@ -17,9 +17,9 @@
 package exsample.jsf.application.service;
 
 import ddd.domain.validation.Validator;
+import ee.domain.annotation.application.Service;
 import exsample.jsf.domain.model.user.User;
 import exsample.jsf.domain.model.user.UserRepository;
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.validation.constraints.AssertTrue;
 
@@ -27,7 +27,7 @@ import javax.validation.constraints.AssertTrue;
  *
  * @author Yamashita,Takahiro
  */
-@RequestScoped
+@Service
 public class RemoveUser {
 
     private User user;

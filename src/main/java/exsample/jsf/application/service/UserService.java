@@ -17,17 +17,17 @@
 package exsample.jsf.application.service;
 
 import ddd.domain.exception.UnexpectedApplicationException;
+import ee.domain.annotation.application.Service;
 import exsample.jsf.domain.model.user.User;
 import exsample.jsf.domain.model.user.UserRepository;
 import java.util.List;
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
 /**
  *
  * @author Yamashita,Takahiro
  */
-@RequestScoped
+@Service
 public class UserService {
 
     private UserRepository userRepository;

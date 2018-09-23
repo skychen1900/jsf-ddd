@@ -6,7 +6,6 @@ import ee.domain.annotation.controller.EndConversation;
 import exsample.jsf.application.service.RegisterUser;
 import exsample.jsf.application.service.UserService;
 import exsample.jsf.domain.model.user.User;
-import java.util.Optional;
 import javax.inject.Inject;
 
 @Controller
@@ -51,14 +50,8 @@ public class UserRegistrationAction {
         User requestUser = this.registrationPage.toUser();
         registerUser.execute(requestUser);
 
-        Optional<User> responseUser = this.userService.findByKey(requestUser);
-
-        //とりあえず、登録要素が無いという有り得ない状況だったら 自画面にそのまま遷移させる（ありえないケース）
-        if (responseUser.isPresent() == false) {
-            return null;
-        }
-
-        this.registrationPage.update(responseUser.get());
+        User responseUser = userService.findByKey(requestUser);
+        this.registrationPage.update(responseUser);
         return "persistcomplete.xhtml";
     }
 

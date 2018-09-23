@@ -56,7 +56,7 @@ public class UpdateUser {
 
     @AssertTrue(message = "{update.user.doesnot.exist}")
     boolean isExistUser() {
-        return userRepository.findById(user).isPresent();
+        return userRepository.isExistById(user);
     }
 
 }

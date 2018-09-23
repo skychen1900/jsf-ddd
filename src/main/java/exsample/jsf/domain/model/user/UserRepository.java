@@ -17,7 +17,6 @@
 package exsample.jsf.domain.model.user;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  *
@@ -27,9 +26,27 @@ public interface UserRepository {
 
     public List<User> findAll();
 
-    public Optional<User> findByKey(User user);
+    /**
+     * 検索キーを元に最新のEntityを取得します.
+     *
+     * @param user 最新を取得するEntity
+     * @return 取得した最新のEntity
+     * @throws NoExistsEntityException 対象Entityが存在しない場合
+     */
+    public User findByKey(User user);
 
-    public Optional<User> findById(User user);
+    /**
+     * IDを元に最新のEntityを取得します.
+     *
+     * @param user 最新を取得するEntity
+     * @return 取得した最新のEntity
+     * @throws NoExistsEntityException 対象Entityが存在しない場合
+     */
+    public User findById(User user);
+
+    public boolean isExistById(User user);
+
+    public boolean isExistByEmail(User user);
 
     public void register(User user);
 

@@ -19,7 +19,6 @@ package exsample.jsf.application.service;
 import exsample.jsf.domain.model.user.User;
 import exsample.jsf.domain.model.user.UserRepository;
 import java.util.List;
-import java.util.Optional;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
@@ -44,12 +43,20 @@ public class UserService {
         return this.userRepository.findAll();
     }
 
-    public Optional<User> findById(User user) {
+    public User findById(User user) {
         return this.userRepository.findById(user);
     }
 
-    public Optional<User> findByKey(User user) {
+    public User findByKey(User user) {
         return this.userRepository.findByKey(user);
+    }
+
+    public boolean isExistById(User user) {
+        return this.userRepository.isExistById(user);
+    }
+
+    public boolean isExistByEmail(User user) {
+        return this.userRepository.isExistByEmail(user);
     }
 
 }

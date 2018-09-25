@@ -44,18 +44,8 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Optional<User> findByKey(User user) {
+    public Optional<User> findByEmail(User user) {
         return this.userTable.findByKey(user);
-    }
-
-    @Override
-    public boolean isExistById(User user) {
-        return this.userTable.findById(user).isPresent();
-    }
-
-    @Override
-    public boolean isExistByEmail(User user) {
-        return this.userTable.findByKey(user).isPresent();
     }
 
     @Override

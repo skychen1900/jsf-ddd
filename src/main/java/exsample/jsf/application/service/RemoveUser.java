@@ -56,7 +56,7 @@ public class RemoveUser {
 
     @AssertTrue(message = "{remove.user.doesnot.exist}")
     boolean isExistUser() {
-        return userRepository.isExistByEmail(user);
+        return userRepository.isNotExistSameEmail(user);
     }
 
 }

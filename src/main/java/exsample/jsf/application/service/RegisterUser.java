@@ -56,7 +56,7 @@ public class RegisterUser {
 
     @AssertTrue(message = "{same.email.user.already.exist}")
     boolean isNotExistSameEmail() {
-        return userRepository.isExistByEmail(user) == false;
+        return userRepository.isNotExistSameEmail(user);
     }
 
 }

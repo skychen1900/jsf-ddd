@@ -16,7 +16,6 @@
  */
 package exsample.jsf.application.service;
 
-import ddd.domain.exception.UnexpectedApplicationException;
 import ee.domain.annotation.application.Service;
 import exsample.jsf.domain.model.user.User;
 import exsample.jsf.domain.model.user.UserRepository;
@@ -45,12 +44,10 @@ public class UserService {
     }
 
     public User registeredUser(User user) {
-        return this.userRepository.findById(user)
-                .orElseThrow(() -> new UnexpectedApplicationException("user.doesnot.exist.findbyid"));
+        return this.userRepository.registeredUser(user);
     }
 
     public User persistedUser(User user) {
-        return this.userRepository.findByKey(user)
-                .orElseThrow(() -> new UnexpectedApplicationException("user.doesnot.exist.findbyEmail"));
+        return this.userRepository.persistedUser(user);
     }
 }

@@ -16,6 +16,7 @@
  */
 package exsample.jsf.application.service;
 
+import ddd.domain.validation.PreConditionValidationGroups.PreCondition;
 import ddd.domain.validation.Validator;
 import ee.domain.annotation.application.Service;
 import exsample.jsf.domain.model.user.User;
@@ -54,8 +55,8 @@ public class UpdateUser {
         userRepository.register(user);
     }
 
-    @AssertTrue(message = "{update.user.doesnot.exist}")
-    boolean isExistUser() {
+    @AssertTrue(message = "{update.user.doesnot.exist}", groups = PreCondition.class)
+    private boolean isExistUser() {
         return userRepository.isExistById(user);
     }
 

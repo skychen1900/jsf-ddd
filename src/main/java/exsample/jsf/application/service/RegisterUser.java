@@ -16,6 +16,7 @@
  */
 package exsample.jsf.application.service;
 
+import ddd.domain.validation.PreConditionValidationGroups.PreCondition;
 import ddd.domain.validation.Validator;
 import ee.domain.annotation.application.Service;
 import exsample.jsf.domain.model.user.User;
@@ -46,7 +47,7 @@ public class RegisterUser {
 
     public void validatePreCondition(User user) {
         this.user = user;
-        validator.validate(this);
+        validator.validatePreCondition(this);
     }
 
     public void with(User user) {
@@ -54,8 +55,8 @@ public class RegisterUser {
         userRepository.register(user);
     }
 
-    @AssertTrue(message = "{same.email.user.already.exist}")
-    boolean isNotExistSameEmail() {
+    @AssertTrue(message = "{same.email.user.already.exist}", groups = PreCondition.class)
+    private boolean isNotExistSameEmail() {
         return userRepository.isNotExistSameEmail(user);
     }
 

@@ -16,6 +16,7 @@
  */
 package exsample.jsf.application.service;
 
+import ddd.application.commnand.CommandPreCondition;
 import ddd.domain.validation.PreConditionValidationGroups.PreCondition;
 import ddd.domain.validation.Validator;
 import ee.domain.annotation.application.Service;
@@ -29,25 +30,28 @@ import javax.validation.constraints.AssertTrue;
  * @author Yamashita,Takahiro
  */
 @Service
-public class UpdateUser {
+public class UpdateUser implements CommandPreCondition<User> {
 
     private User user;
 
     private UserRepository userRepository;
     private Validator validator;
+    private RegisterUser registerUser;
 
     public UpdateUser() {
     }
 
     @Inject
-    public UpdateUser(UserRepository userRepository, Validator validator) {
+    public UpdateUser(UserRepository userRepository, Validator validator, RegisterUser registerUser) {
         this.userRepository = userRepository;
         this.validator = validator;
+        this.registerUser = registerUser;
     }
 
+    @Override
     public void validatePreCondition(User user) {
         this.user = user;
-        validator.validate(this);
+        validator.validatePreCondition(this);
     }
 
     public void with(User user) {
@@ -56,8 +60,8 @@ public class UpdateUser {
     }
 
     @AssertTrue(message = "{update.user.doesnot.exist}", groups = PreCondition.class)
-    private boolean isExistUser() {
-        return userRepository.isExistById(user);
+    private boolean isRegisteredUser() {
+        return registerUser.isInvalidPostCondition(user);
     }
 
 }

@@ -50,10 +50,6 @@ public interface UserRepository {
         return this.findById(user).orElseThrow(() -> new UnexpectedApplicationException("user.doesnot.exist.findbyid"));
     }
 
-    public default boolean isExistById(User user) {
-        return this.findById(user).isPresent();
-    }
-
     public default boolean isNotExistSameEmail(User user) {
         return this.findByEmail(user).isPresent() == false;
     }

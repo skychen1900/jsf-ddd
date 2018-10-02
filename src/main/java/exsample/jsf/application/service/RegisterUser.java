@@ -16,6 +16,7 @@
  */
 package exsample.jsf.application.service;
 
+import ddd.application.commnand.Command;
 import ddd.domain.validation.PreConditionValidationGroups.PreCondition;
 import ddd.domain.validation.Validator;
 import ee.domain.annotation.application.Service;
@@ -29,7 +30,7 @@ import javax.validation.constraints.AssertTrue;
  * @author Yamashita,Takahiro
  */
 @Service
-public class RegisterUser {
+public class RegisterUser implements Command<User> {
 
     private User user;
 
@@ -45,19 +46,27 @@ public class RegisterUser {
         this.validator = validator;
     }
 
-    public void validatePreCondition(User user) {
-        this.user = user;
+    @Override
+    public void validatePreCondition(User entity) {
+        this.user = entity;
         validator.validatePreCondition(this);
     }
 
     public void with(User user) {
         validatePreCondition(user);
         userRepository.register(user);
+        validatePostCondition(user);
     }
 
     @AssertTrue(message = "{same.email.user.already.exist}", groups = PreCondition.class)
     private boolean isNotExistSameEmail() {
         return userRepository.isNotExistSameEmail(user);
+    }
+
+    @Override
+    public void validatePostCondition(User entity) {
+        this.user = entity;
+        validator.validatePostCondition(this);
     }
 
 }

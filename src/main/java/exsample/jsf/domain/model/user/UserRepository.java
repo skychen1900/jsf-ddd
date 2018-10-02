@@ -36,7 +36,7 @@ public interface UserRepository {
      * @throws UnexpectedApplicationException 対象Entityが存在しない場合
      */
     public default User persistedUser(User user) {
-        return this.findById(user).orElseThrow(() -> new UnexpectedApplicationException("user.doesnot.exist.findbyEmail"));
+        return this.findByEmail(user).orElseThrow(() -> new UnexpectedApplicationException("user.doesnot.exist.findbyEmail"));
     }
 
     /**

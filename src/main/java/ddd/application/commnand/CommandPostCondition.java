@@ -26,12 +26,12 @@ public interface CommandPostCondition<T> {
 
     public void validatePostCondition(T entity);
 
-    public default boolean isInvalidPostCondition(T entity) {
+    public default boolean isValidPostCondition(T entity) {
         try {
             this.validatePostCondition(entity);
-            return false;
-        } catch (BeanValidationException ex) {
             return true;
+        } catch (BeanValidationException ex) {
+            return false;
         }
     }
 }

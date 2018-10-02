@@ -61,7 +61,7 @@ public class RemoveUser implements CommandPreCondition<User> {
 
     @AssertTrue(message = "{remove.user.doesnot.exist}", groups = PreCondition.class)
     private boolean isRegisteredUser() {
-        return registerUser.isInvalidPostCondition(user);
+        return registerUser.isValidPostCondition(user);
     }
 
 }

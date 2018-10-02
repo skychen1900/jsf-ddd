@@ -26,12 +26,12 @@ public interface CommandPreCondition<T> {
 
     public void validatePreCondition(T entity);
 
-    public default boolean isInvalidPreCondition(T entity) {
+    public default boolean isValidPreCondition(T entity) {
         try {
             this.validatePreCondition(entity);
-            return false;
-        } catch (BeanValidationException ex) {
             return true;
+        } catch (BeanValidationException ex) {
+            return false;
         }
     }
 

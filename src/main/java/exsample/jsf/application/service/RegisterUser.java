@@ -17,12 +17,14 @@
 package exsample.jsf.application.service;
 
 import ddd.application.commnand.Command;
+import ddd.domain.validation.PostConditionValidationGroups.PostCondition;
 import ddd.domain.validation.PreConditionValidationGroups.PreCondition;
 import ddd.domain.validation.Validator;
 import ee.domain.annotation.application.Service;
 import exsample.jsf.domain.model.user.User;
 import exsample.jsf.domain.model.user.UserRepository;
 import javax.inject.Inject;
+import javax.validation.constraints.AssertFalse;
 import javax.validation.constraints.AssertTrue;
 
 /**
@@ -59,6 +61,7 @@ public class RegisterUser implements Command<User> {
     }
 
     @AssertTrue(message = "{same.email.user.already.exist}", groups = PreCondition.class)
+    @AssertFalse(message = "{user.cannot.register}", groups = PostCondition.class)
     private boolean isNotExistSameEmail() {
         return userRepository.isNotExistSameEmail(user);
     }

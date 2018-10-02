@@ -110,6 +110,7 @@
                     <xmlOutputDirectory>target/site/findbugs</xmlOutputDirectory>
                     <findbugsXmlOutputDirectory>target/site/findbugs</findbugsXmlOutputDirectory>
                     <!-- ファイル出力関連 end -->
+                    <excludeFilterFile>findbugs-exclude.xml</excludeFilterFile> <!-- 検証除外条件 -->
                 </configuration>
             </plugin>
 

@@ -54,6 +54,12 @@ public interface UserRepository {
         return this.findByEmail(user).isPresent() == false;
     }
 
+    public default boolean isNotExistSameEmailForUpdate(User user) {
+        return this.findByEmail(user)
+                .map(et -> et.getUserId().equals(user.getUserId()))
+                .orElse(true);
+    }
+
     public Optional<User> findById(User user);
 
     public Optional<User> findByEmail(User user);

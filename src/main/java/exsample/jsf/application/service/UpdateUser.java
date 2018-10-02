@@ -64,4 +64,9 @@ public class UpdateUser implements CommandPreCondition<User> {
         return registerUser.isValidPostCondition(user);
     }
 
+    @AssertTrue(message = "{same.email.user.already.exist}", groups = PreCondition.class)
+    private boolean isNotExistSameEmailForUpdate() {
+        return userRepository.isNotExistSameEmailForUpdate(user);
+    }
+
 }

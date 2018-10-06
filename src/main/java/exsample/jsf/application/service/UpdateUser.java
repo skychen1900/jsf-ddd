@@ -18,12 +18,12 @@ package exsample.jsf.application.service;
 
 import ddd.application.commnand.CommandPreCondition;
 import ddd.domain.validation.PreConditionValidationGroups.PreCondition;
+import ddd.domain.validation.ValidateCondition;
 import ddd.domain.validation.Validator;
 import ee.domain.annotation.application.Service;
 import exsample.jsf.domain.model.user.User;
 import exsample.jsf.domain.model.user.UserRepository;
 import javax.inject.Inject;
-import javax.validation.constraints.AssertTrue;
 
 /**
  *
@@ -59,14 +59,8 @@ public class UpdateUser implements CommandPreCondition<User> {
         userRepository.register(user);
     }
 
-    @AssertTrue(message = "{update.user.doesnot.exist}", groups = PreCondition.class)
-    private boolean isRegisteredUser() {
-        return registerUser.isValidPostCondition(user);
+    @ValidateCondition(groups = PreCondition.class)
+    private ValidateCondition.Void getRegisteredUser() {
+        return registerUser.invalidPostCondition(user);
     }
-
-    @AssertTrue(message = "{same.email.user.already.exist}", groups = PreCondition.class)
-    private boolean isNotExistSameEmailForUpdate() {
-        return userRepository.isNotExistSameEmailForUpdate(user);
-    }
-
 }

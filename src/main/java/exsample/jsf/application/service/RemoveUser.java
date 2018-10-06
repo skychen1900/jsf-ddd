@@ -17,13 +17,13 @@
 package exsample.jsf.application.service;
 
 import ddd.application.commnand.CommandPreCondition;
-import ddd.domain.validation.PreConditionValidationGroups.PreCondition;
+import ddd.domain.validation.PreConditionValidationGroups;
+import ddd.domain.validation.ValidateCondition;
 import ddd.domain.validation.Validator;
 import ee.domain.annotation.application.Service;
 import exsample.jsf.domain.model.user.User;
 import exsample.jsf.domain.model.user.UserRepository;
 import javax.inject.Inject;
-import javax.validation.constraints.AssertTrue;
 
 /**
  *
@@ -59,9 +59,9 @@ public class RemoveUser implements CommandPreCondition<User> {
         userRepository.remove(user);
     }
 
-    @AssertTrue(message = "{remove.user.doesnot.exist}", groups = PreCondition.class)
-    private boolean isRegisteredUser() {
-        return registerUser.isValidPostCondition(user);
+    @ValidateCondition(groups = PreConditionValidationGroups.PreCondition.class)
+    private ValidateCondition.Void getRegisteredUser() {
+        return registerUser.invalidPostCondition(user);
     }
 
 }

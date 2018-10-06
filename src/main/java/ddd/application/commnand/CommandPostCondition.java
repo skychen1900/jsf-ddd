@@ -17,6 +17,7 @@
 package ddd.application.commnand;
 
 import ddd.domain.validation.BeanValidationException;
+import ddd.domain.validation.ValidateCondition;
 
 /**
  *
@@ -26,12 +27,12 @@ public interface CommandPostCondition<T> {
 
     public void validatePostCondition(T entity);
 
-    public default boolean isValidPostCondition(T entity) {
+    public default ValidateCondition.Void invalidPostCondition(T entity) {
         try {
             this.validatePostCondition(entity);
-            return true;
+            return new ValidateCondition.Void();
         } catch (BeanValidationException ex) {
-            return false;
+            return new ValidateCondition.Void(ex);
         }
     }
 }

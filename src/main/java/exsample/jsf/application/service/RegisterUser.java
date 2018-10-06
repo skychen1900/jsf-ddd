@@ -24,7 +24,6 @@ import ee.domain.annotation.application.Service;
 import exsample.jsf.domain.model.user.User;
 import exsample.jsf.domain.model.user.UserRepository;
 import javax.inject.Inject;
-import javax.validation.constraints.AssertFalse;
 import javax.validation.constraints.AssertTrue;
 
 /**
@@ -57,13 +56,22 @@ public class RegisterUser implements Command<User> {
     public void with(User user) {
         validatePreCondition(user);
         userRepository.register(user);
-        validatePostCondition(user);
+        validatePostCondition(userRepository.persistedUser(user));
     }
 
     @AssertTrue(message = "{same.email.user.already.exist}", groups = PreCondition.class)
-    @AssertFalse(message = "{user.cannot.register}", groups = PostCondition.class)
     private boolean isNotExistSameEmail() {
         return userRepository.isNotExistSameEmail(user);
+    }
+
+    @AssertTrue(message = "{user.cannot.register}", groups = PostCondition.class)
+    private boolean isExistEntity() {
+        return userRepository.isExistEntity(user);
+    }
+
+    @AssertTrue(message = "{same.email.user.already.exist}", groups = PostCondition.class)
+    private boolean isNotExistSameEmailAtOtherEntity() {
+        return userRepository.isNotExistSameEmailAtOtherEntity(user);
     }
 
     @Override

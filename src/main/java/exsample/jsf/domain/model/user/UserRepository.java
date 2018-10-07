@@ -16,6 +16,7 @@
  */
 package exsample.jsf.domain.model.user;
 
+import ddd.domain.exception.UnexpectedApplicationException;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,9 +28,45 @@ public interface UserRepository {
 
     public List<User> findAll();
 
-    public Optional<User> findByKey(User user);
+    /**
+     * 検索キーを元に最新のEntityを取得します.
+     *
+     * @param user 最新を取得するEntity
+     * @return 取得した最新のEntity
+     * @throws UnexpectedApplicationException 対象Entityが存在しない場合
+     */
+    public default User persistedUser(User user) {
+        return this.findByEmail(user).orElseThrow(() -> new UnexpectedApplicationException("user.doesnot.exist.findbyEmail"));
+    }
+
+    /**
+     * IDを元に最新のEntityを取得します.
+     *
+     * @param user 最新を取得するEntity
+     * @return 取得した最新のEntity
+     * @throws UnexpectedApplicationException 対象Entityが存在しない場合
+     */
+    public default User registeredUser(User user) {
+        return this.findById(user).orElseThrow(() -> new UnexpectedApplicationException("user.doesnot.exist.findbyid"));
+    }
+
+    public default boolean isNotExistSameEmail(User user) {
+        return this.findByEmail(user).isPresent() == false;
+    }
+
+    public default boolean isExistEntity(User user) {
+        return this.findById(user).isPresent();
+    }
+
+    public default boolean isNotExistSameEmailAtOtherEntity(User user) {
+        return this.findByEmail(user)
+                .map(et -> et.getUserId().equals(user.getUserId()))
+                .orElse(true);
+    }
 
     public Optional<User> findById(User user);
+
+    public Optional<User> findByEmail(User user);
 
     public void register(User user);
 

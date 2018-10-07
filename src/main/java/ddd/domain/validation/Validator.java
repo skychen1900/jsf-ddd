@@ -24,10 +24,27 @@ package ddd.domain.validation;
 public interface Validator {
 
     /**
-     * 検証を行います.
+     * 不変条件の検証を行います.
      *
      * @param validateTarget 検証対象
      * @throws BeanValidationException 検証不正があった場合
      */
     public void validate(Object validateTarget);
+
+    /**
+     * 事前条件の検証を行います.
+     *
+     * @param validateTarget 検証対象
+     * @throws BeanValidationException 検証不正があった場合
+     */
+    public void validatePreCondition(Object validateTarget);
+
+    /**
+     * 事後条件の検証を行います.
+     *
+     * @param validateTarget 検証対象
+     * @throws BeanValidationException 検証不正があった場合
+     */
+    public void validatePostCondition(Object validateTarget);
+
 }

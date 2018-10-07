@@ -2,7 +2,7 @@
  * Copyright(C) 2013 Sanyu Academy All rights reserved.
  *
  */
-package ddd.domain.validation.annotation;
+package exsample.jsf.domain.validation;
 
 import java.lang.annotation.Documented;
 import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
@@ -23,7 +23,7 @@ import javax.validation.ConstraintValidatorContext;
 import javax.validation.Payload;
 
 @Documented
-@Constraint(validatedBy = {ddd.domain.validation.annotation.DateTimeFormat.Validator.class})
+@Constraint(validatedBy = {exsample.jsf.domain.validation.DateTimeFormat.Validator.class})
 @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER})
 @Retention(RUNTIME)
 public @interface DateTimeFormat {

@@ -4,18 +4,23 @@
  */
 package ee.infrastructure.jsf;
 
+import ddd.domain.exception.UnexpectedApplicationException;
 import ddd.domain.validation.BeanValidationException;
 import ddd.domain.validation.MessageHandler;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.Set;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.ExceptionHandler;
 import javax.faces.context.ExceptionHandlerWrapper;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ExceptionQueuedEvent;
 import javax.faces.event.ExceptionQueuedEventContext;
 import javax.validation.ConstraintViolation;
+import org.vermeerlab.resourcebundle.CustomControl;
 
 /**
  * ExceptionHandler
@@ -55,6 +60,7 @@ public class CustomExceptionHandler extends ExceptionHandlerWrapper {
 
                 // 任意の例外毎に処理を行う
                 this.handleBeanValidationException(th);
+                this.handleEntityNotExistException(th);
 
             } catch (IOException ex) {
                 System.err.println(Arrays.toString(ex.getStackTrace()));
@@ -80,6 +86,39 @@ public class CustomExceptionHandler extends ExceptionHandlerWrapper {
         messageHandler.appendMessage(results);
 
         FacesContext context = FacesContext.getCurrentInstance();
+
+        String contextPath = context.getExternalContext().getRequestContextPath();
+        String currentPage = context.getViewRoot().getViewId();
+        context.getExternalContext().redirect(contextPath + currentPage);
+    }
+
+    //
+    void handleEntityNotExistException(Throwable th) throws IOException {
+        if (th instanceof UnexpectedApplicationException == false) {
+            return;
+        }
+
+        UnexpectedApplicationException ex = (UnexpectedApplicationException) th;
+
+        String message = ex.getMessage();
+
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        Locale locale = context.getViewRoot().getLocale();
+
+        ResourceBundle.Control control = CustomControl.builder().build();
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("Messages", locale, control);
+
+        String convertedMessage = message == null
+                                  ? "System.Error"
+                                  : resourceBundle.containsKey(message) == false
+                                    ? message
+                                    : resourceBundle.getString(message);
+
+        FacesMessage facemsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, convertedMessage, null);
+        context.addMessage(null, facemsg);
+        // リダイレクトしてもFacesMessageが消えないように設定
+        context.getExternalContext().getFlash().setKeepMessages(true);
 
         String contextPath = context.getExternalContext().getRequestContextPath();
         String currentPage = context.getViewRoot().getViewId();

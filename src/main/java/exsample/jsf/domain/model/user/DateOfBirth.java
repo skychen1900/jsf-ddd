@@ -16,7 +16,7 @@
  */
 package exsample.jsf.domain.model.user;
 
-import ddd.domain.validation.annotation.DateTimeFormat;
+import exsample.jsf.domain.validation.DateTimeFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;

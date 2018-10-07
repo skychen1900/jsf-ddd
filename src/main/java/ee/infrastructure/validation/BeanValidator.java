@@ -17,6 +17,8 @@
 package ee.infrastructure.validation;
 
 import ddd.domain.validation.BeanValidationException;
+import ddd.domain.validation.PostConditionValidationPriority;
+import ddd.domain.validation.PreConditionValidationPriority;
 import ddd.domain.validation.ValidationPriority;
 import ddd.domain.validation.Validator;
 import java.util.Set;
@@ -36,6 +38,30 @@ public class BeanValidator implements Validator {
     @Override
     public void validate(Object validateTarget) {
         javax.validation.Validator validator = new GroupSequenceValidator(ValidationPriority.class);
+        Set<ConstraintViolation<Object>> results = validator.validate(validateTarget);
+        if (results.isEmpty() == false) {
+            throw new BeanValidationException(results);
+        }
+    }
+
+    /**
+     * {@inheritDoc }
+     */
+    @Override
+    public void validatePreCondition(Object validateTarget) {
+        javax.validation.Validator validator = new GroupSequenceValidator(PreConditionValidationPriority.class);
+        Set<ConstraintViolation<Object>> results = validator.validate(validateTarget);
+        if (results.isEmpty() == false) {
+            throw new BeanValidationException(results);
+        }
+    }
+
+    /**
+     * {@inheritDoc }
+     */
+    @Override
+    public void validatePostCondition(Object validateTarget) {
+        javax.validation.Validator validator = new GroupSequenceValidator(PostConditionValidationPriority.class);
         Set<ConstraintViolation<Object>> results = validator.validate(validateTarget);
         if (results.isEmpty() == false) {
             throw new BeanValidationException(results);

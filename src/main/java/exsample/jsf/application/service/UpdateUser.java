@@ -16,10 +16,13 @@
  */
 package exsample.jsf.application.service;
 
+import ddd.application.commnand.CommandPreCondition;
+import ddd.domain.validation.PreConditionValidationGroups.PreCondition;
+import ddd.domain.validation.ValidateCondition;
+import ddd.domain.validation.Validator;
 import ee.domain.annotation.application.Service;
 import exsample.jsf.domain.model.user.User;
 import exsample.jsf.domain.model.user.UserRepository;
-import java.util.List;
 import javax.inject.Inject;
 
 /**
@@ -27,27 +30,37 @@ import javax.inject.Inject;
  * @author Yamashita,Takahiro
  */
 @Service
-public class UserService {
+public class UpdateUser implements CommandPreCondition<User> {
+
+    private User user;
 
     private UserRepository userRepository;
+    private Validator validator;
+    private RegisterUser registerUser;
 
-    public UserService() {
+    public UpdateUser() {
     }
 
     @Inject
-    public UserService(UserRepository userRepository) {
+    public UpdateUser(UserRepository userRepository, Validator validator, RegisterUser registerUser) {
         this.userRepository = userRepository;
+        this.validator = validator;
+        this.registerUser = registerUser;
     }
 
-    public List<User> findAll() {
-        return this.userRepository.findAll();
+    @Override
+    public void validatePreCondition(User user) {
+        this.user = user;
+        validator.validatePreCondition(this);
     }
 
-    public User registeredUser(User user) {
-        return this.userRepository.registeredUser(user);
+    public void with(User user) {
+        validatePreCondition(user);
+        userRepository.register(user);
     }
 
-    public User persistedUser(User user) {
-        return this.userRepository.persistedUser(user);
+    @ValidateCondition(groups = PreCondition.class)
+    private ValidateCondition.Void getRegisteredUser() {
+        return registerUser.invalidPostCondition(user);
     }
 }

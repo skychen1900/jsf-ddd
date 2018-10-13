@@ -57,15 +57,6 @@ public class UserRegistrationPage implements Serializable {
     public UserRegistrationPage() {
     }
 
-    public UserRegistrationPage(UserRegistrationPage me) {
-        this.userId = me.userId;
-        this.userEmail = me.userEmail;
-        this.name = me.name;
-        this.dateOfBirth = me.dateOfBirth;
-        this.phoneNumber = me.phoneNumber;
-        this.gender = me.gender;
-    }
-
     public void init() {
         this.userId = new UserId();
         this.userEmail = new EmailForm();

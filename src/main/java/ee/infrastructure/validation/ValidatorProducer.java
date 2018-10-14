@@ -16,6 +16,7 @@
  */
 package ee.infrastructure.validation;
 
+import ddd.domain.validation.Validator;
 import javax.enterprise.context.Dependent;
 import javax.enterprise.inject.Produces;
 import javax.inject.Named;
@@ -27,10 +28,10 @@ import javax.inject.Named;
  */
 @Named
 @Dependent
-public class BeanValidatorProducer {
+public class ValidatorProducer {
 
     @Produces
-    public BeanValidator getBeanValidator() {
+    public Validator getBeanValidator() {
         return new BeanValidator();
     }
 

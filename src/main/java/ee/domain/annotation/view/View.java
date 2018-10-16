@@ -9,7 +9,7 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.inject.Stereotype;
 import javax.inject.Named;
 import javax.interceptor.InterceptorBinding;
@@ -22,8 +22,7 @@ import javax.interceptor.InterceptorBinding;
 @Documented
 @Stereotype
 @Named
-@SessionScoped
-//@ConversationScoped
+@ConversationScoped
 @Target(value = {ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @InterceptorBinding

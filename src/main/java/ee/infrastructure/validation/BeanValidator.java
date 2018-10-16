@@ -21,6 +21,7 @@ import ddd.domain.validation.PostConditionValidationPriority;
 import ddd.domain.validation.PreConditionValidationPriority;
 import ddd.domain.validation.ValidationPriority;
 import ddd.domain.validation.Validator;
+import java.io.Serializable;
 import java.util.Set;
 import javax.validation.ConstraintViolation;
 import org.vermeerlab.beanvalidation.validator.GroupSequenceValidator;
@@ -30,7 +31,9 @@ import org.vermeerlab.beanvalidation.validator.GroupSequenceValidator;
  *
  * @author Yamashita,Takahiro
  */
-public class BeanValidator implements Validator {
+public class BeanValidator implements Validator, Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * {@inheritDoc }

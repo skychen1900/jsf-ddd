@@ -17,7 +17,7 @@
 package exsample.jsf.presentation.userregistration;
 
 import ddd.domain.javabean.annotation.FieldOrder;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import ddd.domain.validation.Validator;
 import ee.domain.annotation.view.View;
 import exsample.jsf.domain.model.user.GenderType;
 import exsample.jsf.domain.model.user.User;
@@ -31,6 +31,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import javax.faces.component.UIComponent;
+import javax.inject.Inject;
 import javax.validation.Valid;
 
 /**
@@ -42,28 +43,36 @@ public class UserRegistrationPage implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    private Validator validator;
+
     private UserId userId;
 
+    @Valid
+    @FieldOrder(1)
     private EmailForm userEmail;
 
+    @Valid
+    @FieldOrder(2)
     private NameForm name;
 
+    @Valid
+    @FieldOrder(3)
     private DateOfBirthForm dateOfBirth;
 
+    @Valid
+    @FieldOrder(4)
     private PhoneNumberForm phoneNumber;
 
+    @Valid
+    @FieldOrder(5)
     private GenderForm gender;
 
     public UserRegistrationPage() {
     }
 
-    public UserRegistrationPage(UserRegistrationPage me) {
-        this.userId = me.userId;
-        this.userEmail = me.userEmail;
-        this.name = me.name;
-        this.dateOfBirth = me.dateOfBirth;
-        this.phoneNumber = me.phoneNumber;
-        this.gender = me.gender;
+    @Inject
+    public UserRegistrationPage(Validator validator) {
+        this.validator = validator;
     }
 
     public void init() {
@@ -84,6 +93,11 @@ public class UserRegistrationPage implements Serializable {
         this.gender = new GenderForm(user.getGender().getValue());
     }
 
+    public User toUser() {
+        this.validator.validate(this);
+        return new User(this.userId, userEmail.getValue(), name.getValue(), dateOfBirth.getValue(), phoneNumber.getValue(), gender.getValue());
+    }
+
     public Map<String, String> checked(Integer index) {
         GenderType genderType = GenderType.find(index);
         Map<String, String> map = new HashMap<>();
@@ -99,40 +113,6 @@ public class UserRegistrationPage implements Serializable {
 
     public void setGender(Integer index) {
         this.gender = new GenderForm(GenderType.find(index));
-    }
-
-    public User toUser() {
-        return new User(this.userId, userEmail.getValue(), name.getValue(), dateOfBirth.getValue(), phoneNumber.getValue(), gender.getValue());
-    }
-
-    public Object getValidationForm() {
-        ValidationForm obj = new ValidationForm();
-        obj.userEmail = userEmail;
-        obj.name = name;
-        obj.dateOfBirth = dateOfBirth;
-        obj.phoneNumber = phoneNumber;
-        return obj;
-    }
-
-    @SuppressFBWarnings("URF_UNREAD_FIELD")
-    private static class ValidationForm {
-
-        @Valid
-        @FieldOrder(1)
-        private EmailForm userEmail;
-
-        @Valid
-        @FieldOrder(2)
-        private NameForm name;
-
-        @Valid
-        @FieldOrder(3)
-        private DateOfBirthForm dateOfBirth;
-
-        @Valid
-        @FieldOrder(4)
-        private PhoneNumberForm phoneNumber;
-
     }
 
     public void setEmail(String email) {

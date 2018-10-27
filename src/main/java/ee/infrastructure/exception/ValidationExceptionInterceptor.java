@@ -5,12 +5,9 @@
 package ee.infrastructure.exception;
 
 import ddd.domain.validation.BeanValidationException;
-import ddd.domain.validation.MessageHandler;
-import ddd.presentation.url.UrlContext;
 import ee.domain.annotation.controller.Action;
 import javax.annotation.Priority;
 import javax.enterprise.context.Dependent;
-import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
@@ -27,12 +24,6 @@ import javax.validation.ValidationException;
 @Priority(Interceptor.Priority.APPLICATION)
 @Dependent
 public class ValidationExceptionInterceptor {
-
-    @Inject
-    UrlContext urlContext;
-
-    @Inject
-    MessageHandler messageHandler;
 
     @AroundInvoke
     public Object invoke(InvocationContext ic) throws Exception {

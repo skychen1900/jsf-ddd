@@ -38,6 +38,12 @@ public class RegisterUser implements Command<User> {
     private UserRepository userRepository;
     private Validator validator;
 
+    public static class Error {
+
+        public static final String SAME_EMAIL_USER_ALREADY_EXIST = "{same.email.user.already.exist}";
+        public static final String USER_CANNOT_REGISTER = "{user.cannot.register}";
+    }
+
     public RegisterUser() {
     }
 
@@ -45,6 +51,11 @@ public class RegisterUser implements Command<User> {
     public RegisterUser(UserRepository userRepository, Validator validator) {
         this.userRepository = userRepository;
         this.validator = validator;
+    }
+
+    @AssertTrue(message = Error.SAME_EMAIL_USER_ALREADY_EXIST, groups = PreCondition.class)
+    private boolean isNotExistSameEmail() {
+        return userRepository.isNotExistSameEmail(user);
     }
 
     @Override
@@ -59,17 +70,12 @@ public class RegisterUser implements Command<User> {
         validatePostCondition(userRepository.persistedUser(user));
     }
 
-    @AssertTrue(message = "{same.email.user.already.exist}", groups = PreCondition.class)
-    private boolean isNotExistSameEmail() {
-        return userRepository.isNotExistSameEmail(user);
-    }
-
-    @AssertTrue(message = "{user.cannot.register}", groups = PostCondition.class)
+    @AssertTrue(message = Error.USER_CANNOT_REGISTER, groups = PostCondition.class)
     private boolean isExistEntity() {
         return userRepository.isExistEntity(user);
     }
 
-    @AssertTrue(message = "{same.email.user.already.exist}", groups = PostCondition.class)
+    @AssertTrue(message = Error.SAME_EMAIL_USER_ALREADY_EXIST, groups = PostCondition.class)
     private boolean isNotExistSameEmailAtOtherEntity() {
         return userRepository.isNotExistSameEmailAtOtherEntity(user);
     }

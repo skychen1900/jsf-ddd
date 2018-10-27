@@ -18,7 +18,9 @@ package exsample.jsf.presentation.userregistration;
 
 import ddd.domain.javabean.annotation.FieldOrder;
 import ddd.domain.validation.Validator;
+import ddd.presentation.annotation.InvalidMessageMapping;
 import ee.domain.annotation.view.View;
+import exsample.jsf.application.service.RegisterUser;
 import exsample.jsf.domain.model.user.GenderType;
 import exsample.jsf.domain.model.user.User;
 import exsample.jsf.domain.model.user.UserId;
@@ -49,6 +51,7 @@ public class UserRegistrationPage implements Serializable {
 
     @Valid
     @FieldOrder(1)
+    @InvalidMessageMapping(RegisterUser.Error.SAME_EMAIL_USER_ALREADY_EXIST)
     private EmailForm userEmail;
 
     @Valid

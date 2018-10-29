@@ -23,6 +23,8 @@ import ddd.domain.validation.ValidationPriority;
 import ddd.domain.validation.Validator;
 import java.io.Serializable;
 import java.util.Set;
+import javax.enterprise.context.Dependent;
+import javax.inject.Named;
 import javax.validation.ConstraintViolation;
 import org.vermeerlab.beanvalidation.validator.GroupSequenceValidator;
 
@@ -31,6 +33,8 @@ import org.vermeerlab.beanvalidation.validator.GroupSequenceValidator;
  *
  * @author Yamashita,Takahiro
  */
+@Named
+@Dependent
 public class BeanValidator implements Validator, Serializable {
 
     private static final long serialVersionUID = 1L;

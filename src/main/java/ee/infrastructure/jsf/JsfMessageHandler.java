@@ -19,8 +19,10 @@ package ee.infrastructure.jsf;
 import ddd.domain.validation.MessageHandler;
 import java.util.List;
 import java.util.Set;
+import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Named;
 import javax.validation.ConstraintViolation;
 import org.vermeerlab.beanvalidation.messageinterpolator.MessageInterpolator;
 import org.vermeerlab.beanvalidation.messageinterpolator.MessageInterpolatorFactory;
@@ -31,6 +33,8 @@ import org.vermeerlab.beanvalidation.sorting.ConstraintViolationSorting;
  *
  * @author Yamashita,Takahiro
  */
+@Named
+@ApplicationScoped
 public class JsfMessageHandler implements MessageHandler {
 
     /**

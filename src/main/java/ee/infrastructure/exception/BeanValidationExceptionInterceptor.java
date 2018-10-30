@@ -8,7 +8,8 @@ import ddd.domain.validation.BeanValidationException;
 import ddd.domain.validation.MessageHandler;
 import ddd.presentation.url.UrlContext;
 import ee.domain.annotation.controller.Action;
-import java.util.Set;
+import ee.infrastructure.jsf.MessageConverter;
+import java.util.List;
 import javax.annotation.Priority;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
@@ -16,6 +17,7 @@ import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
 import javax.validation.ConstraintViolation;
+import org.vermeerlab.beanvalidation.sorting.ConstraintViolationSorting;
 
 @Action
 @Interceptor
@@ -25,6 +27,9 @@ public class BeanValidationExceptionInterceptor {
 
     @Inject
     UrlContext urlContext;
+
+    @Inject
+    MessageConverter messageConverter;
 
     @Inject
     MessageHandler messageHandler;
@@ -37,8 +42,9 @@ public class BeanValidationExceptionInterceptor {
         try {
             return ic.proceed();
         } catch (BeanValidationException ex) {
-            Set<ConstraintViolation<?>> results = ex.getValidatedResults();
-            messageHandler.appendMessage(results);
+            List<ConstraintViolation<?>> constraintViolations = ConstraintViolationSorting.of(ex.getValidatedResults()).toList();
+            List<String> messages = messageConverter.toMessages(constraintViolations);
+            messageHandler.appendMessage(messages);
             return currentViewId;
         }
 

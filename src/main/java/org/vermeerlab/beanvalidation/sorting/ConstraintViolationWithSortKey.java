@@ -14,21 +14,29 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ddd.domain.validation;
+package org.vermeerlab.beanvalidation.sorting;
 
-import java.util.List;
+import javax.validation.ConstraintViolation;
 
 /**
- * クライアントにメッセージを出力する機能を提供します
  *
  * @author Yamashita,Takahiro
  */
-public interface MessageHandler {
+public class ConstraintViolationWithSortKey {
 
-    /**
-     * クライアントのメッセージ領域に検証結果を出力します.
-     *
-     * @param messages 出力メッセージ
-     */
-    public void appendMessage(List<String> messages);
+    private final String key;
+    private final ConstraintViolation<?> constraintViolation;
+
+    public ConstraintViolationWithSortKey(String key, ConstraintViolation<?> constraintViolation) {
+        this.key = key;
+        this.constraintViolation = constraintViolation;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public ConstraintViolation<?> getConstraintViolation() {
+        return constraintViolation;
+    }
 }

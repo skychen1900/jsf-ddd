@@ -20,16 +20,19 @@ public class CustomExceptionHandlerFactory extends ExceptionHandlerFactory {
 
     private final ExceptionHandlerFactory parent;
 
-    public CustomExceptionHandlerFactory(ExceptionHandlerFactory parent) {
-        this.parent = parent;
-    }
+    @Inject
+    MessageConverter messageConverter;
 
     @Inject
     MessageHandler messageHandler;
 
+    public CustomExceptionHandlerFactory(ExceptionHandlerFactory parent) {
+        this.parent = parent;
+    }
+
     @Override
     public ExceptionHandler getExceptionHandler() {
-        ExceptionHandler handler = new CustomExceptionHandler(parent.getExceptionHandler(), messageHandler);
+        ExceptionHandler handler = new CustomExceptionHandler(parent.getExceptionHandler(), messageConverter, messageHandler);
         return handler;
     }
 }

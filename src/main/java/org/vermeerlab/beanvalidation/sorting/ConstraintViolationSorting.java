@@ -105,25 +105,4 @@ public class ConstraintViolationSorting {
         return String.format("%03d", index);
     }
 
-    //
-    static class ConstraintViolationWithSortKey {
-
-        private final String key;
-        private final ConstraintViolation<?> constraintViolation;
-
-        public ConstraintViolationWithSortKey(String key, ConstraintViolation<?> constraintViolation) {
-            this.key = key;
-            this.constraintViolation = constraintViolation;
-        }
-
-        public String getKey() {
-            return key;
-        }
-
-        public ConstraintViolation<?> getConstraintViolation() {
-            return constraintViolation;
-        }
-
-    }
-
 }

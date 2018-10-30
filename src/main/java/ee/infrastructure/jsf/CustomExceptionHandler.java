@@ -10,16 +10,15 @@ import ddd.domain.validation.MessageHandler;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.Set;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExceptionHandler;
 import javax.faces.context.ExceptionHandlerWrapper;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ExceptionQueuedEvent;
 import javax.faces.event.ExceptionQueuedEventContext;
-import javax.validation.ConstraintViolation;
 import org.vermeerlab.resourcebundle.CustomControl;
 
 /**
@@ -32,11 +31,12 @@ import org.vermeerlab.resourcebundle.CustomControl;
 public class CustomExceptionHandler extends ExceptionHandlerWrapper {
 
     private final ExceptionHandler wrapped;
-
+    private final MessageConverter messageConverter;
     private final MessageHandler messageHandler;
 
-    CustomExceptionHandler(ExceptionHandler exception, MessageHandler messageHandler) {
+    CustomExceptionHandler(ExceptionHandler exception, MessageConverter messageConverter, MessageHandler messageHandler) {
         this.wrapped = exception;
+        this.messageConverter = messageConverter;
         this.messageHandler = messageHandler;
     }
 
@@ -81,9 +81,8 @@ public class CustomExceptionHandler extends ExceptionHandlerWrapper {
 
         BeanValidationException ex = (BeanValidationException) th;
 
-        Set<ConstraintViolation<?>> results = ex.getValidatedResults();
-
-        messageHandler.appendMessage(results);
+        List<String> messages = messageConverter.toMessages(ex.getValidatedResults());
+        messageHandler.appendMessage(messages);
 
         FacesContext context = FacesContext.getCurrentInstance();
 

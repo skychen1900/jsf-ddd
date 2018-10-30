@@ -14,21 +14,28 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ddd.domain.validation;
-
-import java.util.List;
+package org.vermeerlab.beanvalidation.sorting;
 
 /**
- * クライアントにメッセージを出力する機能を提供します
  *
  * @author Yamashita,Takahiro
  */
-public interface MessageHandler {
+public class SortedInvalidMessageMappingField {
 
-    /**
-     * クライアントのメッセージ領域に検証結果を出力します.
-     *
-     * @param messages 出力メッセージ
-     */
-    public void appendMessage(List<String> messages);
+    private final String key;
+    private final String message;
+
+    public SortedInvalidMessageMappingField(String key, String message) {
+        this.key = key;
+        this.message = message;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
 }

@@ -16,35 +16,39 @@
  */
 package ee.infrastructure.jsf;
 
-import ddd.domain.validation.MessageHandler;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
-import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import javax.validation.ConstraintViolation;
+import org.vermeerlab.beanvalidation.messageinterpolator.MessageInterpolator;
+import org.vermeerlab.beanvalidation.messageinterpolator.MessageInterpolatorFactory;
 
 /**
- * メッセージ出力する機能を提供します.
  *
  * @author Yamashita,Takahiro
  */
 @Named
 @ApplicationScoped
-public class JsfMessageHandler implements MessageHandler {
+public class MessageConverter {
 
-    /**
-     * {@inheritDoc }
-     */
-    @Override
-    public void appendMessage(List<String> messages) {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        messages.stream()
-                .forEachOrdered(message -> {
-                    FacesMessage facemsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null);
-                    facesContext.addMessage(null, facemsg);
-                });
+    private MessageInterpolatorFactory interpolatorFactory;
 
-        // リダイレクトしてもFacesMessageが消えないように設定
-        facesContext.getExternalContext().getFlash().setKeepMessages(true);
+    @PostConstruct
+    public void init() {
+        this.interpolatorFactory = MessageInterpolatorFactory.of("Messages", "FormMessages", "FormLabels");
     }
+
+    public List<String> toMessages(Collection<ConstraintViolation<?>> constraintViolations) {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        MessageInterpolator interpolator = interpolatorFactory.create(facesContext.getViewRoot().getLocale());
+
+        return constraintViolations.stream()
+                .map(interpolator::toMessage)
+                .collect(Collectors.toList());
+    }
+
 }

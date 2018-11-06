@@ -16,26 +16,27 @@
  */
 package org.vermeerlab.beanvalidation.sorting;
 
+import javax.validation.ConstraintViolation;
+
 /**
  *
  * @author Yamashita,Takahiro
  */
-public class SortedInvalidMessageMappingField {
+public class SortKeyConstraintViolation {
 
-    private final String key;
-    private final String message;
+    private final String sortkey;
+    private final ConstraintViolation<?> constraintViolation;
 
-    public SortedInvalidMessageMappingField(String key, String message) {
-        this.key = key;
-        this.message = message;
+    public SortKeyConstraintViolation(String sortkey, ConstraintViolation<?> constraintViolation) {
+        this.sortkey = sortkey;
+        this.constraintViolation = constraintViolation;
     }
 
-    public String getKey() {
-        return key;
+    public String getSortkey() {
+        return sortkey;
     }
 
-    public String getMessage() {
-        return message;
+    public ConstraintViolation<?> getConstraintViolation() {
+        return constraintViolation;
     }
-
 }

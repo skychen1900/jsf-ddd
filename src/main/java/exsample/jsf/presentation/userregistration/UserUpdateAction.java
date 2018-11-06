@@ -2,6 +2,7 @@ package exsample.jsf.presentation.userregistration;
 
 import ee.domain.annotation.controller.Controller;
 import ee.domain.annotation.controller.EndConversation;
+import ee.domain.annotation.view.ViewContext;
 import exsample.jsf.application.service.UpdateUser;
 import exsample.jsf.application.service.UserService;
 import exsample.jsf.domain.model.user.User;
@@ -11,6 +12,7 @@ import javax.inject.Inject;
 @Controller
 public class UserUpdateAction {
 
+    @ViewContext
     private UserRegistrationPage registrationPage;
 
     private UserService userService;

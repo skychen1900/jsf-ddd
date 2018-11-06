@@ -18,9 +18,8 @@ package org.vermeerlab.beanvalidation.sorting;
 
 import ddd.domain.javabean.annotation.FieldOrder;
 import ddd.presentation.annotation.InvalidMessageMapping;
+import ee.domain.annotation.view.ViewContext;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * {@link ddd.presentation.annotation.InvalidMessageMapping}が付与されたフィールド情報を取得して{@link ddd.domain.javabean.annotation.FieldOrder} 順で
@@ -28,24 +27,35 @@ import java.util.List;
  *
  * @author Yamashita,Takahiro
  */
-public class InvalidMessageMappingScanner {
+public class ViewContextScanner {
 
-    List<SortedInvalidMessageMappingField> sortedInvalidMessageMappingFields = new ArrayList<>();
+    Class<?> actionClass;
+    MessageTmplateSortKeyMap map;
 
-    public SortedInvalidMessageMappingFields scan(Class<?> clazz) {
-        sortedInvalidMessageMappingFields = new ArrayList<>();
+    private ViewContextScanner(Class<?> actionClass) {
+        this.actionClass = actionClass;
+        this.map = new MessageTmplateSortKeyMap();
+    }
 
-        recursiveAppend(clazz, clazz.getCanonicalName());
+    public static ViewContextScanner of(Class<?> actionClass) {
+        return new ViewContextScanner(actionClass);
+    }
 
-        return new SortedInvalidMessageMappingFields(sortedInvalidMessageMappingFields);
+    public MessageTmplateSortKeyMap scan() {
+        Field[] fields = actionClass.getDeclaredFields();
+        for (Field field : fields) {
+            ViewContext viewContext = field.getAnnotation(ViewContext.class);
+            if (viewContext == null) {
+                continue;
+            }
+            resursiveAppendField(field.getType(), field.getType().getCanonicalName());
+        }
+        return map;
     }
 
     //
-    void recursiveAppend(Class<?> clazz, String appendKey) {
+    void resursiveAppendField(Class<?> clazz, String appendKey) {
         Field[] fields = clazz.getDeclaredFields();
-        if (fields.length == 0) {
-            return;
-        }
 
         for (Field field : fields) {
             InvalidMessageMapping invalidMessageMapping = field.getAnnotation(InvalidMessageMapping.class);
@@ -60,11 +70,10 @@ public class InvalidMessageMappingScanner {
             String[] messages = invalidMessageMapping.value();
 
             for (String message : messages) {
-                SortedInvalidMessageMappingField sortedInvalidMessageMappingField = new SortedInvalidMessageMappingField(key, message);
-                sortedInvalidMessageMappingFields.add(sortedInvalidMessageMappingField);
+                map.put(message, key);
             }
 
-            this.recursiveAppend(field.getType(), key);
+            this.resursiveAppendField(field.getType(), key);
         }
     }
 

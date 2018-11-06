@@ -16,8 +16,8 @@ import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
-import javax.validation.ConstraintViolation;
-import org.vermeerlab.beanvalidation.sorting.ConstraintViolationSorting;
+import org.vermeerlab.beanvalidation.sorting.ConstraintViolationsHandler;
+import org.vermeerlab.beanvalidation.sorting.ViewContextScanner;
 
 @Action
 @Interceptor
@@ -42,8 +42,11 @@ public class BeanValidationExceptionInterceptor {
         try {
             return ic.proceed();
         } catch (BeanValidationException ex) {
-            List<ConstraintViolation<?>> constraintViolations = ConstraintViolationSorting.of(ex.getValidatedResults()).toList();
-            List<String> messages = messageConverter.toMessages(constraintViolations);
+            ConstraintViolationsHandler handler = new ConstraintViolationsHandler.Builder()
+                    .messageSortkeyMap(ViewContextScanner.of(ic.getTarget().getClass().getSuperclass()).scan())
+                    .constraintViolationSet(ex.getValidatedResults())
+                    .build();
+            List<String> messages = messageConverter.toMessages(handler.sortedConstraintViolations());
             messageHandler.appendMessage(messages);
             return currentViewId;
         }

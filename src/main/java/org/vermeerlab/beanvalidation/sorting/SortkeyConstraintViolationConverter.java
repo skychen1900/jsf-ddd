@@ -19,7 +19,6 @@ package org.vermeerlab.beanvalidation.sorting;
 import ddd.domain.javabean.annotation.FieldOrder;
 import java.lang.reflect.Field;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -30,48 +29,34 @@ import javax.validation.ConstraintViolation;
  *
  * @author Yamashita,Takahiro
  */
-public class ConstraintViolationSorting {
+class SortkeyConstraintViolationConverter {
 
-    Set<ConstraintViolation<?>> beforeItems;
+    private final Set<ConstraintViolation<?>> constraintViolationSet;
 
-    private ConstraintViolationSorting(Set<ConstraintViolation<?>> constraintViolations) {
-        this.beforeItems = constraintViolations;
+    private SortkeyConstraintViolationConverter(Set<ConstraintViolation<?>> constraintViolationSet) {
+        this.constraintViolationSet = constraintViolationSet;
     }
 
-    /**
-     * インスタンスを構築します.
-     *
-     * @param constraintViolations BeanValidationの検証結果
-     * @return 構築したインスタンス
-     */
-    public static ConstraintViolationSorting of(Set<ConstraintViolation<?>> constraintViolations) {
-        return new ConstraintViolationSorting(constraintViolations);
+    static SortkeyConstraintViolationConverter of(Set<ConstraintViolation<?>> constraintViolationSet) {
+        return new SortkeyConstraintViolationConverter(constraintViolationSet);
     }
 
-    /**
-     * ConstraintViolationを{@link ddd.domain.javabean.annotation.FieldOrder} で指定した順にソートしたリストを返却します.
-     *
-     * @return ソート済みのリスト
-     * @throws ConstraintViolationSortingException 順序取得の際にフィールドの情報を取得できなかった場合
-     */
-    public List<ConstraintViolation<?>> toList() {
-        return beforeItems.stream()
+    List<SortKeyConstraintViolation> toList() {
+        return constraintViolationSet.stream()
                 .map(this::makeSortKey)
-                .sorted(Comparator.comparing(ConstraintViolationWithSortKey::getKey))
-                .map(ConstraintViolationWithSortKey::getConstraintViolation)
                 .collect(Collectors.toList());
     }
 
     //
-    ConstraintViolationWithSortKey makeSortKey(ConstraintViolation<?> constraintViolation) {
+    private SortKeyConstraintViolation makeSortKey(ConstraintViolation<?> constraintViolation) {
         Class<?> clazz = constraintViolation.getRootBeanClass();
         List<String> paths = Arrays.asList(constraintViolation.getPropertyPath().toString().split("\\."));
         String key = this.recursiveAppendKey(clazz, paths, 0, clazz.getCanonicalName());
-        return new ConstraintViolationWithSortKey(key, constraintViolation);
+        return new SortKeyConstraintViolation(key, constraintViolation);
     }
 
     //
-    String recursiveAppendKey(Class<?> clazz, List<String> paths, Integer index, String appendedKey) {
+    private String recursiveAppendKey(Class<?> clazz, List<String> paths, Integer index, String appendedKey) {
         if (paths.size() - 1 <= index) {
             return appendedKey;
         }
@@ -89,7 +74,7 @@ public class ConstraintViolationSorting {
     }
 
     //
-    String fieldOrder(Class<?> clazz, String property) {
+    private String fieldOrder(Class<?> clazz, String property) {
         short index = Short.MAX_VALUE;
 
         try {

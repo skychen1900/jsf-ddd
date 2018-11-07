@@ -13,7 +13,7 @@ import javax.interceptor.InvocationContext;
 
 @EndConversation
 @Interceptor
-@Priority(Interceptor.Priority.APPLICATION)
+@Priority(Interceptor.Priority.APPLICATION + 10)
 public class EndConversationInterceptor {
 
     private final ConversationLifecycleManager conversationLifecycleManager;

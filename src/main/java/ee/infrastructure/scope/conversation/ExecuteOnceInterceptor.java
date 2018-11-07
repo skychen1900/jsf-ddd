@@ -17,7 +17,7 @@ import javax.interceptor.InvocationContext;
 
 @ExecuteOnce
 @Interceptor
-@Priority(Interceptor.Priority.APPLICATION)
+@Priority(Interceptor.Priority.APPLICATION + 10)
 public class ExecuteOnceInterceptor {
 
     private DoubleSubmitLifecycle doubleSubmitLifecycle;

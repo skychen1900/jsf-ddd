@@ -15,7 +15,7 @@ import javax.interceptor.InvocationContext;
 
 @Action
 @Interceptor
-@Priority(Interceptor.Priority.APPLICATION)
+@Priority(Interceptor.Priority.APPLICATION + 10)
 @Dependent
 public class ConversationInterceptor {
 

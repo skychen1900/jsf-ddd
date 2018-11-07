@@ -1,6 +1,5 @@
 package exsample.jsf.presentation.userregistration;
 
-import ee.domain.annotation.controller.Action;
 import ee.domain.annotation.controller.Controller;
 import ee.domain.annotation.controller.EndConversation;
 import exsample.jsf.application.service.RemoveUser;
@@ -10,7 +9,6 @@ import exsample.jsf.domain.model.user.UserId;
 import javax.inject.Inject;
 
 @Controller
-@Action
 public class UserRemovalAction {
 
     private UserRegistrationPage registrationForm;

@@ -4,10 +4,10 @@
  */
 package ee.infrastructure.scope.conversation;
 
+import ddd.presentation.url.UrlContext;
 import ee.domain.annotation.controller.Action;
 import javax.annotation.Priority;
 import javax.enterprise.context.Dependent;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
@@ -19,12 +19,19 @@ import javax.interceptor.InvocationContext;
 @Dependent
 public class ConversationInterceptor {
 
+    private final ConversationLifecycleManager conversationLifecycleManager;
+
+    private final UrlContext urlContext;
+
     @Inject
-    ConversationLifecycleManager conversationLifecycleManager;
+    public ConversationInterceptor(ConversationLifecycleManager conversationLifecycleManager, UrlContext urlContext) {
+        this.conversationLifecycleManager = conversationLifecycleManager;
+        this.urlContext = urlContext;
+    }
 
     @AroundInvoke
     public Object invoke(InvocationContext ic) throws Exception {
-        String currentViewId = FacesContext.getCurrentInstance().getViewRoot().getViewId();
+        String currentViewId = urlContext.currentViewId();
         Object resultViewId = ic.proceed();
         this.conversationLifecycleManager.endConversation(currentViewId, (String) resultViewId);
         return resultViewId;

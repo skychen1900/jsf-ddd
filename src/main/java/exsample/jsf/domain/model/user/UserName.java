@@ -17,6 +17,7 @@
 package exsample.jsf.domain.model.user;
 
 import java.util.Objects;
+import javax.annotation.Nonnull;
 import javax.validation.constraints.Size;
 
 /**
@@ -25,6 +26,7 @@ import javax.validation.constraints.Size;
  */
 public class UserName {
 
+    @Nonnull
     @Size(max = 40)
     private final String value;
 

@@ -17,6 +17,7 @@
 package exsample.jsf.domain.model.user;
 
 import java.util.Objects;
+import javax.annotation.Nonnull;
 import javax.validation.constraints.Email;
 
 /**
@@ -25,6 +26,7 @@ import javax.validation.constraints.Email;
  */
 public class UserEmail {
 
+    @Nonnull
     @Email
     private final String value;
 

@@ -20,6 +20,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
+import javax.annotation.Nonnull;
 
 /**
  *
@@ -29,6 +30,7 @@ public class Age implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Nonnull
     private final Integer value;
 
     public Age(LocalDate fromDate) {

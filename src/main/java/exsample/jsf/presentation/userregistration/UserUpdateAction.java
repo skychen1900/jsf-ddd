@@ -34,17 +34,17 @@ public class UserUpdateAction {
 
         User requestUser = this.userService.registeredUser(user);
         this.registrationPage.update(requestUser);
-        return "updateedit.xhtml";
+        return "update-edit.xhtml";
     }
 
     public String confirm() {
         User requestUser = this.registrationPage.toUser();
         updateUser.validatePreCondition(requestUser);
-        return "updateconfirm.xhtml";
+        return "update-confirm.xhtml";
     }
 
     public String modify() {
-        return "updateedit.xhtml";
+        return "update-edit.xhtml";
     }
 
     public String register() {
@@ -53,7 +53,7 @@ public class UserUpdateAction {
 
         User responseUser = userService.registeredUser(requestUser);
         this.registrationPage.update(responseUser);
-        return "updatecomplete.xhtml";
+        return "update-complete.xhtml";
     }
 
     @EndConversation

@@ -33,13 +33,13 @@ public class UserRemovalAction {
         User user = new User(new UserId(userId));
         User requestUser = userService.registeredUser(user);
         this.registrationForm.update(requestUser);
-        return "removeconfirm.xhtml";
+        return "remove-confirm.xhtml";
     }
 
     public String remove() {
         User requestUser = this.registrationForm.toUser();
         removeUser.with(requestUser);
-        return "removecomplete.xhtml";
+        return "remove-complete.xhtml";
     }
 
     @EndConversation

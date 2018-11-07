@@ -30,17 +30,17 @@ public class UserRegistrationAction {
 
     public String fwPersist() {
         this.registrationPage.init();
-        return "persistedit.xhtml";
+        return "persist-edit.xhtml";
     }
 
     public String confirm() {
         User requestUser = this.registrationPage.toUser();
         registerUser.validatePreCondition(requestUser);
-        return "persistconfirm.xhtml";
+        return "persist-confirm.xhtml";
     }
 
     public String modify() {
-        return "persistedit.xhtml";
+        return "persist-edit.xhtml";
     }
 
     public String register() {
@@ -48,7 +48,7 @@ public class UserRegistrationAction {
         registerUser.with(requestUser);
         User responseUser = userService.persistedUser(requestUser);
         this.registrationPage.update(responseUser);
-        return "persistcomplete.xhtml";
+        return "persist-complete.xhtml";
     }
 
     @EndConversation

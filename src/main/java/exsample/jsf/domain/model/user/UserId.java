@@ -18,7 +18,6 @@ package exsample.jsf.domain.model.user;
 
 import java.io.Serializable;
 import java.util.Objects;
-import javax.annotation.Nonnull;
 
 /**
  *
@@ -28,7 +27,6 @@ public class UserId implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Nonnull
     private final String value;
 
     public UserId() {

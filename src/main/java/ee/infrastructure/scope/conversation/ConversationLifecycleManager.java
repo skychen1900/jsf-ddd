@@ -32,11 +32,18 @@ import javax.inject.Named;
 @ApplicationScoped
 public class ConversationLifecycleManager {
 
-    @Inject
-    Conversation conversation;
+    private Conversation conversation;
+
+    private UrlContext urlContext;
+
+    public ConversationLifecycleManager() {
+    }
 
     @Inject
-    UrlContext urlContext;
+    public ConversationLifecycleManager(Conversation conversation, UrlContext urlContext) {
+        this.conversation = conversation;
+        this.urlContext = urlContext;
+    }
 
     /**
      * 会話スコープの開始します。

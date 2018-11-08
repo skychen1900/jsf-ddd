@@ -32,7 +32,6 @@ import exsample.jsf.presentation.userregistration.form.PhoneNumberForm;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
-import javax.faces.component.UIComponent;
 import javax.inject.Inject;
 import javax.validation.Valid;
 
@@ -110,8 +109,8 @@ public class UserRegistrationPage implements Serializable {
         return map;
     }
 
-    public String targetFor(UIComponent component, String targetName) {
-        return component.getClientId() + "-" + targetName;
+    public String targetFor(String clientId, String targetName) {
+        return clientId + "-" + targetName;
     }
 
     public void setGender(Integer index) {

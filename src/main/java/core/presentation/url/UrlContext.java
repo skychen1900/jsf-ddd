@@ -14,7 +14,7 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ddd.presentation.url;
+package core.presentation.url;
 
 /**
  * クライアントページのURLを扱います

@@ -4,9 +4,9 @@
  */
 package ee.infrastructure.exception;
 
-import ddd.domain.validation.BeanValidationException;
-import ddd.domain.validation.MessageHandler;
-import ddd.presentation.url.UrlContext;
+import core.domain.validation.BeanValidationException;
+import core.domain.validation.MessageHandler;
+import core.presentation.url.UrlContext;
 import ee.domain.annotation.controller.Action;
 import ee.infrastructure.jsf.MessageConverter;
 import java.util.List;

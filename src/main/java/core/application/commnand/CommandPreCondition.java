@@ -14,25 +14,26 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ddd.application.commnand;
+package core.application.commnand;
 
-import ddd.domain.validation.BeanValidationException;
-import ddd.domain.validation.ValidateCondition;
+import core.domain.validation.BeanValidationException;
+import core.domain.validation.ValidateCondition;
 
 /**
  *
  * @author Yamashita,Takahiro
  */
-public interface CommandPostCondition<T> {
+public interface CommandPreCondition<T> {
 
-    public void validatePostCondition(T entity);
+    public void validatePreCondition(T entity);
 
-    public default ValidateCondition.Void invalidPostCondition(T entity) {
+    public default ValidateCondition.Void invalidPreCondition(T entity) {
         try {
-            this.validatePostCondition(entity);
+            this.validatePreCondition(entity);
             return new ValidateCondition.Void();
         } catch (BeanValidationException ex) {
             return new ValidateCondition.Void(ex);
         }
     }
+
 }

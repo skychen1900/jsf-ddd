@@ -16,11 +16,11 @@
  */
 package ee.infrastructure.validation;
 
-import ddd.domain.validation.BeanValidationException;
-import ddd.domain.validation.PostConditionValidationPriority;
-import ddd.domain.validation.PreConditionValidationPriority;
-import ddd.domain.validation.ValidationPriority;
-import ddd.domain.validation.Validator;
+import core.domain.validation.BeanValidationException;
+import core.domain.validation.PostConditionValidationPriority;
+import core.domain.validation.PreConditionValidationPriority;
+import core.domain.validation.ValidationPriority;
+import core.domain.validation.Validator;
 import java.io.Serializable;
 import java.util.Set;
 import javax.enterprise.context.Dependent;

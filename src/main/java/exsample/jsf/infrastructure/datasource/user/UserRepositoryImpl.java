@@ -16,7 +16,7 @@
  */
 package exsample.jsf.infrastructure.datasource.user;
 
-import dummy.datastore.UserTable;
+import zzz.dummy.datastore.UserTable;
 import exsample.jsf.domain.model.user.User;
 import exsample.jsf.domain.model.user.UserRepository;
 import java.util.Comparator;

@@ -16,7 +16,7 @@
  */
 package ee.infrastructure.jsf;
 
-import ddd.presentation.url.UrlContext;
+import core.presentation.url.UrlContext;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;

@@ -14,7 +14,7 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package dummy.datastore;
+package zzz.dummy.datastore;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import exsample.jsf.domain.model.user.DateOfBirth;

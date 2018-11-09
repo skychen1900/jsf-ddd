@@ -14,7 +14,7 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ddd.domain.exception;
+package core.domain.exception;
 
 /**
  *

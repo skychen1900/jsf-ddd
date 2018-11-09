@@ -14,7 +14,7 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ddd.application.commnand;
+package core.application.commnand;
 
 /**
  *

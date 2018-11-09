@@ -16,7 +16,7 @@
  */
 package ee.infrastructure.jsf;
 
-import ddd.domain.validation.MessageHandler;
+import core.domain.validation.MessageHandler;
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.FacesMessage;

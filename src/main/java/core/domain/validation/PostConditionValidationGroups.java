@@ -14,15 +14,15 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ddd.domain.validation;
+package core.domain.validation;
 
 /**
  *
  * @author Yamashita,Takahiro
  */
-public interface PreConditionValidationGroups {
+public interface PostConditionValidationGroups {
 
-    public interface PreCondition {
+    public interface PostCondition {
     }
 
 }

@@ -16,7 +16,7 @@
  */
 package ee.infrastructure.scope.conversation;
 
-import ddd.presentation.url.UrlContext;
+import core.presentation.url.UrlContext;
 import java.util.Objects;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Conversation;

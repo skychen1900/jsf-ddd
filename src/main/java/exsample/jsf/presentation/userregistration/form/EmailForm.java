@@ -16,7 +16,7 @@
  */
 package exsample.jsf.presentation.userregistration.form;
 
-import ddd.domain.validation.ValidationGroups;
+import core.domain.validation.ValidationGroups;
 import ddd.presentation.DefaultForm;
 import exsample.jsf.domain.model.user.UserEmail;
 import java.io.Serializable;

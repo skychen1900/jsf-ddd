@@ -14,15 +14,21 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ddd.domain.validation;
+package core.presentation.annotation;
 
-import javax.validation.GroupSequence;
+import static java.lang.annotation.ElementType.FIELD;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
+ * Serviceの検証不正をViewフィールドにマッピングします.
  *
  * @author Yamashita,Takahiro
  */
-@GroupSequence({PreConditionValidationGroups.PreCondition.class})
-public interface PreConditionValidationPriority {
+@Target({FIELD})
+@Retention(RetentionPolicy.RUNTIME)
+public @interface InvalidMessageMapping {
 
+    String[] value() default "";
 }

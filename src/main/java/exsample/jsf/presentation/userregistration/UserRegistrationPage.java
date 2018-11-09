@@ -16,9 +16,9 @@
  */
 package exsample.jsf.presentation.userregistration;
 
-import ddd.domain.javabean.annotation.FieldOrder;
-import ddd.domain.validation.Validator;
-import ddd.presentation.annotation.InvalidMessageMapping;
+import core.domain.javabean.annotation.FieldOrder;
+import core.domain.validation.Validator;
+import core.presentation.annotation.InvalidMessageMapping;
 import ee.domain.annotation.view.View;
 import exsample.jsf.application.service.RegisterUser;
 import exsample.jsf.domain.model.user.GenderType;

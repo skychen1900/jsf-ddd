@@ -14,21 +14,21 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ddd.presentation.annotation;
+package core.domain.validation;
 
-import static java.lang.annotation.ElementType.FIELD;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.util.List;
 
 /**
- * Serviceの検証不正をViewフィールドにマッピングします.
+ * クライアントにメッセージを出力する機能を提供します
  *
  * @author Yamashita,Takahiro
  */
-@Target({FIELD})
-@Retention(RetentionPolicy.RUNTIME)
-public @interface InvalidMessageMapping {
+public interface MessageHandler {
 
-    String[] value() default "";
+    /**
+     * クライアントのメッセージ領域に検証結果を出力します.
+     *
+     * @param messages 出力メッセージ
+     */
+    public void appendMessage(List<String> messages);
 }

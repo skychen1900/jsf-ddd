@@ -14,7 +14,7 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ddd.domain.validation;
+package core.domain.validation;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

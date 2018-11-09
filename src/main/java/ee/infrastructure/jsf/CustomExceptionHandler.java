@@ -4,9 +4,9 @@
  */
 package ee.infrastructure.jsf;
 
-import ddd.domain.exception.UnexpectedApplicationException;
-import ddd.domain.validation.BeanValidationException;
-import ddd.domain.validation.MessageHandler;
+import core.domain.exception.UnexpectedApplicationException;
+import core.domain.validation.BeanValidationException;
+import core.domain.validation.MessageHandler;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Iterator;

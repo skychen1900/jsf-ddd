@@ -14,15 +14,15 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ddd.domain.validation;
+package core.domain.validation;
+
+import javax.validation.GroupSequence;
 
 /**
  *
  * @author Yamashita,Takahiro
  */
-public interface ValidationGroups {
-
-    public interface Form {
-    }
+@GroupSequence({PostConditionValidationGroups.PostCondition.class})
+public interface PostConditionValidationPriority {
 
 }

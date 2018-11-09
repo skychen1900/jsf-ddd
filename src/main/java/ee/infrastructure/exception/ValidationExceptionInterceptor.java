@@ -4,7 +4,7 @@
  */
 package ee.infrastructure.exception;
 
-import ddd.domain.validation.BeanValidationException;
+import core.domain.validation.BeanValidationException;
 import ee.domain.annotation.controller.Action;
 import javax.annotation.Priority;
 import javax.enterprise.context.Dependent;

@@ -14,15 +14,23 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ddd.domain.validation;
+package core.domain.javabean.annotation;
+
+import static java.lang.annotation.ElementType.FIELD;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
+ * ClassのFieldの順序を指定します.
+ * <p>
+ * Javaの仕様としてFieldの順序は保証されないため、ClassのFiled順序を指定するためのAnnotationです.
  *
  * @author Yamashita,Takahiro
  */
-public interface PostConditionValidationGroups {
+@Target({FIELD})
+@Retention(RetentionPolicy.RUNTIME)
+public @interface FieldOrder {
 
-    public interface PostCondition {
-    }
-
+    short value() default Short.MAX_VALUE;
 }

@@ -14,21 +14,15 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ddd.domain.validation;
-
-import java.util.List;
+package core.domain.validation;
 
 /**
- * クライアントにメッセージを出力する機能を提供します
  *
  * @author Yamashita,Takahiro
  */
-public interface MessageHandler {
+public interface PreConditionValidationGroups {
 
-    /**
-     * クライアントのメッセージ領域に検証結果を出力します.
-     *
-     * @param messages 出力メッセージ
-     */
-    public void appendMessage(List<String> messages);
+    public interface PreCondition {
+    }
+
 }

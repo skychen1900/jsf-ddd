@@ -14,16 +14,25 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ddd.domain.validation;
+package core.application.commnand;
 
-import javax.validation.GroupSequence;
-import javax.validation.groups.Default;
+import core.domain.validation.BeanValidationException;
+import core.domain.validation.ValidateCondition;
 
 /**
  *
  * @author Yamashita,Takahiro
  */
-@GroupSequence({ValidationGroups.Form.class, Default.class})
-public interface ValidationPriority {
+public interface CommandPostCondition<T> {
 
+    public void validatePostCondition(T entity);
+
+    public default ValidateCondition.Void invalidPostCondition(T entity) {
+        try {
+            this.validatePostCondition(entity);
+            return new ValidateCondition.Void();
+        } catch (BeanValidationException ex) {
+            return new ValidateCondition.Void(ex);
+        }
+    }
 }

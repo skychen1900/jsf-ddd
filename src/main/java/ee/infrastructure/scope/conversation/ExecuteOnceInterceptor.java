@@ -4,7 +4,7 @@
  */
 package ee.infrastructure.scope.conversation;
 
-import ddd.presentation.url.UrlContext;
+import core.presentation.url.UrlContext;
 import ee.domain.annotation.controller.ExecuteOnce;
 import java.util.Objects;
 import javax.annotation.Priority;

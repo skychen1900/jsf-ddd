@@ -2,7 +2,7 @@
  * Copyright(C) 2013 Sanyu Academy All rights reserved.
  *
  */
-package ddd.domain.validation;
+package core.domain.validation;
 
 import java.lang.annotation.Documented;
 import static java.lang.annotation.ElementType.METHOD;
@@ -28,7 +28,7 @@ import javax.validation.Payload;
  * @author Yamashita,Takahiro
  */
 @Documented
-@Constraint(validatedBy = {ddd.domain.validation.ValidateCondition.Validator.class})
+@Constraint(validatedBy = {core.domain.validation.ValidateCondition.Validator.class})
 @Target({METHOD})
 @Retention(RUNTIME)
 public @interface ValidateCondition {
@@ -61,7 +61,7 @@ public @interface ValidateCondition {
     }
 
     /**
-     * {@link ddd.domain.validation.ValidateCondition} を付与するメソッドの戻り値の型
+     * {@link core.domain.validation.ValidateCondition} を付与するメソッドの戻り値の型
      */
     public static class Void {
 

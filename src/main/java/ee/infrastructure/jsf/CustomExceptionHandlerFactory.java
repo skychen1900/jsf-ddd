@@ -4,7 +4,7 @@
  */
 package ee.infrastructure.jsf;
 
-import ddd.domain.validation.MessageHandler;
+import core.domain.validation.MessageHandler;
 import javax.faces.context.ExceptionHandler;
 import javax.faces.context.ExceptionHandlerFactory;
 import javax.inject.Inject;

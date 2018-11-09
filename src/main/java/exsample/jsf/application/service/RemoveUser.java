@@ -16,10 +16,10 @@
  */
 package exsample.jsf.application.service;
 
-import ddd.application.commnand.CommandPreCondition;
-import ddd.domain.validation.PreConditionValidationGroups;
-import ddd.domain.validation.ValidateCondition;
-import ddd.domain.validation.Validator;
+import core.application.commnand.CommandPreCondition;
+import core.domain.validation.PreConditionValidationGroups;
+import core.domain.validation.ValidateCondition;
+import core.domain.validation.Validator;
 import ee.domain.annotation.application.Service;
 import exsample.jsf.domain.model.user.User;
 import exsample.jsf.domain.model.user.UserRepository;

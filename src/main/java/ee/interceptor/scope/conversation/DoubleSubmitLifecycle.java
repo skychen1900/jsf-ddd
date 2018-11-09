@@ -16,7 +16,7 @@
  */
 package ee.interceptor.scope.conversation;
 
-import core.scope.conversation.DoubleSubmitState;
+import spec.scope.conversation.DoubleSubmitState;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ConversationScoped;

@@ -4,7 +4,7 @@
  */
 package ee.jsf.exceptionhandler;
 
-import core.validation.MessageHandler;
+import spec.validation.MessageHandler;
 import ee.jsf.messages.MessageConverter;
 import javax.faces.context.ExceptionHandler;
 import javax.faces.context.ExceptionHandlerFactory;

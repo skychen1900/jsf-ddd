@@ -1,6 +1,6 @@
 package exsample.jsf.presentation.userregistration;
 
-import core.annotation.presentation.controller.Controller;
+import spec.annotation.presentation.controller.Controller;
 import exsample.jsf.application.service.UserService;
 import exsample.jsf.domain.model.user.User;
 import java.util.List;

@@ -4,7 +4,7 @@
  */
 package ee.interceptor.scope.conversation;
 
-import core.annotation.presentation.controller.EndConversation;
+import spec.annotation.presentation.controller.EndConversation;
 import javax.annotation.Priority;
 import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;

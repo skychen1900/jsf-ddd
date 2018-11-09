@@ -4,10 +4,10 @@
  */
 package ee.interceptor.validation;
 
-import core.validation.BeanValidationException;
-import core.validation.MessageHandler;
-import core.presentation.url.UrlContext;
-import core.annotation.presentation.controller.Action;
+import spec.validation.BeanValidationException;
+import spec.validation.MessageHandler;
+import spec.presentation.url.UrlContext;
+import spec.annotation.presentation.controller.Action;
 import ee.jsf.messages.MessageConverter;
 import java.util.List;
 import javax.annotation.Priority;

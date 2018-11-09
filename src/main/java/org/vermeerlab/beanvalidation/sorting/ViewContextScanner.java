@@ -16,13 +16,13 @@
  */
 package org.vermeerlab.beanvalidation.sorting;
 
-import core.annotation.FieldOrder;
-import core.annotation.presentation.view.InvalidMessageMapping;
-import core.annotation.presentation.controller.ViewContext;
+import spec.annotation.FieldOrder;
+import spec.annotation.presentation.view.InvalidMessageMapping;
+import spec.annotation.presentation.controller.ViewContext;
 import java.lang.reflect.Field;
 
 /**
- * {@link core.annotation.presentation.view.InvalidMessageMapping}が付与されたフィールド情報を取得して{@link core.annotation.FieldOrder} 順で
+ * {@link spec.annotation.presentation.view.InvalidMessageMapping}が付与されたフィールド情報を取得して{@link spec.annotation.FieldOrder} 順で
  * 並び替えた検証不正メッセージを返却する機能を提供します.
  *
  * @author Yamashita,Takahiro

@@ -4,8 +4,8 @@
  */
 package ee.interceptor.validation;
 
-import core.validation.BeanValidationException;
-import core.annotation.presentation.controller.Action;
+import spec.validation.BeanValidationException;
+import spec.annotation.presentation.controller.Action;
 import javax.annotation.Priority;
 import javax.enterprise.context.Dependent;
 import javax.interceptor.AroundInvoke;

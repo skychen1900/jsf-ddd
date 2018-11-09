@@ -4,9 +4,9 @@
  */
 package ee.jsf.exceptionhandler;
 
-import core.exception.UnexpectedApplicationException;
-import core.validation.BeanValidationException;
-import core.validation.MessageHandler;
+import spec.exception.UnexpectedApplicationException;
+import spec.validation.BeanValidationException;
+import spec.validation.MessageHandler;
 import ee.jsf.messages.MessageConverter;
 import java.io.IOException;
 import java.util.Arrays;

@@ -1,7 +1,7 @@
 package exsample.jsf.presentation.userregistration;
 
-import core.annotation.presentation.controller.Controller;
-import core.annotation.presentation.controller.EndConversation;
+import spec.annotation.presentation.controller.Controller;
+import spec.annotation.presentation.controller.EndConversation;
 import exsample.jsf.application.service.RemoveUser;
 import exsample.jsf.application.service.UserService;
 import exsample.jsf.domain.model.user.User;

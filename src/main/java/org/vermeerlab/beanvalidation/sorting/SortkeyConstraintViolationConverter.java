@@ -16,7 +16,7 @@
  */
 package org.vermeerlab.beanvalidation.sorting;
 
-import core.annotation.FieldOrder;
+import spec.annotation.FieldOrder;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 import javax.validation.ConstraintViolation;
 
 /**
- * ConstraintViolationを{@link core.annotation.FieldOrder} で指定した順にソートする機能を提供します.
+ * ConstraintViolationを{@link spec.annotation.FieldOrder} で指定した順にソートする機能を提供します.
  *
  * @author Yamashita,Takahiro
  */

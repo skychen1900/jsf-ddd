@@ -16,8 +16,8 @@
  */
 package core.application.commnand;
 
-import core.domain.validation.BeanValidationException;
-import core.domain.validation.ValidateCondition;
+import core.validation.BeanValidationException;
+import core.validation.ValidateCondition;
 
 /**
  *

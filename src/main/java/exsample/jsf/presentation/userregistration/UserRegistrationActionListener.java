@@ -1,6 +1,6 @@
 package exsample.jsf.presentation.userregistration;
 
-import ee.domain.annotation.controller.Controller;
+import core.annotation.presentation.controller.Controller;
 import java.io.Serializable;
 import javax.inject.Inject;
 

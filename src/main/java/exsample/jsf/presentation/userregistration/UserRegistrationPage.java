@@ -16,10 +16,10 @@
  */
 package exsample.jsf.presentation.userregistration;
 
-import core.domain.javabean.annotation.FieldOrder;
-import core.domain.validation.Validator;
-import core.presentation.annotation.InvalidMessageMapping;
-import ee.domain.annotation.view.View;
+import core.annotation.FieldOrder;
+import core.validation.Validator;
+import core.annotation.presentation.view.InvalidMessageMapping;
+import core.annotation.presentation.view.View;
 import exsample.jsf.application.service.RegisterUser;
 import exsample.jsf.domain.model.user.GenderType;
 import exsample.jsf.domain.model.user.User;

@@ -14,15 +14,17 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package spec.validation;
+package ee.validation.priority;
 
 import javax.validation.GroupSequence;
+import javax.validation.groups.Default;
+import spec.validation.ValidationGroups;
 
 /**
  *
  * @author Yamashita,Takahiro
  */
-@GroupSequence({PostConditionValidationGroups.PostCondition.class})
-public interface PostConditionValidationPriority {
+@GroupSequence({ValidationGroups.Form.class, Default.class})
+public interface ValidationPriority {
 
 }

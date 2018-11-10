@@ -16,7 +16,7 @@
  */
 package ee.jsf.context;
 
-import spec.presentation.url.UrlContext;
+import spec.presentation.UrlContext;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;

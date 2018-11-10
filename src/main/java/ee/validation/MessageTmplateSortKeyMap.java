@@ -14,7 +14,7 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package org.vermeerlab.beanvalidation.sorting;
+package ee.validation;
 
 import java.util.Collections;
 import java.util.HashMap;

@@ -14,7 +14,7 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package spec.presentation.url;
+package spec.presentation;
 
 /**
  * クライアントページのURLを扱います

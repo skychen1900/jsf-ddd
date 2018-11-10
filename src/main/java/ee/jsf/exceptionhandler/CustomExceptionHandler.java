@@ -6,7 +6,7 @@ package ee.jsf.exceptionhandler;
 
 import spec.exception.UnexpectedApplicationException;
 import spec.validation.BeanValidationException;
-import spec.validation.MessageHandler;
+import spec.presentation.MessageHandler;
 import ee.jsf.messages.MessageConverter;
 import java.io.IOException;
 import java.util.Arrays;

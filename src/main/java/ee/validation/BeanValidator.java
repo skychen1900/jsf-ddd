@@ -14,12 +14,12 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ee.infrastructure.validation;
+package ee.validation;
 
 import spec.validation.BeanValidationException;
-import spec.validation.PostConditionValidationPriority;
-import spec.validation.PreConditionValidationPriority;
-import spec.validation.ValidationPriority;
+import ee.validation.priority.PostConditionValidationPriority;
+import ee.validation.priority.PreConditionValidationPriority;
+import ee.validation.priority.ValidationPriority;
 import spec.validation.Validator;
 import java.io.Serializable;
 import java.util.Set;

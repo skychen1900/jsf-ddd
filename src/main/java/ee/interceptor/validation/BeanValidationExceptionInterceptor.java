@@ -5,8 +5,8 @@
 package ee.interceptor.validation;
 
 import spec.validation.BeanValidationException;
-import spec.validation.MessageHandler;
-import spec.presentation.url.UrlContext;
+import spec.presentation.MessageHandler;
+import spec.presentation.UrlContext;
 import spec.annotation.presentation.controller.Action;
 import ee.jsf.messages.MessageConverter;
 import java.util.List;
@@ -16,8 +16,8 @@ import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
-import org.vermeerlab.beanvalidation.sorting.ConstraintViolationsHandler;
-import org.vermeerlab.beanvalidation.sorting.ViewContextScanner;
+import ee.validation.ConstraintViolationsHandler;
+import ee.validation.ViewContextScanner;
 
 @Action
 @Interceptor

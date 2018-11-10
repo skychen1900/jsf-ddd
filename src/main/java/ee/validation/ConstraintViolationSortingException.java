@@ -14,7 +14,7 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package org.vermeerlab.beanvalidation.sorting;
+package ee.validation;
 
 /**
  * 検証結果の表示順ソート時に発生した実行時例外

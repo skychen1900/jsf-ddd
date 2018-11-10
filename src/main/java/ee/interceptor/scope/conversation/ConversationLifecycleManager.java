@@ -16,7 +16,7 @@
  */
 package ee.interceptor.scope.conversation;
 
-import spec.presentation.url.UrlContext;
+import spec.presentation.UrlContext;
 import java.util.Objects;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Conversation;

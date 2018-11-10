@@ -14,7 +14,7 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package org.vermeerlab.beanvalidation.sorting;
+package ee.validation;
 
 import spec.annotation.FieldOrder;
 import java.lang.reflect.Field;

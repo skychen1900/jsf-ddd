@@ -16,7 +16,7 @@
  */
 package ee.jsf.messages;
 
-import spec.validation.MessageHandler;
+import spec.presentation.MessageHandler;
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.FacesMessage;

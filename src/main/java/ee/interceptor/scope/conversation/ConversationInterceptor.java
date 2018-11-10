@@ -4,7 +4,7 @@
  */
 package ee.interceptor.scope.conversation;
 
-import spec.presentation.url.UrlContext;
+import spec.presentation.UrlContext;
 import spec.annotation.presentation.controller.Action;
 import javax.annotation.Priority;
 import javax.enterprise.context.Dependent;

@@ -14,15 +14,29 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package spec.validation;
+package ee.validation;
 
-import javax.validation.GroupSequence;
+import javax.validation.ConstraintViolation;
 
 /**
  *
  * @author Yamashita,Takahiro
  */
-@GroupSequence({PreConditionValidationGroups.PreCondition.class})
-public interface PreConditionValidationPriority {
+public class SortKeyConstraintViolation {
 
+    private final String sortkey;
+    private final ConstraintViolation<?> constraintViolation;
+
+    public SortKeyConstraintViolation(String sortkey, ConstraintViolation<?> constraintViolation) {
+        this.sortkey = sortkey;
+        this.constraintViolation = constraintViolation;
+    }
+
+    public String getSortkey() {
+        return sortkey;
+    }
+
+    public ConstraintViolation<?> getConstraintViolation() {
+        return constraintViolation;
+    }
 }

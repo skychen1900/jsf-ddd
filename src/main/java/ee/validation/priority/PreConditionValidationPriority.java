@@ -14,21 +14,16 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package spec.validation;
+package ee.validation.priority;
 
-import java.util.List;
+import javax.validation.GroupSequence;
+import spec.validation.PreConditionValidationGroups;
 
 /**
- * クライアントにメッセージを出力する機能を提供します
  *
  * @author Yamashita,Takahiro
  */
-public interface MessageHandler {
+@GroupSequence({PreConditionValidationGroups.PreCondition.class})
+public interface PreConditionValidationPriority {
 
-    /**
-     * クライアントのメッセージ領域に検証結果を出力します.
-     *
-     * @param messages 出力メッセージ
-     */
-    public void appendMessage(List<String> messages);
 }

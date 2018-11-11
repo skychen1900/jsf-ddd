@@ -4,10 +4,9 @@
  */
 package ee.interceptor.validation;
 
-import spec.validation.BeanValidationException;
-import spec.presentation.MessageHandler;
-import spec.annotation.presentation.controller.Action;
 import ee.jsf.messages.MessageConverter;
+import ee.validation.ConstraintViolationsHandler;
+import ee.validation.ViewContextScanner;
 import java.util.List;
 import javax.annotation.Priority;
 import javax.enterprise.context.Dependent;
@@ -15,9 +14,10 @@ import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
-import ee.validation.ConstraintViolationsHandler;
-import ee.validation.ViewContextScanner;
+import spec.annotation.presentation.controller.Action;
 import spec.presentation.CurrentViewContext;
+import spec.presentation.MessageHandler;
+import spec.validation.BeanValidationException;
 
 @Action
 @Interceptor
@@ -25,14 +25,18 @@ import spec.presentation.CurrentViewContext;
 @Dependent
 public class BeanValidationExceptionInterceptor {
 
-    @Inject
-    CurrentViewContext context;
+    private final CurrentViewContext context;
+
+    private final MessageConverter messageConverter;
+
+    private final MessageHandler messageHandler;
 
     @Inject
-    MessageConverter messageConverter;
-
-    @Inject
-    MessageHandler messageHandler;
+    public BeanValidationExceptionInterceptor(CurrentViewContext context, MessageConverter messageConverter, MessageHandler messageHandler) {
+        this.context = context;
+        this.messageConverter = messageConverter;
+        this.messageHandler = messageHandler;
+    }
 
     @AroundInvoke
     public Object invoke(InvocationContext ic) throws Exception {

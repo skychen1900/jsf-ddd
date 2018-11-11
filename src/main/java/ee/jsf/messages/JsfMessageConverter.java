@@ -27,6 +27,7 @@ import javax.validation.ConstraintViolation;
 import org.vermeerlab.beanvalidation.messageinterpolator.MessageInterpolator;
 import org.vermeerlab.beanvalidation.messageinterpolator.MessageInterpolatorFactory;
 import spec.presentation.CurrentViewContext;
+import spec.presentation.MessageConverter;
 
 /**
  *
@@ -34,17 +35,17 @@ import spec.presentation.CurrentViewContext;
  */
 @Named
 @ApplicationScoped
-public class MessageConverter {
+public class JsfMessageConverter implements MessageConverter {
 
     private MessageInterpolatorFactory interpolatorFactory;
 
     private CurrentViewContext context;
 
-    public MessageConverter() {
+    public JsfMessageConverter() {
     }
 
     @Inject
-    public MessageConverter(CurrentViewContext context) {
+    public JsfMessageConverter(CurrentViewContext context) {
         this.context = context;
     }
 
@@ -53,6 +54,7 @@ public class MessageConverter {
         this.interpolatorFactory = MessageInterpolatorFactory.of("Messages", "FormMessages", "FormLabels");
     }
 
+    @Override
     public List<String> toMessages(Collection<ConstraintViolation<?>> constraintViolations) {
         MessageInterpolator interpolator = interpolatorFactory.create(context.clientLocate());
 

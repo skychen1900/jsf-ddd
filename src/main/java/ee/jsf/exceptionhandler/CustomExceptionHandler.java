@@ -4,10 +4,6 @@
  */
 package ee.jsf.exceptionhandler;
 
-import spec.exception.UnexpectedApplicationException;
-import spec.validation.BeanValidationException;
-import spec.presentation.MessageHandler;
-import ee.jsf.messages.MessageConverter;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -21,6 +17,10 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ExceptionQueuedEvent;
 import javax.faces.event.ExceptionQueuedEventContext;
 import org.vermeerlab.resourcebundle.CustomControl;
+import spec.exception.UnexpectedApplicationException;
+import spec.presentation.MessageConverter;
+import spec.presentation.MessageHandler;
+import spec.validation.BeanValidationException;
 
 /**
  * ExceptionHandler

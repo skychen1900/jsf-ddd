@@ -4,11 +4,11 @@
  */
 package ee.jsf.exceptionhandler;
 
-import spec.presentation.MessageHandler;
-import ee.jsf.messages.MessageConverter;
 import javax.faces.context.ExceptionHandler;
 import javax.faces.context.ExceptionHandlerFactory;
 import javax.inject.Inject;
+import spec.presentation.MessageConverter;
+import spec.presentation.MessageHandler;
 
 /**
  * ExceptionHandlerFactory

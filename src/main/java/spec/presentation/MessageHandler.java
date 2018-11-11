@@ -28,7 +28,14 @@ public interface MessageHandler {
     /**
      * クライアントのメッセージ領域に検証結果を出力します.
      *
+     * @param message 出力メッセージ
+     */
+    public void appendMessage(String message);
+
+    /**
+     * クライアントのメッセージ領域に検証結果を出力します.
+     *
      * @param messages 出力メッセージ
      */
-    public void appendMessage(List<String> messages);
+    public void appendMessages(List<String> messages);
 }

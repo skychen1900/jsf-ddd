@@ -83,7 +83,7 @@ public class CustomExceptionHandler extends ExceptionHandlerWrapper {
         BeanValidationException ex = (BeanValidationException) th;
 
         List<String> messages = messageConverter.toMessages(ex.getValidatedResults());
-        messageHandler.appendMessage(messages);
+        messageHandler.appendMessages(messages);
 
         FacesContext context = FacesContext.getCurrentInstance();
 

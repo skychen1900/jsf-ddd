@@ -16,12 +16,12 @@
  */
 package ee.jsf.messages;
 
-import spec.presentation.MessageHandler;
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import spec.presentation.MessageHandler;
 
 /**
  * メッセージ出力する機能を提供します.
@@ -36,7 +36,17 @@ public class JsfMessageHandler implements MessageHandler {
      * {@inheritDoc }
      */
     @Override
-    public void appendMessage(List<String> messages) {
+    public void appendMessage(String message) {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        FacesMessage facemsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null);
+        facesContext.addMessage(null, facemsg);
+
+        // リダイレクトしてもFacesMessageが消えないように設定
+        facesContext.getExternalContext().getFlash().setKeepMessages(true);
+    }
+
+    @Override
+    public void appendMessages(List<String> messages) {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         messages.stream()
                 .forEachOrdered(message -> {
@@ -47,4 +57,5 @@ public class JsfMessageHandler implements MessageHandler {
         // リダイレクトしてもFacesMessageが消えないように設定
         facesContext.getExternalContext().getFlash().setKeepMessages(true);
     }
+
 }

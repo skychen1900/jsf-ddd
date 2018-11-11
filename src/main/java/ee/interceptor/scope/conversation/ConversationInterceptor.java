@@ -24,9 +24,9 @@ public class ConversationInterceptor {
     private final CurrentViewContext context;
 
     @Inject
-    public ConversationInterceptor(ConversationLifecycleManager conversationLifecycleManager, CurrentViewContext urlContext) {
+    public ConversationInterceptor(ConversationLifecycleManager conversationLifecycleManager, CurrentViewContext context) {
         this.conversationLifecycleManager = conversationLifecycleManager;
-        this.context = urlContext;
+        this.context = context;
     }
 
     @AroundInvoke

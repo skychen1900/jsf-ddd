@@ -28,9 +28,9 @@ public class ExecuteOnceInterceptor {
     }
 
     @Inject
-    public ExecuteOnceInterceptor(DoubleSubmitLifecycle doubleSubmitLifecycle, CurrentViewContext urlContext) {
+    public ExecuteOnceInterceptor(DoubleSubmitLifecycle doubleSubmitLifecycle, CurrentViewContext context) {
         this.doubleSubmitLifecycle = doubleSubmitLifecycle;
-        this.context = urlContext;
+        this.context = context;
     }
 
     @AroundInvoke

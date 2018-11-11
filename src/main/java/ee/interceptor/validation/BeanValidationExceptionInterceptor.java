@@ -26,7 +26,7 @@ import spec.presentation.CurrentViewContext;
 public class BeanValidationExceptionInterceptor {
 
     @Inject
-    CurrentViewContext urlContext;
+    CurrentViewContext context;
 
     @Inject
     MessageConverter messageConverter;
@@ -37,7 +37,7 @@ public class BeanValidationExceptionInterceptor {
     @AroundInvoke
     public Object invoke(InvocationContext ic) throws Exception {
 
-        String currentViewId = urlContext.currentViewId();
+        String currentViewId = context.currentViewId();
 
         try {
             return ic.proceed();

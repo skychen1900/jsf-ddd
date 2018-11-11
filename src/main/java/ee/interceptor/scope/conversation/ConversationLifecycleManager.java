@@ -40,9 +40,9 @@ public class ConversationLifecycleManager {
     }
 
     @Inject
-    public ConversationLifecycleManager(Conversation conversation, CurrentViewContext urlContext) {
+    public ConversationLifecycleManager(Conversation conversation, CurrentViewContext context) {
         this.conversation = conversation;
-        this.context = urlContext;
+        this.context = context;
     }
 
     /**

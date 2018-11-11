@@ -16,13 +16,14 @@
  */
 package ee.jsf.context;
 
-import spec.presentation.UrlContext;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import javax.enterprise.context.Dependent;
 import javax.faces.context.FacesContext;
+import spec.presentation.CurrentViewContext;
 
 /**
  * JSFでクライアントページのURLを扱う機能を提供します.
@@ -30,7 +31,7 @@ import javax.faces.context.FacesContext;
  * @author Yamashita,Takahiro
  */
 @Dependent
-public class JsfUrlContext implements UrlContext {
+public class JsfCurrentViewContext implements CurrentViewContext {
 
     /**
      * {@inheritDoc }
@@ -52,6 +53,14 @@ public class JsfUrlContext implements UrlContext {
         Map<String, List<String>> parameters = new HashMap<>();
         parameters.put("faces-redirect", Arrays.asList("true"));
         return FacesContext.getCurrentInstance().getExternalContext().encodeRedirectURL(_baseUrl, parameters);
+    }
+
+    /**
+     * {@inheritDoc }
+     */
+    @Override
+    public Locale clientLocate() {
+        return FacesContext.getCurrentInstance().getViewRoot().getLocale();
     }
 
 }

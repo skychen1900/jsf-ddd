@@ -4,14 +4,14 @@
  */
 package ee.interceptor.scope.conversation;
 
-import spec.presentation.UrlContext;
-import spec.annotation.presentation.controller.Action;
 import javax.annotation.Priority;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
+import spec.annotation.presentation.controller.Action;
+import spec.presentation.CurrentViewContext;
 
 @Action
 @Interceptor
@@ -21,17 +21,17 @@ public class ConversationInterceptor {
 
     private final ConversationLifecycleManager conversationLifecycleManager;
 
-    private final UrlContext urlContext;
+    private final CurrentViewContext context;
 
     @Inject
-    public ConversationInterceptor(ConversationLifecycleManager conversationLifecycleManager, UrlContext urlContext) {
+    public ConversationInterceptor(ConversationLifecycleManager conversationLifecycleManager, CurrentViewContext urlContext) {
         this.conversationLifecycleManager = conversationLifecycleManager;
-        this.urlContext = urlContext;
+        this.context = urlContext;
     }
 
     @AroundInvoke
     public Object invoke(InvocationContext ic) throws Exception {
-        String currentViewId = urlContext.currentViewId();
+        String currentViewId = context.currentViewId();
         Object resultViewId = ic.proceed();
         this.conversationLifecycleManager.endConversation(currentViewId, (String) resultViewId);
         return resultViewId;

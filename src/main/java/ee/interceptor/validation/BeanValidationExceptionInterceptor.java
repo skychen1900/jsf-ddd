@@ -6,7 +6,6 @@ package ee.interceptor.validation;
 
 import spec.validation.BeanValidationException;
 import spec.presentation.MessageHandler;
-import spec.presentation.UrlContext;
 import spec.annotation.presentation.controller.Action;
 import ee.jsf.messages.MessageConverter;
 import java.util.List;
@@ -18,6 +17,7 @@ import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
 import ee.validation.ConstraintViolationsHandler;
 import ee.validation.ViewContextScanner;
+import spec.presentation.CurrentViewContext;
 
 @Action
 @Interceptor
@@ -26,7 +26,7 @@ import ee.validation.ViewContextScanner;
 public class BeanValidationExceptionInterceptor {
 
     @Inject
-    UrlContext urlContext;
+    CurrentViewContext urlContext;
 
     @Inject
     MessageConverter messageConverter;

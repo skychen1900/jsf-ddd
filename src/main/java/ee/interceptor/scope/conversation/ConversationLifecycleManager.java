@@ -16,12 +16,12 @@
  */
 package ee.interceptor.scope.conversation;
 
-import spec.presentation.UrlContext;
 import java.util.Objects;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Conversation;
 import javax.inject.Inject;
 import javax.inject.Named;
+import spec.presentation.CurrentViewContext;
 
 /**
  * 会話スコープのライフサイクルを操作するクラスです.
@@ -34,15 +34,15 @@ public class ConversationLifecycleManager {
 
     private Conversation conversation;
 
-    private UrlContext urlContext;
+    private CurrentViewContext context;
 
     public ConversationLifecycleManager() {
     }
 
     @Inject
-    public ConversationLifecycleManager(Conversation conversation, UrlContext urlContext) {
+    public ConversationLifecycleManager(Conversation conversation, CurrentViewContext urlContext) {
         this.conversation = conversation;
-        this.urlContext = urlContext;
+        this.context = urlContext;
     }
 
     /**
@@ -53,7 +53,7 @@ public class ConversationLifecycleManager {
      * @return 会話スコープ開始済みの場合は指定のページ、未開始の場合はindexページ
      */
     public String startAndForwardIndexPage() {
-        String currentViewId = urlContext.currentViewId();
+        String currentViewId = context.currentViewId();
         if (this.conversation.isTransient() == false) {
             return currentViewId;
         }
@@ -62,9 +62,9 @@ public class ConversationLifecycleManager {
         this.conversation.setTimeout(300000);
 
         if (currentViewId.equals("index.xhtml") == false) {
-            return (String) urlContext.responseViewId("index.xhtml");
+            return (String) context.responseViewId("index.xhtml");
         }
-        return (String) urlContext.responseViewId(currentViewId);
+        return (String) context.responseViewId(currentViewId);
     }
 
     /**

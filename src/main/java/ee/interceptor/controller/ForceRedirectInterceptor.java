@@ -4,7 +4,6 @@
  */
 package ee.interceptor.controller;
 
-import spec.presentation.UrlContext;
 import spec.annotation.presentation.controller.Action;
 import javax.annotation.Priority;
 import javax.enterprise.context.Dependent;
@@ -12,6 +11,7 @@ import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
+import spec.presentation.CurrentViewContext;
 
 @Action
 @Interceptor
@@ -20,17 +20,17 @@ import javax.interceptor.InvocationContext;
 public class ForceRedirectInterceptor {
 
     @Inject
-    UrlContext urlContext;
+    CurrentViewContext context;
 
     @AroundInvoke
     public Object invoke(InvocationContext ic) throws Exception {
-        String currentViewId = urlContext.currentViewId();
+        String currentViewId = context.currentViewId();
 
         Object resultViewId = ic.proceed();
 
         if (resultViewId == null) {
             resultViewId = currentViewId;
         }
-        return urlContext.responseViewId(resultViewId);
+        return context.responseViewId(resultViewId);
     }
 }

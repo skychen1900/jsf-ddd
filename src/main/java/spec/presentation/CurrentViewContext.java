@@ -16,12 +16,14 @@
  */
 package spec.presentation;
 
+import java.util.Locale;
+
 /**
  * クライアントページのURLを扱います
  *
  * @author Yamashita,Takahiro
  */
-public interface UrlContext {
+public interface CurrentViewContext {
 
     /**
      * 現在のクライアントURL（コンテキストパスを除く）を返却します.
@@ -40,5 +42,12 @@ public interface UrlContext {
      * @return リダイレクト編集をした URL（コンテキストパスを除く）
      */
     public <T extends Object> Object responseViewId(T baseUrl);
+
+    /**
+     * 現在のクライアントのLocaleを返却します.
+     *
+     * @return クライアントのLocale
+     */
+    public Locale clientLocate();
 
 }

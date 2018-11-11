@@ -4,8 +4,6 @@
  */
 package ee.interceptor.scope.conversation;
 
-import spec.presentation.UrlContext;
-import spec.annotation.presentation.controller.ExecuteOnce;
 import java.util.Objects;
 import javax.annotation.Priority;
 import javax.faces.application.FacesMessage;
@@ -14,6 +12,8 @@ import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
+import spec.annotation.presentation.controller.ExecuteOnce;
+import spec.presentation.CurrentViewContext;
 
 @ExecuteOnce
 @Interceptor
@@ -22,15 +22,15 @@ public class ExecuteOnceInterceptor {
 
     private DoubleSubmitLifecycle doubleSubmitLifecycle;
 
-    private UrlContext urlContext;
+    private CurrentViewContext context;
 
     public ExecuteOnceInterceptor() {
     }
 
     @Inject
-    public ExecuteOnceInterceptor(DoubleSubmitLifecycle doubleSubmitLifecycle, UrlContext urlContext) {
+    public ExecuteOnceInterceptor(DoubleSubmitLifecycle doubleSubmitLifecycle, CurrentViewContext urlContext) {
         this.doubleSubmitLifecycle = doubleSubmitLifecycle;
-        this.urlContext = urlContext;
+        this.context = urlContext;
     }
 
     @AroundInvoke
@@ -65,7 +65,7 @@ public class ExecuteOnceInterceptor {
                         ? FacesContext.getCurrentInstance().getViewRoot().getViewId()
                         : annotation.forwardPage();
 
-        return urlContext.responseViewId(result);
+        return context.responseViewId(result);
     }
 
 }

@@ -21,11 +21,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
-import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.validation.ConstraintViolation;
 import org.vermeerlab.beanvalidation.messageinterpolator.MessageInterpolator;
 import org.vermeerlab.beanvalidation.messageinterpolator.MessageInterpolatorFactory;
+import spec.presentation.CurrentViewContext;
 
 /**
  *
@@ -37,14 +38,23 @@ public class MessageConverter {
 
     private MessageInterpolatorFactory interpolatorFactory;
 
+    private CurrentViewContext context;
+
+    public MessageConverter() {
+    }
+
+    @Inject
+    public MessageConverter(CurrentViewContext context) {
+        this.context = context;
+    }
+
     @PostConstruct
     public void init() {
         this.interpolatorFactory = MessageInterpolatorFactory.of("Messages", "FormMessages", "FormLabels");
     }
 
     public List<String> toMessages(Collection<ConstraintViolation<?>> constraintViolations) {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        MessageInterpolator interpolator = interpolatorFactory.create(facesContext.getViewRoot().getLocale());
+        MessageInterpolator interpolator = interpolatorFactory.create(context.clientLocate());
 
         return constraintViolations.stream()
                 .map(interpolator::toMessage)

@@ -16,12 +16,12 @@
  */
 package exsample.jsf.presentation.userregistration.form;
 
-import spec.validation.ValidationGroups;
-import ddd.presentation.DefaultForm;
 import exsample.jsf.domain.model.user.DateOfBirth;
 import java.io.Serializable;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import spec.presentation.view.DefaultForm;
+import spec.validation.ValidationGroups;
 
 /**
  * 誕生日を表示するFormです.

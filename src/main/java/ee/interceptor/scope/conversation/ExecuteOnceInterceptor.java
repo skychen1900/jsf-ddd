@@ -62,7 +62,7 @@ public class ExecuteOnceInterceptor {
 
         // エラーページを指定していない場合は自画面へ遷移
         String result = Objects.equals(annotation.forwardPage(), "")
-                        ? FacesContext.getCurrentInstance().getViewRoot().getViewId()
+                        ? context.currentViewId()
                         : annotation.forwardPage();
 
         return context.responseViewId(result);

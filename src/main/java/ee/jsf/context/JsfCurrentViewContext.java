@@ -23,7 +23,7 @@ import java.util.Locale;
 import java.util.Map;
 import javax.enterprise.context.Dependent;
 import javax.faces.context.FacesContext;
-import spec.presentation.CurrentViewContext;
+import spec.interfaces.infrastructure.CurrentViewContext;
 
 /**
  * JSFでクライアントページのURLを扱う機能を提供します.

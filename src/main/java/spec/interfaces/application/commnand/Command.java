@@ -14,7 +14,7 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package spec.application.commnand;
+package spec.interfaces.application.commnand;
 
 /**
  *

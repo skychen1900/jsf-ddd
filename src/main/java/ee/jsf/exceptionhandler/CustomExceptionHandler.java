@@ -18,8 +18,8 @@ import javax.faces.event.ExceptionQueuedEvent;
 import javax.faces.event.ExceptionQueuedEventContext;
 import org.vermeerlab.resourcebundle.CustomControl;
 import spec.exception.UnexpectedApplicationException;
-import spec.presentation.MessageConverter;
-import spec.presentation.MessageHandler;
+import spec.interfaces.infrastructure.MessageConverter;
+import spec.interfaces.infrastructure.MessageHandler;
 import spec.validation.BeanValidationException;
 
 /**

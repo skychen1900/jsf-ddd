@@ -21,7 +21,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
-import spec.presentation.MessageHandler;
+import spec.interfaces.infrastructure.MessageHandler;
 
 /**
  * メッセージ出力する機能を提供します.

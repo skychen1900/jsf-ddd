@@ -19,7 +19,7 @@ package exsample.jsf.presentation.userregistration.form;
 import exsample.jsf.domain.model.user.Gender;
 import exsample.jsf.domain.model.user.GenderType;
 import java.io.Serializable;
-import spec.presentation.view.DefaultForm;
+import spec.interfaces.presentation.view.DefaultForm;
 
 /**
  * 性別を表示するFormです

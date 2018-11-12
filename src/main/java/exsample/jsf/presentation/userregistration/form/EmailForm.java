@@ -20,7 +20,7 @@ import exsample.jsf.domain.model.user.UserEmail;
 import java.io.Serializable;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
-import spec.presentation.view.DefaultForm;
+import spec.interfaces.presentation.view.DefaultForm;
 import spec.validation.ValidationGroups;
 
 /**

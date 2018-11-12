@@ -14,7 +14,7 @@
  *
  *  Copyright ? 2018 Yamashita,Takahiro
  */
-package spec.presentation;
+package spec.interfaces.infrastructure;
 
 import java.util.Collection;
 import java.util.List;

@@ -21,7 +21,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Conversation;
 import javax.inject.Inject;
 import javax.inject.Named;
-import spec.presentation.CurrentViewContext;
+import spec.interfaces.infrastructure.CurrentViewContext;
 
 /**
  * 会話スコープのライフサイクルを操作するクラスです.

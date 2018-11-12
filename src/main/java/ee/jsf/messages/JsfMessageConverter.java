@@ -26,8 +26,8 @@ import javax.inject.Named;
 import javax.validation.ConstraintViolation;
 import org.vermeerlab.beanvalidation.messageinterpolator.MessageInterpolator;
 import org.vermeerlab.beanvalidation.messageinterpolator.MessageInterpolatorFactory;
-import spec.presentation.CurrentViewContext;
-import spec.presentation.MessageConverter;
+import spec.interfaces.infrastructure.CurrentViewContext;
+import spec.interfaces.infrastructure.MessageConverter;
 
 /**
  *

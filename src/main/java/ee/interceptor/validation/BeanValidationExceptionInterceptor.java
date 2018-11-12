@@ -15,9 +15,9 @@ import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
 import spec.annotation.presentation.controller.Action;
-import spec.presentation.CurrentViewContext;
-import spec.presentation.MessageConverter;
-import spec.presentation.MessageHandler;
+import spec.interfaces.infrastructure.CurrentViewContext;
+import spec.interfaces.infrastructure.MessageConverter;
+import spec.interfaces.infrastructure.MessageHandler;
 import spec.validation.BeanValidationException;
 
 @Action

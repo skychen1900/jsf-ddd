@@ -7,8 +7,8 @@ package ee.jsf.exceptionhandler;
 import javax.faces.context.ExceptionHandler;
 import javax.faces.context.ExceptionHandlerFactory;
 import javax.inject.Inject;
-import spec.presentation.MessageConverter;
-import spec.presentation.MessageHandler;
+import spec.interfaces.infrastructure.MessageConverter;
+import spec.interfaces.infrastructure.MessageHandler;
 
 /**
  * ExceptionHandlerFactory

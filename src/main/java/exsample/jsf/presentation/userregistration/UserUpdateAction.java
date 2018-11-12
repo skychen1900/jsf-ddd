@@ -1,7 +1,8 @@
 package exsample.jsf.presentation.userregistration;
 
-import ee.domain.annotation.controller.Controller;
-import ee.domain.annotation.controller.EndConversation;
+import spec.annotation.presentation.controller.Controller;
+import spec.annotation.presentation.controller.EndConversation;
+import spec.annotation.presentation.controller.ViewContext;
 import exsample.jsf.application.service.UpdateUser;
 import exsample.jsf.application.service.UserService;
 import exsample.jsf.domain.model.user.User;
@@ -11,6 +12,7 @@ import javax.inject.Inject;
 @Controller
 public class UserUpdateAction {
 
+    @ViewContext
     private UserRegistrationPage registrationPage;
 
     private UserService userService;
@@ -32,17 +34,17 @@ public class UserUpdateAction {
 
         User requestUser = this.userService.registeredUser(user);
         this.registrationPage.update(requestUser);
-        return "updateedit.xhtml";
+        return "update-edit.xhtml";
     }
 
     public String confirm() {
         User requestUser = this.registrationPage.toUser();
         updateUser.validatePreCondition(requestUser);
-        return "updateconfirm.xhtml";
+        return "update-confirm.xhtml";
     }
 
     public String modify() {
-        return "updateedit.xhtml";
+        return "update-edit.xhtml";
     }
 
     public String register() {
@@ -51,7 +53,7 @@ public class UserUpdateAction {
 
         User responseUser = userService.registeredUser(requestUser);
         this.registrationPage.update(responseUser);
-        return "updatecomplete.xhtml";
+        return "update-complete.xhtml";
     }
 
     @EndConversation

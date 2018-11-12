@@ -1,8 +1,7 @@
 package exsample.jsf.presentation.userregistration;
 
-import ee.domain.annotation.controller.Action;
-import ee.domain.annotation.controller.Controller;
-import ee.domain.annotation.controller.EndConversation;
+import spec.annotation.presentation.controller.Controller;
+import spec.annotation.presentation.controller.EndConversation;
 import exsample.jsf.application.service.RemoveUser;
 import exsample.jsf.application.service.UserService;
 import exsample.jsf.domain.model.user.User;
@@ -10,7 +9,6 @@ import exsample.jsf.domain.model.user.UserId;
 import javax.inject.Inject;
 
 @Controller
-@Action
 public class UserRemovalAction {
 
     private UserRegistrationPage registrationForm;
@@ -33,13 +31,13 @@ public class UserRemovalAction {
         User user = new User(new UserId(userId));
         User requestUser = userService.registeredUser(user);
         this.registrationForm.update(requestUser);
-        return "removeconfirm.xhtml";
+        return "remove-confirm.xhtml";
     }
 
     public String remove() {
         User requestUser = this.registrationForm.toUser();
         removeUser.with(requestUser);
-        return "removecomplete.xhtml";
+        return "remove-complete.xhtml";
     }
 
     @EndConversation

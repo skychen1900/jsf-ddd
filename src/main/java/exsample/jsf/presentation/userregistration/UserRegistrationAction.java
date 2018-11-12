@@ -1,7 +1,8 @@
 package exsample.jsf.presentation.userregistration;
 
-import ee.domain.annotation.controller.Controller;
-import ee.domain.annotation.controller.EndConversation;
+import spec.annotation.presentation.controller.Controller;
+import spec.annotation.presentation.controller.EndConversation;
+import spec.annotation.presentation.controller.ViewContext;
 import exsample.jsf.application.service.RegisterUser;
 import exsample.jsf.application.service.UserService;
 import exsample.jsf.domain.model.user.User;
@@ -10,6 +11,7 @@ import javax.inject.Inject;
 @Controller
 public class UserRegistrationAction {
 
+    @ViewContext
     private UserRegistrationPage registrationPage;
 
     private UserService userService;
@@ -28,17 +30,17 @@ public class UserRegistrationAction {
 
     public String fwPersist() {
         this.registrationPage.init();
-        return "persistedit.xhtml";
+        return "persist-edit.xhtml";
     }
 
     public String confirm() {
         User requestUser = this.registrationPage.toUser();
         registerUser.validatePreCondition(requestUser);
-        return "persistconfirm.xhtml";
+        return "persist-confirm.xhtml";
     }
 
     public String modify() {
-        return "persistedit.xhtml";
+        return "persist-edit.xhtml";
     }
 
     public String register() {
@@ -46,7 +48,7 @@ public class UserRegistrationAction {
         registerUser.with(requestUser);
         User responseUser = userService.persistedUser(requestUser);
         this.registrationPage.update(responseUser);
-        return "persistcomplete.xhtml";
+        return "persist-complete.xhtml";
     }
 
     @EndConversation

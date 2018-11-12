@@ -6,7 +6,7 @@
 
     <factory>
         <exception-handler-factory>
-            ee.infrastructure.jsf.CustomExceptionHandlerFactory
+            ee.jsf.exceptionhandler.CustomExceptionHandlerFactory
         </exception-handler-factory>
     </factory>
 

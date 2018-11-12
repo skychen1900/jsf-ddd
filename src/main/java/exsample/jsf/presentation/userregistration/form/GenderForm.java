@@ -16,10 +16,10 @@
  */
 package exsample.jsf.presentation.userregistration.form;
 
-import ddd.presentation.DefaultForm;
 import exsample.jsf.domain.model.user.Gender;
 import exsample.jsf.domain.model.user.GenderType;
 import java.io.Serializable;
+import spec.presentation.view.DefaultForm;
 
 /**
  * 性別を表示するFormです

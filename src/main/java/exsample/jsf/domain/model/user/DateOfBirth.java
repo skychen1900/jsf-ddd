@@ -20,6 +20,7 @@ import exsample.jsf.domain.validation.DateTimeFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
+import javax.annotation.Nonnull;
 
 /**
  *
@@ -27,6 +28,7 @@ import java.util.Objects;
  */
 public class DateOfBirth {
 
+    @Nonnull
     @DateTimeFormat
     private final String value;
 

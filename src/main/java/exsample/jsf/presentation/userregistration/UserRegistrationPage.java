@@ -16,9 +16,11 @@
  */
 package exsample.jsf.presentation.userregistration;
 
-import ddd.domain.javabean.annotation.FieldOrder;
-import ddd.domain.validation.Validator;
-import ee.domain.annotation.view.View;
+import spec.annotation.FieldOrder;
+import spec.validation.Validator;
+import spec.annotation.presentation.view.InvalidMessageMapping;
+import spec.annotation.presentation.view.View;
+import exsample.jsf.application.service.RegisterUser;
 import exsample.jsf.domain.model.user.GenderType;
 import exsample.jsf.domain.model.user.User;
 import exsample.jsf.domain.model.user.UserId;
@@ -30,7 +32,6 @@ import exsample.jsf.presentation.userregistration.form.PhoneNumberForm;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
-import javax.faces.component.UIComponent;
 import javax.inject.Inject;
 import javax.validation.Valid;
 
@@ -49,6 +50,7 @@ public class UserRegistrationPage implements Serializable {
 
     @Valid
     @FieldOrder(1)
+    @InvalidMessageMapping(RegisterUser.Error.SAME_EMAIL_USER_ALREADY_EXIST)
     private EmailForm userEmail;
 
     @Valid
@@ -107,8 +109,8 @@ public class UserRegistrationPage implements Serializable {
         return map;
     }
 
-    public String targetFor(UIComponent component, String targetName) {
-        return component.getClientId() + "-" + targetName;
+    public String targetFor(String clientId, String targetName) {
+        return clientId + "-" + targetName;
     }
 
     public void setGender(Integer index) {

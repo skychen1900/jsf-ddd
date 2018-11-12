@@ -16,7 +16,7 @@
  */
 package exsample.jsf.domain.model.user;
 
-import ddd.domain.exception.UnexpectedApplicationException;
+import spec.exception.UnexpectedApplicationException;
 import java.util.List;
 import java.util.Optional;
 

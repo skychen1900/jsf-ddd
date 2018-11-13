@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+    <head jsfc="h:head">
+        <title>JSF</title>
+
+        <ui:remove>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.css"/>
+            <link rel="stylesheet" href="../../../../resources/css/userregistration.css"/>
+        </ui:remove>
+
+        <h:outputStylesheet library="css" name="userregistration.css" />
+
+    </head>
+    <body jsfc="h:body">
+        <div class="ui container">
+            <div class="ui basic segment">
+                <h1 class="ui header">利用者情報の更新完了</h1>
+            </div>
+
+            <div id="completeMessage" class="ui inverted segment">
+                <p>#{userRegistrationPage.name}(#{userRegistrationPage.email}) さんの情報を更新しました。</p>
+            </div>
+
+            <h:form id="f">
+                <div class="ui basic segment">
+                    <a href="#" jsf:action="#{userUpdateAction.fwTop()}" jsf:id="fwTopPage">利用者一覧へ</a>
+
+                </div>
+            </h:form>
+
+        </div>
+
+    </body>
+</html>

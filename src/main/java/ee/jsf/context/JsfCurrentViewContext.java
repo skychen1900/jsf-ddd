@@ -21,7 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import javax.enterprise.context.Dependent;
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import spec.interfaces.infrastructure.CurrentViewContext;
 
@@ -30,15 +31,22 @@ import spec.interfaces.infrastructure.CurrentViewContext;
  *
  * @author Yamashita,Takahiro
  */
-@Dependent
+@RequestScoped
 public class JsfCurrentViewContext implements CurrentViewContext {
+
+    FacesContext context;
+
+    @PostConstruct
+    private void init() {
+        context = FacesContext.getCurrentInstance();
+    }
 
     /**
      * {@inheritDoc }
      */
     @Override
     public String currentViewId() {
-        return FacesContext.getCurrentInstance().getViewRoot().getViewId();
+        return context.getViewRoot().getViewId();
     }
 
     /**
@@ -52,7 +60,7 @@ public class JsfCurrentViewContext implements CurrentViewContext {
         }
         Map<String, List<String>> parameters = new HashMap<>();
         parameters.put("faces-redirect", Arrays.asList("true"));
-        return FacesContext.getCurrentInstance().getExternalContext().encodeRedirectURL(_baseUrl, parameters);
+        return context.getExternalContext().encodeRedirectURL(_baseUrl, parameters);
     }
 
     /**
@@ -60,7 +68,7 @@ public class JsfCurrentViewContext implements CurrentViewContext {
      */
     @Override
     public Locale clientLocate() {
-        return FacesContext.getCurrentInstance().getViewRoot().getLocale();
+        return context.getViewRoot().getLocale();
     }
 
 }

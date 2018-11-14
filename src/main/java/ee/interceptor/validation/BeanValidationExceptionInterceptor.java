@@ -4,7 +4,6 @@
  */
 package ee.interceptor.validation;
 
-import ee.jsf.messages.JsfMessageConverter;
 import ee.validation.ConstraintViolationsHandler;
 import ee.validation.ViewContextScanner;
 import java.util.List;
@@ -33,7 +32,7 @@ public class BeanValidationExceptionInterceptor {
     private final MessageHandler messageHandler;
 
     @Inject
-    public BeanValidationExceptionInterceptor(CurrentViewContext context, JsfMessageConverter messageConverter, MessageHandler messageHandler) {
+    public BeanValidationExceptionInterceptor(CurrentViewContext context, MessageConverter messageConverter, MessageHandler messageHandler) {
         this.context = context;
         this.messageConverter = messageConverter;
         this.messageHandler = messageHandler;

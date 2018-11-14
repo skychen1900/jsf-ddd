@@ -30,18 +30,18 @@ import java.lang.reflect.Field;
 public class ViewContextScanner {
 
     Class<?> actionClass;
-    MessageTmplateSortKeyMap map;
+    MessageTmplateWithSortKeyMap map;
 
     private ViewContextScanner(Class<?> actionClass) {
         this.actionClass = actionClass;
-        this.map = new MessageTmplateSortKeyMap();
+        this.map = new MessageTmplateWithSortKeyMap();
     }
 
     public static ViewContextScanner of(Class<?> actionClass) {
         return new ViewContextScanner(actionClass);
     }
 
-    public MessageTmplateSortKeyMap scan() {
+    public MessageTmplateWithSortKeyMap scan() {
         Field[] fields = actionClass.getDeclaredFields();
         for (Field field : fields) {
             ViewContext viewContext = field.getAnnotation(ViewContext.class);

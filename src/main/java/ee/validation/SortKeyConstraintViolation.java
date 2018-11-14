@@ -19,6 +19,7 @@ package ee.validation;
 import javax.validation.ConstraintViolation;
 
 /**
+ * SortKeyとConstraintViolationのペアを扱うクラスです.
  *
  * @author Yamashita,Takahiro
  */

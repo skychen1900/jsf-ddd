@@ -23,14 +23,15 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
+ * MessageTemplateをKey、SortKeyをValueとしたMapを扱うクラスです
  *
  * @author Yamashita,Takahiro
  */
-public class MessageTmplateSortKeyMap {
+public class MessageTmplateWithSortKeyMap {
 
     private final Map<String, String> map;
 
-    public MessageTmplateSortKeyMap() {
+    public MessageTmplateWithSortKeyMap() {
         this.map = new HashMap<>();
     }
 
@@ -48,7 +49,7 @@ public class MessageTmplateSortKeyMap {
         return Collections.unmodifiableMap(map);
     }
 
-    public void putAll(MessageTmplateSortKeyMap keyMap) {
+    public void putAll(MessageTmplateWithSortKeyMap keyMap) {
         keyMap.getEntry().entrySet().stream()
                 .forEach(entry -> {
                     this.put(entry.getKey(), entry.getValue());

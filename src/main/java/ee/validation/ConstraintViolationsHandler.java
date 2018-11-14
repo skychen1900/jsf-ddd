@@ -45,15 +45,15 @@ public class ConstraintViolationsHandler {
 
     public static class Builder {
 
-        private final MessageTmplateSortKeyMap messageTmplateSortKeyMap;
+        private final MessageTmplateWithSortKeyMap messageTmplateSortKeyMap;
         private Set<ConstraintViolation<?>> constraintViolationSet;
 
         public Builder() {
-            messageTmplateSortKeyMap = new MessageTmplateSortKeyMap();
+            messageTmplateSortKeyMap = new MessageTmplateWithSortKeyMap();
             constraintViolationSet = new HashSet<>();
         }
 
-        public Builder messageSortkeyMap(MessageTmplateSortKeyMap messageTmplateSortKeyMap) {
+        public Builder messageSortkeyMap(MessageTmplateWithSortKeyMap messageTmplateSortKeyMap) {
             this.messageTmplateSortKeyMap.putAll(messageTmplateSortKeyMap);
             return this;
         }

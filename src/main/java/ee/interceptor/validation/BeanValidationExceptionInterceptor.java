@@ -51,7 +51,7 @@ public class BeanValidationExceptionInterceptor {
                     .constraintViolationSet(ex.getValidatedResults())
                     .build();
             List<String> messages = messageConverter.toMessages(handler.sortedConstraintViolations());
-            messageHandler.appendMessages(messages);
+            messageHandler.appendErrorMessages(messages);
             return currentViewId;
         }
 

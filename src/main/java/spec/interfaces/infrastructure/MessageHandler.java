@@ -30,12 +30,12 @@ public interface MessageHandler {
      *
      * @param message 出力メッセージ
      */
-    public void appendMessage(String message);
+    public void appendErrorMessage(String message);
 
     /**
      * クライアントのメッセージ領域に検証結果を出力します.
      *
      * @param messages 出力メッセージ
      */
-    public void appendMessages(List<String> messages);
+    public void appendErrorMessages(List<String> messages);
 }

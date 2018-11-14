@@ -50,7 +50,7 @@ public class ExecuteOnceInterceptor {
     Object toErrorPage(ExecuteOnce annotation) {
         String message = annotation.message();
         if (Objects.equals(message, "") == false) {
-            messageHandler.appendMessage(message);
+            messageHandler.appendErrorMessage(message);
         }
 
         // エラーページを指定していない場合は自画面へ遷移

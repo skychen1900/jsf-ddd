@@ -36,7 +36,7 @@ public class JsfMessageHandler implements MessageHandler {
      * {@inheritDoc }
      */
     @Override
-    public void appendMessage(String message) {
+    public void appendErrorMessage(String message) {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         FacesMessage facemsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null);
         facesContext.addMessage(null, facemsg);
@@ -46,7 +46,7 @@ public class JsfMessageHandler implements MessageHandler {
     }
 
     @Override
-    public void appendMessages(List<String> messages) {
+    public void appendErrorMessages(List<String> messages) {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         messages.stream()
                 .forEachOrdered(message -> {

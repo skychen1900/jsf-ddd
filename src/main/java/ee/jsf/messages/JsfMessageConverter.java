@@ -16,6 +16,7 @@
  */
 package ee.jsf.messages;
 
+import ee.validation.ConstraintViolationForMessage;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,6 +29,7 @@ import org.vermeerlab.beanvalidation.messageinterpolator.MessageInterpolator;
 import org.vermeerlab.beanvalidation.messageinterpolator.MessageInterpolatorFactory;
 import spec.interfaces.infrastructure.CurrentViewContext;
 import spec.interfaces.infrastructure.MessageConverter;
+import spec.message.ClientidMessage;
 
 /**
  *
@@ -57,10 +59,17 @@ public class JsfMessageConverter implements MessageConverter {
     @Override
     public List<String> toMessages(Collection<ConstraintViolation<?>> constraintViolations) {
         MessageInterpolator interpolator = interpolatorFactory.create(context.clientLocate());
-
         return constraintViolations.stream()
                 .map(interpolator::toMessage)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public ClientidMessage toClientidMessage(ConstraintViolationForMessage constraintViolationForMessage) {
+        MessageInterpolator interpolator = interpolatorFactory.create(context.clientLocate());
+        String message = interpolator.toMessage(constraintViolationForMessage.getConstraintViolation());
+        String targetField = constraintViolationForMessage.getClientId();
+        return new ClientidMessage(targetField, message);
     }
 
 }

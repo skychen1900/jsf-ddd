@@ -17,11 +17,13 @@
 package ee.jsf.messages;
 
 import java.util.List;
+import java.util.function.Consumer;
 import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import spec.interfaces.infrastructure.MessageHandler;
+import spec.message.ClientidMessages;
 
 /**
  * メッセージ出力する機能を提供します.
@@ -37,22 +39,44 @@ public class JsfMessageHandler implements MessageHandler {
      */
     @Override
     public void appendErrorMessage(String message) {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        FacesMessage facemsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null);
-        facesContext.addMessage(null, facemsg);
-
-        // リダイレクトしてもFacesMessageが消えないように設定
-        facesContext.getExternalContext().getFlash().setKeepMessages(true);
+        this.templateMethod(facesContext -> {
+            FacesMessage facemsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null);
+            facesContext.addMessage(null, facemsg);
+        });
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public void appendErrorMessages(List<String> messages) {
+        this.templateMethod(facesContext -> {
+            messages.stream()
+                    .forEachOrdered(message -> {
+                        FacesMessage facemsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null);
+                        facesContext.addMessage(null, facemsg);
+                    });
+        });
+    }
+
+    /**
+     * {@inheritDoc }
+     */
+    @Override
+    public void appendErrorMessages(ClientidMessages clientidMessages) {
+        this.templateMethod(facesContext -> {
+            clientidMessages.getList().stream()
+                    .forEachOrdered(clientidMessage -> {
+                        FacesMessage facemsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, clientidMessage.getMessage(), null);
+                        facesContext.addMessage(clientidMessage.getClientId(), facemsg);
+                    });
+        });
+    }
+
+    private void templateMethod(Consumer<FacesContext> consumer) {
         FacesContext facesContext = FacesContext.getCurrentInstance();
-        messages.stream()
-                .forEachOrdered(message -> {
-                    FacesMessage facemsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null);
-                    facesContext.addMessage(null, facemsg);
-                });
+
+        consumer.accept(facesContext);
 
         // リダイレクトしてもFacesMessageが消えないように設定
         facesContext.getExternalContext().getFlash().setKeepMessages(true);

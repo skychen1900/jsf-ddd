@@ -16,12 +16,16 @@
  */
 package ee.validation;
 
+import java.util.Collection;
 import static java.util.Comparator.comparing;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.validation.ConstraintViolation;
+import spec.interfaces.infrastructure.MessageConverter;
+import spec.message.ClientidMessage;
+import spec.message.ClientidMessages;
 
 /**
  *
@@ -29,32 +33,64 @@ import javax.validation.ConstraintViolation;
  */
 public class ConstraintViolationsHandler {
 
-    private final List<SortKeyConstraintViolation> sortKeyConstraintViolations;
+    private final MessageConverter messageConverter;
+    private final List<ConstraintViolationForMessage> constraintViolationForMessages;
 
-    private ConstraintViolationsHandler(List<SortKeyConstraintViolation> sortKeyConstraintViolations) {
-        this.sortKeyConstraintViolations = sortKeyConstraintViolations;
+    private ConstraintViolationsHandler(MessageConverter messageConverter, List<ConstraintViolationForMessage> constraintViolationForMessages) {
+        this.messageConverter = messageConverter;
+        this.constraintViolationForMessages = constraintViolationForMessages;
     }
 
-    public List<ConstraintViolation<?>> sortedConstraintViolations() {
-        return sortKeyConstraintViolations.stream()
-                .sorted(comparing(SortKeyConstraintViolation::getSortkey)
+    public ClientidMessages toClientMessages() {
+        List<ClientidMessage> clientidMessages = constraintViolationForMessages.stream()
+                .sorted(comparing(ConstraintViolationForMessage::getSortkey)
                         .thenComparing(s -> s.getConstraintViolation().getMessageTemplate()))
-                .map(SortKeyConstraintViolation::getConstraintViolation)
+                .map(c -> this.messageConverter.toClientidMessage(c))
                 .collect(Collectors.toList());
+        return new ClientidMessages(clientidMessages);
     }
 
     public static class Builder {
 
-        private final MessageTmplateWithSortKeyMap messageTmplateSortKeyMap;
+        private final MessageTemplateAndSortKey messageTemplateAndSortKey;
+        private MessageConverter messageConverter;
+        private final TargetClientIds targetClientIds;
         private Set<ConstraintViolation<?>> constraintViolationSet;
 
         public Builder() {
-            messageTmplateSortKeyMap = new MessageTmplateWithSortKeyMap();
+            messageTemplateAndSortKey = new MessageTemplateAndSortKey();
+            targetClientIds = new TargetClientIds();
             constraintViolationSet = new HashSet<>();
+            messageConverter = new DefaultMessageConverter();
         }
 
-        public Builder messageSortkeyMap(MessageTmplateWithSortKeyMap messageTmplateSortKeyMap) {
-            this.messageTmplateSortKeyMap.putAll(messageTmplateSortKeyMap);
+        private static class DefaultMessageConverter implements MessageConverter {
+
+            @Override
+            public List<String> toMessages(Collection<ConstraintViolation<?>> constraintViolations) {
+                return constraintViolations.stream()
+                        .map(c -> c.getMessage())
+                        .collect(Collectors.toList());
+            }
+
+            @Override
+            public ClientidMessage toClientidMessage(ConstraintViolationForMessage constraintViolationForMessage) {
+                return new ClientidMessage(null, constraintViolationForMessage.getConstraintViolation().getMessage());
+            }
+        }
+
+        public Builder messageConverter(MessageConverter messageConverter) {
+            this.messageConverter = messageConverter;
+            return this;
+        }
+
+        public Builder messageTemplateAndSortKey(MessageTemplateAndSortKey messageTmplateAndSortKey) {
+            this.messageTemplateAndSortKey.putAll(messageTmplateAndSortKey);
+            return this;
+        }
+
+        public Builder targetClientIds(Set<String> targetClientIds) {
+            this.targetClientIds.addAll(targetClientIds);
             return this;
         }
 
@@ -65,9 +101,15 @@ public class ConstraintViolationsHandler {
 
         public ConstraintViolationsHandler build() {
             return new ConstraintViolationsHandler(
-                    messageTmplateSortKeyMap.replaceSortKey(
-                            SortkeyConstraintViolationConverter.of(constraintViolationSet).toList()
-                    ));
+                    messageConverter,
+                    PresentationConstraintViolationForMessages
+                            .of(constraintViolationSet, targetClientIds)
+                            .toConstraintViolationForMessages()
+                            .updateSortkey(c -> messageTemplateAndSortKey.updateSortkey(c))
+                            .updateClientId(c -> messageTemplateAndSortKey.updateSortkey(c))
+                            .list()
+            );
+
         }
 
     }

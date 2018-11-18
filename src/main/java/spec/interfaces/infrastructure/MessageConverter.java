@@ -16,9 +16,11 @@
  */
 package spec.interfaces.infrastructure;
 
+import ee.validation.ConstraintViolationForMessage;
 import java.util.Collection;
 import java.util.List;
 import javax.validation.ConstraintViolation;
+import spec.message.ClientidMessage;
 
 /**
  *
@@ -28,4 +30,5 @@ public interface MessageConverter {
 
     List<String> toMessages(Collection<ConstraintViolation<?>> constraintViolations);
 
+    public ClientidMessage toClientidMessage(ConstraintViolationForMessage constraintViolationForMessage);
 }

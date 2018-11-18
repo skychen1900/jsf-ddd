@@ -4,9 +4,9 @@
  */
 package ee.interceptor.validation;
 
+import ee.jsf.context.UIComponentHandler;
 import ee.validation.ConstraintViolationsHandler;
 import ee.validation.ViewContextScanner;
-import java.util.List;
 import javax.annotation.Priority;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
@@ -31,11 +31,14 @@ public class BeanValidationExceptionInterceptor {
 
     private final MessageHandler messageHandler;
 
+    private final UIComponentHandler uiComponentHandler;
+
     @Inject
-    public BeanValidationExceptionInterceptor(CurrentViewContext context, MessageConverter messageConverter, MessageHandler messageHandler) {
+    public BeanValidationExceptionInterceptor(CurrentViewContext context, MessageConverter messageConverter, MessageHandler messageHandler, UIComponentHandler uiComponentHandler) {
         this.context = context;
         this.messageConverter = messageConverter;
         this.messageHandler = messageHandler;
+        this.uiComponentHandler = uiComponentHandler;
     }
 
     @AroundInvoke
@@ -47,11 +50,12 @@ public class BeanValidationExceptionInterceptor {
             return ic.proceed();
         } catch (BeanValidationException ex) {
             ConstraintViolationsHandler handler = new ConstraintViolationsHandler.Builder()
-                    .messageSortkeyMap(ViewContextScanner.of(ic.getTarget().getClass().getSuperclass()).scan())
+                    .messageConverter(messageConverter)
+                    .messageTemplateAndSortKey(ViewContextScanner.of(ic.getTarget().getClass().getSuperclass()).messageTmplateAndSortKey())
+                    .targetClientIds(uiComponentHandler.filterMessageTargets())
                     .constraintViolationSet(ex.getValidatedResults())
                     .build();
-            List<String> messages = messageConverter.toMessages(handler.sortedConstraintViolations());
-            messageHandler.appendErrorMessages(messages);
+            messageHandler.appendErrorMessages(handler.toClientMessages());
             return currentViewId;
         }
 

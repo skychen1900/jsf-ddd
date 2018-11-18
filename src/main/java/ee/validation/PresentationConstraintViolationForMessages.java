@@ -16,43 +16,62 @@
  */
 package ee.validation;
 
-import spec.annotation.FieldOrder;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.validation.ConstraintViolation;
+import spec.annotation.FieldOrder;
+import spec.annotation.presentation.view.View;
 
 /**
- * ConstraintViolationを{@link spec.annotation.FieldOrder} で指定した順にソートする機能を提供します.
+ * クライアントメッセージの出力に必要な情報をPresentation層から取得して
+ * ConstraintViolationと関連付ける機能を提供します.
+ * <P>
+ * <ul>
+ * <li>{@link spec.annotation.FieldOrder} で指定したソート情報を付与します</li>
+ * <li>UIComponentで指定した{@code for} で指定した情報がある場合は その項目を対象に、出力対象にない場合は 全体メッセージの対象にします</li>
+ * </ul>
  *
  * @author Yamashita,Takahiro
  */
-class SortkeyConstraintViolationConverter {
+class PresentationConstraintViolationForMessages {
 
     private final Set<ConstraintViolation<?>> constraintViolationSet;
+    private final TargetClientIds targetClientIds;
 
-    private SortkeyConstraintViolationConverter(Set<ConstraintViolation<?>> constraintViolationSet) {
+    PresentationConstraintViolationForMessages(Set<ConstraintViolation<?>> constraintViolationSet, TargetClientIds targetClientIds) {
         this.constraintViolationSet = constraintViolationSet;
+        this.targetClientIds = targetClientIds;
     }
 
-    static SortkeyConstraintViolationConverter of(Set<ConstraintViolation<?>> constraintViolationSet) {
-        return new SortkeyConstraintViolationConverter(constraintViolationSet);
+    static PresentationConstraintViolationForMessages of(Set<ConstraintViolation<?>> constraintViolationSet, TargetClientIds targetClientIds) {
+        return new PresentationConstraintViolationForMessages(constraintViolationSet, targetClientIds);
     }
 
-    List<SortKeyConstraintViolation> toList() {
+    List<ConstraintViolationForMessage> toList() {
         return constraintViolationSet.stream()
-                .map(this::makeSortKey)
+                .map(this::toConstraintViolationForMessage)
                 .collect(Collectors.toList());
     }
 
+    ConstraintViolationForMessages toConstraintViolationForMessages() {
+        return new ConstraintViolationForMessages(
+                constraintViolationSet
+                        .stream()
+                        .map(this::toConstraintViolationForMessage)
+                        .collect(Collectors.toList())
+        );
+    }
+
     //
-    private SortKeyConstraintViolation makeSortKey(ConstraintViolation<?> constraintViolation) {
+    private ConstraintViolationForMessage toConstraintViolationForMessage(ConstraintViolation<?> constraintViolation) {
         Class<?> clazz = constraintViolation.getRootBeanClass();
         List<String> paths = Arrays.asList(constraintViolation.getPropertyPath().toString().split("\\."));
         String key = this.recursiveAppendKey(clazz, paths, 0, clazz.getCanonicalName());
-        return new SortKeyConstraintViolation(key, constraintViolation);
+        String targetClientId = this.toTargetClientId(clazz, paths.get(0));
+        return new ConstraintViolationForMessage(key, targetClientId, constraintViolation);
     }
 
     //
@@ -69,7 +88,7 @@ class SortkeyConstraintViolationConverter {
             Class<?> nextClass = clazz.getDeclaredField(field).getType();
             return this.recursiveAppendKey(nextClass, paths, index + 1, key);
         } catch (NoSuchFieldException | SecurityException ex) {
-            throw new ConstraintViolationSortingException("Target field or filedtype can not get.", ex);
+            throw new ConstraintViolationConverterException("Target field or filedtype can not get.", ex);
         }
     }
 
@@ -84,10 +103,18 @@ class SortkeyConstraintViolationConverter {
                 index = fieldOrder.value();
             }
         } catch (NoSuchFieldException | SecurityException ex) {
-            throw new ConstraintViolationSortingException("Target field can not get.", ex);
+            throw new ConstraintViolationConverterException("Target field can not get.", ex);
         }
 
         return String.format("%03d", index);
+    }
+
+    //
+    private String toTargetClientId(Class<?> clazz, String path) {
+        if (clazz.getAnnotation(View.class) == null) {
+            return null;
+        }
+        return this.targetClientIds.orNull(path);
     }
 
 }

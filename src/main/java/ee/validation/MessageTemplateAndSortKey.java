@@ -16,22 +16,19 @@
  */
 package ee.validation;
 
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * MessageTemplateをKey、SortKeyをValueとしたMapを扱うクラスです
  *
  * @author Yamashita,Takahiro
  */
-public class MessageTmplateWithSortKeyMap {
+public class MessageTemplateAndSortKey {
 
     private final Map<String, String> map;
 
-    public MessageTmplateWithSortKeyMap() {
+    public MessageTemplateAndSortKey() {
         this.map = new HashMap<>();
     }
 
@@ -45,24 +42,19 @@ public class MessageTmplateWithSortKeyMap {
         }
     }
 
-    public Map<String, String> getEntry() {
-        return Collections.unmodifiableMap(map);
-    }
-
-    public void putAll(MessageTmplateWithSortKeyMap keyMap) {
-        keyMap.getEntry().entrySet().stream()
+    public void putAll(MessageTemplateAndSortKey keyMap) {
+        keyMap.map.entrySet().stream()
                 .forEach(entry -> {
                     this.put(entry.getKey(), entry.getValue());
                 });
     }
 
-    public List<SortKeyConstraintViolation> replaceSortKey(List<SortKeyConstraintViolation> sortkeyConstraintViolations) {
-        return sortkeyConstraintViolations.stream()
-                .map(e -> {
-                    String sortKey = map.getOrDefault(e.getConstraintViolation().getMessageTemplate(), e.getSortkey());
-                    return new SortKeyConstraintViolation(sortKey, e.getConstraintViolation());
-                })
-                .collect(Collectors.toList());
-    }
+    public ConstraintViolationForMessage updateSortkey(ConstraintViolationForMessage constraintViolationForMessage) {
+        String sortkey = map.getOrDefault(constraintViolationForMessage.getConstraintViolation().getMessageTemplate(),
+                                          constraintViolationForMessage.getSortkey());
+        return new ConstraintViolationForMessage(sortkey,
+                                                 constraintViolationForMessage.getClientId(),
+                                                 constraintViolationForMessage.getConstraintViolation());
 
+    }
 }

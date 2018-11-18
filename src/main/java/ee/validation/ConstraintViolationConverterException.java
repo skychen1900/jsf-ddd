@@ -21,26 +21,26 @@ package ee.validation;
  *
  * @author Yamashita,Takahiro
  */
-public class ConstraintViolationSortingException extends RuntimeException {
+public class ConstraintViolationConverterException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
-    public ConstraintViolationSortingException() {
+    public ConstraintViolationConverterException() {
     }
 
-    public ConstraintViolationSortingException(String message) {
+    public ConstraintViolationConverterException(String message) {
         super(message);
     }
 
-    public ConstraintViolationSortingException(String message, Throwable cause) {
+    public ConstraintViolationConverterException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public ConstraintViolationSortingException(Throwable cause) {
+    public ConstraintViolationConverterException(Throwable cause) {
         super(cause);
     }
 
-    public ConstraintViolationSortingException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    public ConstraintViolationConverterException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 

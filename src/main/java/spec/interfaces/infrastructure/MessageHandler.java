@@ -17,6 +17,7 @@
 package spec.interfaces.infrastructure;
 
 import java.util.List;
+import spec.message.ClientidMessages;
 
 /**
  * クライアントにメッセージを出力する機能を提供します
@@ -38,4 +39,12 @@ public interface MessageHandler {
      * @param messages 出力メッセージ
      */
     public void appendErrorMessages(List<String> messages);
+
+    /**
+     * クライアントのメッセージ領域に検証結果を出力します.
+     *
+     * @param messages 出力メッセージ
+     */
+    public void appendErrorMessages(ClientidMessages messages);
+
 }

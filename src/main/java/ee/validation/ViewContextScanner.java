@@ -30,18 +30,18 @@ import java.lang.reflect.Field;
 public class ViewContextScanner {
 
     Class<?> actionClass;
-    MessageTmplateWithSortKeyMap map;
+    MessageTemplateAndSortKey messageTemplateAndSortKey;
 
     private ViewContextScanner(Class<?> actionClass) {
         this.actionClass = actionClass;
-        this.map = new MessageTmplateWithSortKeyMap();
+        this.messageTemplateAndSortKey = new MessageTemplateAndSortKey();
     }
 
     public static ViewContextScanner of(Class<?> actionClass) {
         return new ViewContextScanner(actionClass);
     }
 
-    public MessageTmplateWithSortKeyMap scan() {
+    public MessageTemplateAndSortKey messageTmplateAndSortKey() {
         Field[] fields = actionClass.getDeclaredFields();
         for (Field field : fields) {
             ViewContext viewContext = field.getAnnotation(ViewContext.class);
@@ -50,7 +50,7 @@ public class ViewContextScanner {
             }
             resursiveAppendField(field.getType(), field.getType().getCanonicalName());
         }
-        return map;
+        return messageTemplateAndSortKey;
     }
 
     //
@@ -70,7 +70,7 @@ public class ViewContextScanner {
             String[] messages = invalidMessageMapping.value();
 
             for (String message : messages) {
-                map.put(message, key);
+                messageTemplateAndSortKey.put(message, key);
             }
 
             this.resursiveAppendField(field.getType(), key);

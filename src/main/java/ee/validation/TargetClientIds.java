@@ -44,16 +44,15 @@ public class TargetClientIds {
     public ConstraintViolationForMessage updateTargetClientId(ConstraintViolationForMessage constraintViolationForMessage) {
         String clientId = clientId(constraintViolationForMessage);
 
-        return new ConstraintViolationForMessage(constraintViolationForMessage.getSortkey(),
+        return new ConstraintViolationForMessage(constraintViolationForMessage.getSortKey(),
                                                  clientId,
                                                  constraintViolationForMessage.getConstraintViolation());
 
     }
 
     private String clientId(ConstraintViolationForMessage constraintViolationForMessage) {
-        if (constraintViolationForMessage.getClientId() != null) {
-            return constraintViolationForMessage.getClientId();
-        }
-        return null;
+        return constraintViolationForMessage.getClientId() != null
+               ? constraintViolationForMessage.getClientId()
+               : null;
     }
 }

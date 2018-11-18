@@ -16,10 +16,10 @@
  */
 package ee.validation;
 
-import spec.annotation.FieldOrder;
-import spec.annotation.presentation.view.InvalidMessageMapping;
-import spec.annotation.presentation.controller.ViewContext;
 import java.lang.reflect.Field;
+import spec.annotation.FieldOrder;
+import spec.annotation.presentation.controller.ViewContext;
+import spec.annotation.presentation.view.InvalidMessageMapping;
 
 /**
  * {@link spec.annotation.presentation.view.InvalidMessageMapping}が付与されたフィールド情報を取得して{@link spec.annotation.FieldOrder} 順で
@@ -30,18 +30,18 @@ import java.lang.reflect.Field;
 public class ViewContextScanner {
 
     Class<?> actionClass;
-    MessageTemplateAndSortKey messageTemplateAndSortKey;
+    MessageMappingInfos messageMappingInfos;
 
     private ViewContextScanner(Class<?> actionClass) {
         this.actionClass = actionClass;
-        this.messageTemplateAndSortKey = new MessageTemplateAndSortKey();
+        this.messageMappingInfos = new MessageMappingInfos();
     }
 
     public static ViewContextScanner of(Class<?> actionClass) {
         return new ViewContextScanner(actionClass);
     }
 
-    public MessageTemplateAndSortKey messageTmplateAndSortKey() {
+    public MessageMappingInfos messageTmplateAndSortKey() {
         Field[] fields = actionClass.getDeclaredFields();
         for (Field field : fields) {
             ViewContext viewContext = field.getAnnotation(ViewContext.class);
@@ -50,7 +50,7 @@ public class ViewContextScanner {
             }
             resursiveAppendField(field.getType(), field.getType().getCanonicalName());
         }
-        return messageTemplateAndSortKey;
+        return messageMappingInfos;
     }
 
     //
@@ -70,7 +70,7 @@ public class ViewContextScanner {
             String[] messages = invalidMessageMapping.value();
 
             for (String message : messages) {
-                messageTemplateAndSortKey.put(message, key);
+                messageMappingInfos.put(new MessageMappingInfo(message, key, null));
             }
 
             this.resursiveAppendField(field.getType(), key);

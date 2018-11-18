@@ -43,7 +43,7 @@ public class ConstraintViolationsHandler {
 
     public ClientidMessages toClientMessages() {
         List<ClientidMessage> clientidMessages = constraintViolationForMessages.stream()
-                .sorted(comparing(ConstraintViolationForMessage::getSortkey)
+                .sorted(comparing(ConstraintViolationForMessage::getSortKey)
                         .thenComparing(s -> s.getConstraintViolation().getMessageTemplate()))
                 .map(c -> this.messageConverter.toClientidMessage(c))
                 .collect(Collectors.toList());
@@ -52,13 +52,13 @@ public class ConstraintViolationsHandler {
 
     public static class Builder {
 
-        private final MessageTemplateAndSortKey messageTemplateAndSortKey;
+        private final MessageMappingInfos messageMappingInfos;
         private MessageConverter messageConverter;
         private final TargetClientIds targetClientIds;
         private Set<ConstraintViolation<?>> constraintViolationSet;
 
         public Builder() {
-            messageTemplateAndSortKey = new MessageTemplateAndSortKey();
+            messageMappingInfos = new MessageMappingInfos();
             targetClientIds = new TargetClientIds();
             constraintViolationSet = new HashSet<>();
             messageConverter = new DefaultMessageConverter();
@@ -84,8 +84,8 @@ public class ConstraintViolationsHandler {
             return this;
         }
 
-        public Builder messageTemplateAndSortKey(MessageTemplateAndSortKey messageTmplateAndSortKey) {
-            this.messageTemplateAndSortKey.putAll(messageTmplateAndSortKey);
+        public Builder messageTemplateAndSortKey(MessageMappingInfos messageTmplateAndSortKey) {
+            this.messageMappingInfos.putAll(messageTmplateAndSortKey);
             return this;
         }
 
@@ -105,8 +105,8 @@ public class ConstraintViolationsHandler {
                     PresentationConstraintViolationForMessages
                             .of(constraintViolationSet, targetClientIds)
                             .toConstraintViolationForMessages()
-                            .updateSortkey(c -> messageTemplateAndSortKey.updateSortkey(c))
-                            .updateClientId(c -> messageTemplateAndSortKey.updateSortkey(c))
+                            .updateSortkey(c -> messageMappingInfos.updateSortkey(c))
+                            .updateClientId(c -> messageMappingInfos.updateSortkey(c))
                             .list()
             );
 

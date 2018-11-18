@@ -70,7 +70,7 @@ public class ViewContextScanner {
             String[] messages = invalidMessageMapping.value();
 
             for (String message : messages) {
-                messageMappingInfos.put(new MessageMappingInfo(message, key, null));
+                messageMappingInfos.put(message, key, field.getName());
             }
 
             this.resursiveAppendField(field.getType(), key);

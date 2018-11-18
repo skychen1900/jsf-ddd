@@ -18,6 +18,7 @@ package ee.validation;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * {@link MessageMappingInfo} の集約を扱う機能を提供します.
@@ -31,6 +32,25 @@ public class MessageMappingInfos {
 
     public MessageMappingInfos() {
         messageMappingInfos = new HashMap<>();
+    }
+
+    public void put(String message, String sortKey, String targetClientId) {
+        if (messageMappingInfos.containsKey(message) == false) {
+            MessageMappingInfo messageMappingInfo = new MessageMappingInfo(message, sortKey, targetClientId);
+            messageMappingInfos.put(message, messageMappingInfo);
+            return;
+        }
+
+        MessageMappingInfo _messageMappingInfo = messageMappingInfos.get(message);
+        String _sortKey = _messageMappingInfo.isUpdate(sortKey)
+                          ? sortKey
+                          : _messageMappingInfo.getSortKey();
+
+        Set<String> _ids = _messageMappingInfo.getTargetClientIds();
+        _ids.add(targetClientId);
+        MessageMappingInfo messageMappingInfo = new MessageMappingInfo(message, _sortKey, _ids);
+
+        this.messageMappingInfos.put(message, messageMappingInfo);
     }
 
     public void put(MessageMappingInfo messageMappingInfo) {
@@ -56,9 +76,10 @@ public class MessageMappingInfos {
     }
 
     public ConstraintViolationForMessage updateSortkey(ConstraintViolationForMessage constraintViolationForMessage) {
+
         MessageMappingInfo messageMappingInfo = messageMappingInfos.getOrDefault(
                 constraintViolationForMessage.getConstraintViolation().getMessageTemplate(),
-                new MessageMappingInfo(null, constraintViolationForMessage.getSortKey(), null));
+                MessageMappingInfo.createDummyBySortKey(constraintViolationForMessage.getSortKey()));
 
         return new ConstraintViolationForMessage(messageMappingInfo.getSortKey(),
                                                  constraintViolationForMessage.getClientId(),

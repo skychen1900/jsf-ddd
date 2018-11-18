@@ -16,7 +16,8 @@
  */
 package ee.validation;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * {@link spec.annotation.presentation.view.InvalidMessageMapping} でマークしたフィールドの情報を扱う機能を提供します.
@@ -30,16 +31,29 @@ public class MessageMappingInfo {
 
     private final String message;
     private final String sortKey;
-    private final List<String> targetClientIds;
+    private final Set<String> targetClientIds;
 
-    public MessageMappingInfo(String message, String sortKey, List<String> targetClientIds) {
+    public MessageMappingInfo(String message, String sortKey, String targetClientId) {
+        this.message = message;
+        this.sortKey = sortKey;
+
+        Set<String> _targetClientIds = new HashSet<>();
+        _targetClientIds.add(targetClientId);
+        this.targetClientIds = _targetClientIds;
+    }
+
+    public MessageMappingInfo(String message, String sortKey, Set<String> targetClientIds) {
         this.message = message;
         this.sortKey = sortKey;
         this.targetClientIds = targetClientIds;
     }
 
+    public static MessageMappingInfo createDummyBySortKey(String sortKey) {
+        return new MessageMappingInfo("", sortKey, "");
+    }
+
     public boolean isUpdate(String sortKey) {
-        return this.sortKey.compareTo(sortKey) == 1;
+        return sortKey.compareTo(sortKey) == 1;
     }
 
     public String getMessage() {
@@ -50,7 +64,7 @@ public class MessageMappingInfo {
         return sortKey;
     }
 
-    public List<String> getTargetClientIds() {
+    public Set<String> getTargetClientIds() {
         return targetClientIds;
     }
 

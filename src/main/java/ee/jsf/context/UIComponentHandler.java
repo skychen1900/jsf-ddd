@@ -16,9 +16,8 @@
  */
 package ee.jsf.context;
 
-import java.util.HashSet;
+import ee.validation.TargetClientIds;
 import java.util.List;
-import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.component.UIComponent;
@@ -39,27 +38,30 @@ public class UIComponentHandler {
         context = FacesContext.getCurrentInstance();
     }
 
-    public Set<String> filterMessageTargets() {
-        return this.targetClientId(context.getViewRoot().getChildren(), 0, new HashSet<>());
+    public TargetClientIds filterMessageTargets() {
+        return this.targetClientId(context.getViewRoot().getChildren(), 0, new TargetClientIds());
     }
 
-    private Set<String> targetClientId(List<UIComponent> uiComponents, int depth, Set<String> targetSet) {
+    private TargetClientIds targetClientId(List<UIComponent> uiComponents, int depth, TargetClientIds targetClientIds) {
         for (UIComponent uiComponent : uiComponents) {
 
             if (uiComponent instanceof HtmlMessage) {
                 Object obj = uiComponent.getAttributes().get("for");
                 if (obj != null) {
-                    targetSet.add(obj.toString());
+                    String clientId = uiComponent.getClientId();
+                    String id = uiComponent.getId();
+                    String targetId = clientId.substring(0, clientId.length() - id.length()) + obj.toString();
+                    targetClientIds.put(obj.toString(), targetId);
                 }
             }
 
             if (uiComponent.getChildren().isEmpty() == false) {
-                this.targetClientId(uiComponent.getChildren(), depth + 1, targetSet);
+                this.targetClientId(uiComponent.getChildren(), depth + 1, targetClientIds);
             }
 
         }
 
-        return targetSet;
+        return targetClientIds;
 
     }
 

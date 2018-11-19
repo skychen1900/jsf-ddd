@@ -18,7 +18,6 @@ package ee.validation;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * {@link MessageMappingInfo} の集約を扱う機能を提供します.
@@ -46,10 +45,10 @@ public class MessageMappingInfos {
                           ? sortKey
                           : _messageMappingInfo.getSortKey();
 
-        Set<String> _ids = _messageMappingInfo.getTargetClientIds();
-        _ids.add(targetClientId);
-        MessageMappingInfo messageMappingInfo = new MessageMappingInfo(message, _sortKey, _ids);
+        TargetClientIds _ids = _messageMappingInfo.getTargetClientIds();
+        _ids.put(targetClientId);
 
+        MessageMappingInfo messageMappingInfo = new MessageMappingInfo(message, _sortKey, _ids);
         this.messageMappingInfos.put(message, messageMappingInfo);
     }
 
@@ -82,7 +81,7 @@ public class MessageMappingInfos {
                 MessageMappingInfo.createDummyBySortKey(constraintViolationForMessage.getSortKey()));
 
         return new ConstraintViolationForMessage(messageMappingInfo.getSortKey(),
-                                                 constraintViolationForMessage.getClientId(),
+                                                 constraintViolationForMessage.getId(),
                                                  constraintViolationForMessage.getConstraintViolation());
     }
 }

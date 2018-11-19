@@ -68,6 +68,7 @@ public class JsfMessageHandler implements MessageHandler {
             clientidMessages.getList().stream()
                     .forEachOrdered(clientidMessage -> {
                         FacesMessage facemsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, clientidMessage.getMessage(), null);
+                        System.err.println("clientidMessage.getClientId()::" + clientidMessage.getClientId());
                         facesContext.addMessage(clientidMessage.getClientId(), facemsg);
                     });
         });

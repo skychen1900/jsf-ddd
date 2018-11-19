@@ -50,12 +50,6 @@ class PresentationConstraintViolationForMessages {
         return new PresentationConstraintViolationForMessages(constraintViolationSet, targetClientIds);
     }
 
-    List<ConstraintViolationForMessage> toList() {
-        return constraintViolationSet.stream()
-                .map(this::toConstraintViolationForMessage)
-                .collect(Collectors.toList());
-    }
-
     ConstraintViolationForMessages toConstraintViolationForMessages() {
         return new ConstraintViolationForMessages(
                 constraintViolationSet
@@ -70,8 +64,8 @@ class PresentationConstraintViolationForMessages {
         Class<?> clazz = constraintViolation.getRootBeanClass();
         List<String> paths = Arrays.asList(constraintViolation.getPropertyPath().toString().split("\\."));
         String key = this.recursiveAppendKey(clazz, paths, 0, clazz.getCanonicalName());
-        String targetClientId = this.toTargetClientId(clazz, paths.get(0));
-        return new ConstraintViolationForMessage(key, targetClientId, constraintViolation);
+        String id = this.toId(clazz, paths.get(0));
+        return new ConstraintViolationForMessage(key, id, constraintViolation);
     }
 
     //
@@ -109,12 +103,20 @@ class PresentationConstraintViolationForMessages {
         return String.format("%03d", index);
     }
 
-    //
-    private String toTargetClientId(Class<?> clazz, String path) {
-        if (clazz.getAnnotation(View.class) == null) {
-            return null;
-        }
-        return this.targetClientIds.orNull(path);
+    /**
+     * View情報から取得される情報から判断できる情報で message出力先を編集します.
+     * <p>
+     * xhtmlのforで指定したIdが存在しない場合は、messageの宛先が無いと言えるため nullを返却します.
+     * ここではPresentation層から判断できる判断できる情報だけで編集して、他レイヤーによる更新は別に行います.
+     *
+     * @param clazz 検証不正のルートとなるクラス
+     * @param path 検証不正のルートとなるフィールド名
+     * @return xhtmlのforで指定したIdが存在しない場合は {@code null}、存在したら フィールド名を返却
+     */
+    private String toId(Class<?> clazz, String path) {
+        return clazz.getAnnotation(View.class) != null
+               ? this.targetClientIds.orNull(path)
+               : null;
     }
 
 }

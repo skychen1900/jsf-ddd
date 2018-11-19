@@ -16,7 +16,9 @@
  */
 package ee.validation;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -25,20 +27,42 @@ import java.util.Set;
  */
 public class TargetClientIds {
 
-    private final Set<String> targetClientIds;
+    /**
+     * key:Id, value clientIdのlist
+     */
+    private final Map<String, Set<String>> map;
 
     public TargetClientIds() {
-        this.targetClientIds = new HashSet<>();
+        this.map = new HashMap<>();
     }
 
-    public void addAll(Set<String> targetClientIds) {
-        this.targetClientIds.addAll(targetClientIds);
+    public void put(String id) {
+        this.put(id, id);
     }
 
-    public String orNull(String targetClientId) {
-        return this.targetClientIds.contains(targetClientId)
-               ? targetClientId
-               : null;
+    public void put(String id, String clientId) {
+        Set<String> clientIds = map.getOrDefault(id, new HashSet<>());
+        clientIds.add(clientId);
+        this.map.put(id, clientIds);
+    }
+
+    public void putAll(TargetClientIds targetClientIds) {
+        this.map.putAll(targetClientIds.map);
+    }
+
+    /**
+     * xhtmlに指定されているＩＤに合致する、フルパスのクライアントＩＤを返却します.
+     * <p>
+     * TODO:まだ、繰り返し領域を考慮していません。
+     *
+     * @param id クライアントＩＤ（フルパスではない）
+     * @return 指定のIDがxhtmlに指定されている場合はフルパスのクライアントＩＤ、存在しない場合は null を返却します.
+     */
+    public String orNull(String id) {
+        Set<String> clientIds = this.map.getOrDefault(id, new HashSet<>());
+        return clientIds.isEmpty()
+               ? null
+               : clientIds.iterator().next();
     }
 
     public ConstraintViolationForMessage updateTargetClientId(ConstraintViolationForMessage constraintViolationForMessage) {
@@ -51,8 +75,8 @@ public class TargetClientIds {
     }
 
     private String clientId(ConstraintViolationForMessage constraintViolationForMessage) {
-        return constraintViolationForMessage.getClientId() != null
-               ? constraintViolationForMessage.getClientId()
+        return constraintViolationForMessage.getId() != null
+               ? constraintViolationForMessage.getId()
                : null;
     }
 }

@@ -16,9 +16,6 @@
  */
 package ee.validation;
 
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  * {@link spec.annotation.presentation.view.InvalidMessageMapping} でマークしたフィールドの情報を扱う機能を提供します.
  * <p>
@@ -31,18 +28,18 @@ public class MessageMappingInfo {
 
     private final String message;
     private final String sortKey;
-    private final Set<String> targetClientIds;
+    private final TargetClientIds targetClientIds;
 
     public MessageMappingInfo(String message, String sortKey, String targetClientId) {
         this.message = message;
         this.sortKey = sortKey;
 
-        Set<String> _targetClientIds = new HashSet<>();
-        _targetClientIds.add(targetClientId);
+        TargetClientIds _targetClientIds = new TargetClientIds();
+        _targetClientIds.put(targetClientId);
         this.targetClientIds = _targetClientIds;
     }
 
-    public MessageMappingInfo(String message, String sortKey, Set<String> targetClientIds) {
+    public MessageMappingInfo(String message, String sortKey, TargetClientIds targetClientIds) {
         this.message = message;
         this.sortKey = sortKey;
         this.targetClientIds = targetClientIds;
@@ -53,7 +50,7 @@ public class MessageMappingInfo {
     }
 
     public boolean isUpdate(String sortKey) {
-        return sortKey.compareTo(sortKey) == 1;
+        return this.sortKey.compareTo(sortKey) == 1;
     }
 
     public String getMessage() {
@@ -64,7 +61,7 @@ public class MessageMappingInfo {
         return sortKey;
     }
 
-    public Set<String> getTargetClientIds() {
+    public TargetClientIds getTargetClientIds() {
         return targetClientIds;
     }
 

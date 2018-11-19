@@ -89,8 +89,8 @@ public class ConstraintViolationsHandler {
             return this;
         }
 
-        public Builder targetClientIds(Set<String> targetClientIds) {
-            this.targetClientIds.addAll(targetClientIds);
+        public Builder targetClientIds(TargetClientIds targetClientIds) {
+            this.targetClientIds.putAll(targetClientIds);
             return this;
         }
 
@@ -105,8 +105,7 @@ public class ConstraintViolationsHandler {
                     PresentationConstraintViolationForMessages
                             .of(constraintViolationSet, targetClientIds)
                             .toConstraintViolationForMessages()
-                            .updateSortkey(c -> messageMappingInfos.updateSortkey(c))
-                            .updateClientId(c -> messageMappingInfos.updateSortkey(c))
+                            .update(c -> messageMappingInfos.updateSortkey(c))
                             .list()
             );
 

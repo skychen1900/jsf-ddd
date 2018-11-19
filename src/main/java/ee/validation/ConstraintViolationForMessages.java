@@ -39,28 +39,14 @@ public class ConstraintViolationForMessages {
     }
 
     /**
-     * ソートキーを更新した新たなインスタンスを返却します.
+     * 関数で情報を更新した新たなインスタンスを返却します.
      * <P>
      * 循環参照をさせないために関数型で呼出し元で処理します.
      *
-     * @param unaryOperator ソートキーを更新する関数
-     * @return ソートキーを更新した新たなインスタンス
+     * @param unaryOperator 更新する関数
+     * @return 更新した新たなインスタンス
      */
-    public ConstraintViolationForMessages updateSortkey(UnaryOperator<ConstraintViolationForMessage> unaryOperator) {
-        return new ConstraintViolationForMessages(
-                items.stream()
-                        .map(c -> unaryOperator.apply(c))
-                        .collect(Collectors.toList())
-        );
-    }
-
-    /**
-     * クライアントＩＤを更新した新たなインスタンスを返却します.
-     *
-     * @param unaryOperator
-     * @return
-     */
-    public ConstraintViolationForMessages updateClientId(UnaryOperator<ConstraintViolationForMessage> unaryOperator) {
+    public ConstraintViolationForMessages update(UnaryOperator<ConstraintViolationForMessage> unaryOperator) {
         return new ConstraintViolationForMessages(
                 items.stream()
                         .map(c -> unaryOperator.apply(c))

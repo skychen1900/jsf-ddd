@@ -45,6 +45,10 @@ public class UIComponentHandler {
     private TargetClientIds targetClientId(List<UIComponent> uiComponents, int depth, TargetClientIds targetClientIds) {
         for (UIComponent uiComponent : uiComponents) {
 
+            /**
+             * h:message と対象要素が並列の構造の動作確認が出来ている状態です.
+             * 繰り返し領域の対応などをする場合には、改修が必要であると想定されますが 未対応です.
+             */
             if (uiComponent instanceof HtmlMessage) {
                 Object obj = uiComponent.getAttributes().get("for");
                 if (obj != null) {

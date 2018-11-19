@@ -41,7 +41,7 @@ public class ViewContextScanner {
         return new ViewContextScanner(actionClass);
     }
 
-    public MessageMappingInfos messageTmplateAndSortKey() {
+    public MessageMappingInfos messageMappingInfosNotYetReplaceClientId() {
         Field[] fields = actionClass.getDeclaredFields();
         for (Field field : fields) {
             ViewContext viewContext = field.getAnnotation(ViewContext.class);

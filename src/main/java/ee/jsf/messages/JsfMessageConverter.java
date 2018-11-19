@@ -68,8 +68,8 @@ public class JsfMessageConverter implements MessageConverter {
     public ClientidMessage toClientidMessage(ConstraintViolationForMessage constraintViolationForMessage) {
         MessageInterpolator interpolator = interpolatorFactory.create(context.clientLocate());
         String message = interpolator.toMessage(constraintViolationForMessage.getConstraintViolation());
-        String targetField = constraintViolationForMessage.getId();
-        return new ClientidMessage(targetField, message);
+        String targetClientId = constraintViolationForMessage.getId();
+        return new ClientidMessage(targetClientId, message);
     }
 
 }

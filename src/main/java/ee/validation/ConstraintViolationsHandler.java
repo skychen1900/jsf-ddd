@@ -52,13 +52,13 @@ public class ConstraintViolationsHandler {
 
     public static class Builder {
 
-        private final MessageMappingInfos messageMappingInfos;
+        private final MessageMappingInfos messageMappingInfosNotYetReplaceClientId;
         private MessageConverter messageConverter;
         private final TargetClientIds targetClientIds;
         private Set<ConstraintViolation<?>> constraintViolationSet;
 
         public Builder() {
-            messageMappingInfos = new MessageMappingInfos();
+            messageMappingInfosNotYetReplaceClientId = new MessageMappingInfos();
             targetClientIds = new TargetClientIds();
             constraintViolationSet = new HashSet<>();
             messageConverter = new DefaultMessageConverter();
@@ -84,8 +84,8 @@ public class ConstraintViolationsHandler {
             return this;
         }
 
-        public Builder messageTemplateAndSortKey(MessageMappingInfos messageTmplateAndSortKey) {
-            this.messageMappingInfos.putAll(messageTmplateAndSortKey);
+        public Builder messageMappingInfosNotYetReplaceClientId(MessageMappingInfos messageMappingInfos) {
+            this.messageMappingInfosNotYetReplaceClientId.putAll(messageMappingInfos);
             return this;
         }
 
@@ -100,12 +100,16 @@ public class ConstraintViolationsHandler {
         }
 
         public ConstraintViolationsHandler build() {
+
+            MessageMappingInfos messageMappingInfos
+                                = this.messageMappingInfosNotYetReplaceClientId.replacedClientIds(targetClientIds);
+
             return new ConstraintViolationsHandler(
                     messageConverter,
                     PresentationConstraintViolationForMessages
                             .of(constraintViolationSet, targetClientIds)
                             .toConstraintViolationForMessages()
-                            .update(c -> messageMappingInfos.updateSortkey(c))
+                            .update(c -> messageMappingInfos.updateConstraintViolationForMessage(c))
                             .list()
             );
 

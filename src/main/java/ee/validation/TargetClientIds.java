@@ -22,6 +22,12 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * クライアントＩＤ（項目名とフルパス）を扱う機能を提供します.
+ * <p>
+ * フルパスは、繰り返し領域の場合もあるため 複数保持する構造になっています.<br>
+ * TODO:まだ、繰り返し領域を考慮していません。<br>
+ *
+ * クライアントＩＤについて、{@code null}を返却するのは、メッセージ出力先として対象となる項目が無い場合に、クライアントＩＤとして {@code null}を指定させたいためです.
  *
  * @author Yamashita,Takahiro
  */
@@ -53,30 +59,28 @@ public class TargetClientIds {
     /**
      * xhtmlに指定されているＩＤに合致する、フルパスのクライアントＩＤを返却します.
      * <p>
-     * TODO:まだ、繰り返し領域を考慮していません。
      *
      * @param id クライアントＩＤ（フルパスではない）
      * @return 指定のIDがxhtmlに指定されている場合はフルパスのクライアントＩＤ、存在しない場合は null を返却します.
      */
-    public String orNull(String id) {
+    public String getOrNull(String id) {
         Set<String> clientIds = this.map.getOrDefault(id, new HashSet<>());
         return clientIds.isEmpty()
                ? null
                : clientIds.iterator().next();
     }
 
-    public ConstraintViolationForMessage updateTargetClientId(ConstraintViolationForMessage constraintViolationForMessage) {
-        String clientId = clientId(constraintViolationForMessage);
-
-        return new ConstraintViolationForMessage(constraintViolationForMessage.getSortKey(),
-                                                 clientId,
-                                                 constraintViolationForMessage.getConstraintViolation());
-
-    }
-
-    private String clientId(ConstraintViolationForMessage constraintViolationForMessage) {
-        return constraintViolationForMessage.getId() != null
-               ? constraintViolationForMessage.getId()
-               : null;
+    /**
+     * 項目ＩＤが一致するクライアントＩＤを返却します.
+     * <p>
+     * クライアントＩＤは繰り返し領域を扱う場合を考慮し、複数保持していますが 本メソッドでは 先頭のクライアントＩＤを返却します.<br>
+     * また、項目ＩＤが一致する要素が無い場合は {@code null}を返却します
+     *
+     * @param targetClientIds
+     * @return 一致する項目ＩＤがあった場合は クライアントＩＤ（先頭）、無かった場合は {@code null}
+     */
+    public String getClientIdOrNull(TargetClientIds targetClientIds) {
+        String key = targetClientIds.map.entrySet().iterator().next().getKey();
+        return this.getOrNull(key);
     }
 }

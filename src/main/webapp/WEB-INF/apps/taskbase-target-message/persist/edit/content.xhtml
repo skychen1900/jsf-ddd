@@ -29,25 +29,26 @@
                     <div class="field">
                         <label>利用者ID</label>
                         <input class="short-input" type="text" placeholder="someone@example.com" jsf:id="email" jsf:value="#{userRegistrationPage.email}"/>
-
+                        <h:message for="email" styleClass="error-message ui left pointing red basic label" />
                     </div>
 
 
                     <div class="field">
                         <label>名前</label>
-                        <input class="short-input" type="text" placeholder="名前" pt:placeholder="名前" jsf:id="userName" jsf:value="#{userRegistrationPage.name}"/>
-
+                        <input class="short-input" type="text" placeholder="名前" pt:placeholder="名前" jsf:id="name" jsf:value="#{userRegistrationPage.name}"/>
+                        <h:message for="name" styleClass="error-message ui left pointing red basic label" />
                     </div>
 
                     <div class="field">
                         <label>生年月日</label>
                         <input class="short-input" type="text" placeholder="2000-01-01" jsf:id="dateOfBirth" jsf:value="#{userRegistrationPage.dateOfBirth}"/>
-
+                        <h:message for="dateOfBirth" styleClass="error-message ui left pointing red basic label" />
                     </div>
 
                     <div class="field">
                         <label>電話番号</label>
                         <input class="short-input" type="text" placeholder="03-1234-5678" jsf:id="phoneNumber" jsf:value="#{userRegistrationPage.phoneNumber}"/>
+                        <h:message for="phoneNumber" styleClass="error-message ui left pointing red basic label" />
                     </div>
 
                     <div class="inline fields">
@@ -86,7 +87,7 @@
 
                 </div>
 
-                <h:messages globalOnly="true" errorClass="errorMessage" showSummary="true" showDetail="false" layout="list" />
+                <h:messages globalOnly="true" errorClass="error-message" showSummary="true" showDetail="false" layout="list" />
 
                 <div class="ui basic segment">
                     <button class="ui positive basic button" jsf:id="confirmButton" jsf:action="#{userRegistrationAction.confirm()}">確認する</button>

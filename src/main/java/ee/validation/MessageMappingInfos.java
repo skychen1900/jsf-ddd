@@ -17,7 +17,9 @@
 package ee.validation;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * {@link MessageMappingInfo} の集約を扱う機能を提供します.
@@ -52,17 +54,6 @@ public class MessageMappingInfos {
         this.messageMappingInfos.put(message, messageMappingInfo);
     }
 
-    public void put(MessageMappingInfo messageMappingInfo) {
-        String message = messageMappingInfo.getMessage();
-        if (messageMappingInfos.containsKey(message) == false) {
-            messageMappingInfos.put(message, messageMappingInfo);
-        }
-
-        if (messageMappingInfos.get(message).isUpdate(messageMappingInfo.getSortKey())) {
-            messageMappingInfos.put(message, messageMappingInfo);
-        }
-    }
-
     public void putAll(MessageMappingInfos messageMappingInfos) {
         messageMappingInfos.messageMappingInfos.entrySet().stream()
                 .forEach(entry -> {
@@ -70,18 +61,73 @@ public class MessageMappingInfos {
                 });
     }
 
-    public void addAll(MessageMappingInfos messageMappingInfos) {
+    private void put(MessageMappingInfo messageMappingInfo) {
+        String message = messageMappingInfo.getMessage();
+        if (messageMappingInfos.containsKey(message) == false) {
+            messageMappingInfos.put(message, messageMappingInfo);
+            return;
+        }
 
+        MessageMappingInfo _messageMappingInfo = messageMappingInfos.get(message);
+        String _paramSortKey = messageMappingInfo.getSortKey();
+        String _sortKey = _messageMappingInfo.isUpdate(_paramSortKey)
+                          ? _paramSortKey
+                          : _messageMappingInfo.getSortKey();
+
+        TargetClientIds _ids = _messageMappingInfo.getTargetClientIds();
+        _ids.putAll(messageMappingInfo.getTargetClientIds());
+
+        this.messageMappingInfos.put(message, new MessageMappingInfo(message, _sortKey, _ids));
     }
 
-    public ConstraintViolationForMessage updateSortkey(ConstraintViolationForMessage constraintViolationForMessage) {
+    /**
+     * 項目名であるＩＤからクライアントＩＤ（フルパス）に置き換えた、新たなインスタンスを返却します.
+     * <p>
+     * TODO：まだクライアントＩＤを複数保持した機能は実装していません。（繰り返し処理を扱っていないため）
+     * {@link TargetClientIds} はクライアントＩＤを複数保持していますが、デフォルトとして先頭のクライアントＩＤで置き換えます.<br>
+     *
+     * @param targetClientIds 項目名とクライアントＩＤを置き換えるための情報
+     * @return 項目名であるＩＤからクライアントＩＤ（フルパス）に置き換えた 新たなインスタンス
+     */
+    public MessageMappingInfos replacedClientIds(TargetClientIds targetClientIds) {
 
-        MessageMappingInfo messageMappingInfo = messageMappingInfos.getOrDefault(
-                constraintViolationForMessage.getConstraintViolation().getMessageTemplate(),
-                MessageMappingInfo.createDummyBySortKey(constraintViolationForMessage.getSortKey()));
+        List<MessageMappingInfo> replaceItems = messageMappingInfos.entrySet().stream()
+                .map(entry -> {
+                    String message = entry.getKey();
 
-        return new ConstraintViolationForMessage(messageMappingInfo.getSortKey(),
-                                                 constraintViolationForMessage.getId(),
+                    MessageMappingInfo messageMappingInfo = entry.getValue();
+                    TargetClientIds clientIds = messageMappingInfo.getTargetClientIds();
+                    String replaceClientId = targetClientIds.getClientIdOrNull(clientIds);
+                    MessageMappingInfo replacedMessageMappingInfo = new MessageMappingInfo(message,
+                                                                                           messageMappingInfo.getSortKey(),
+                                                                                           replaceClientId);
+                    return replacedMessageMappingInfo;
+                })
+                .collect(Collectors.toList());
+
+        MessageMappingInfos replacedMessageMappingInfos = new MessageMappingInfos();
+        for (MessageMappingInfo replaceItem : replaceItems) {
+            replacedMessageMappingInfos.put(replaceItem);
+        }
+
+        return replacedMessageMappingInfos;
+    }
+
+    public ConstraintViolationForMessage updateConstraintViolationForMessage(ConstraintViolationForMessage constraintViolationForMessage) {
+
+        MessageMappingInfo messageMappingInfo = messageMappingInfos.get(
+                constraintViolationForMessage.getConstraintViolation().getMessageTemplate());
+
+        String _sortKey = (messageMappingInfo != null)
+                          ? messageMappingInfo.getSortKey() : constraintViolationForMessage.getSortKey();
+
+        String _id = (messageMappingInfo != null)
+                     ? messageMappingInfo.firstClientId()
+                     : constraintViolationForMessage.getId();
+
+        return new ConstraintViolationForMessage(_sortKey,
+                                                 _id,
                                                  constraintViolationForMessage.getConstraintViolation());
     }
+
 }

@@ -51,7 +51,8 @@ public class BeanValidationExceptionInterceptor {
         } catch (BeanValidationException ex) {
             ConstraintViolationsHandler handler = new ConstraintViolationsHandler.Builder()
                     .messageConverter(messageConverter)
-                    .messageTemplateAndSortKey(ViewContextScanner.of(ic.getTarget().getClass().getSuperclass()).messageTmplateAndSortKey())
+                    .messageMappingInfosNotYetReplaceClientId(
+                            ViewContextScanner.of(ic.getTarget().getClass().getSuperclass()).messageMappingInfosNotYetReplaceClientId())
                     .targetClientIds(uiComponentHandler.filterMessageTargets())
                     .constraintViolationSet(ex.getValidatedResults())
                     .build();

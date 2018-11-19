@@ -49,6 +49,10 @@ public class MessageMappingInfo {
         return new MessageMappingInfo("", sortKey, "");
     }
 
+    public static MessageMappingInfo createDummyByTargetClientId(String targetClientId) {
+        return new MessageMappingInfo("", "", targetClientId);
+    }
+
     public boolean isUpdate(String sortKey) {
         return this.sortKey.compareTo(sortKey) == 1;
     }
@@ -63,6 +67,10 @@ public class MessageMappingInfo {
 
     public TargetClientIds getTargetClientIds() {
         return targetClientIds;
+    }
+
+    public String firstClientId() {
+        return targetClientIds.getClientIdOrNull(targetClientIds);
     }
 
 }

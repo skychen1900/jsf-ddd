@@ -1,6 +1,6 @@
 /*
-検証結果の背景色
+検証結果
 */
-.text-error {
+.error-message {
     color: red;
 }

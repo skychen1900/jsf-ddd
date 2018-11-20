@@ -45,14 +45,6 @@ public class MessageMappingInfo {
         this.targetClientIds = targetClientIds;
     }
 
-    public static MessageMappingInfo createDummyBySortKey(String sortKey) {
-        return new MessageMappingInfo("", sortKey, "");
-    }
-
-    public static MessageMappingInfo createDummyByTargetClientId(String targetClientId) {
-        return new MessageMappingInfo("", "", targetClientId);
-    }
-
     public boolean isUpdate(String sortKey) {
         return this.sortKey.compareTo(sortKey) == 1;
     }

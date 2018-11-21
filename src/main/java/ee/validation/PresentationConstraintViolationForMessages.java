@@ -36,7 +36,7 @@ import spec.annotation.presentation.view.View;
  *
  * @author Yamashita,Takahiro
  */
-class PresentationConstraintViolationForMessages {
+public class PresentationConstraintViolationForMessages {
 
     private final Set<ConstraintViolation<?>> constraintViolationSet;
     private final TargetClientIds targetClientIds;
@@ -46,11 +46,11 @@ class PresentationConstraintViolationForMessages {
         this.targetClientIds = targetClientIds;
     }
 
-    static PresentationConstraintViolationForMessages of(Set<ConstraintViolation<?>> constraintViolationSet, TargetClientIds targetClientIds) {
+    public static PresentationConstraintViolationForMessages of(Set<ConstraintViolation<?>> constraintViolationSet, TargetClientIds targetClientIds) {
         return new PresentationConstraintViolationForMessages(constraintViolationSet, targetClientIds);
     }
 
-    ConstraintViolationForMessages toConstraintViolationForMessages() {
+    public ConstraintViolationForMessages toConstraintViolationForMessages() {
         return new ConstraintViolationForMessages(
                 constraintViolationSet
                         .stream()

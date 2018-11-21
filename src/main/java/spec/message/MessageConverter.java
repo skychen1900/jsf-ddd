@@ -14,13 +14,13 @@
  *
  *  Copyright ? 2018 Yamashita,Takahiro
  */
-package spec.interfaces.infrastructure;
+package spec.message;
 
-import ee.validation.ConstraintViolationForMessage;
+import ee.validation.MessageMappingInfos;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import javax.validation.ConstraintViolation;
-import spec.message.ClientidMessage;
 
 /**
  *
@@ -30,5 +30,6 @@ public interface MessageConverter {
 
     List<String> toMessages(Collection<ConstraintViolation<?>> constraintViolations);
 
-    public ClientidMessage toClientidMessage(ConstraintViolationForMessage constraintViolationForMessage);
+    public ClientidMessages toClientidMessages(Set<ConstraintViolation<?>> constraintViolationSet, MessageMappingInfos messageMappingInfosNotYetReplaceClientId);
+
 }

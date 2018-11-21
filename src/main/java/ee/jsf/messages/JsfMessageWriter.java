@@ -22,8 +22,8 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
-import spec.interfaces.infrastructure.MessageHandler;
 import spec.message.ClientidMessages;
+import spec.message.MessageWriter;
 
 /**
  * メッセージ出力する機能を提供します.
@@ -32,7 +32,7 @@ import spec.message.ClientidMessages;
  */
 @Named
 @ApplicationScoped
-public class JsfMessageHandler implements MessageHandler {
+public class JsfMessageWriter implements MessageWriter {
 
     /**
      * {@inheritDoc }

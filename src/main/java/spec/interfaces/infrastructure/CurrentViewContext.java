@@ -19,7 +19,7 @@ package spec.interfaces.infrastructure;
 import java.util.Locale;
 
 /**
- * クライアントページのURLを扱います
+ * 現在のクライアントコンテキストを扱う機能を提供します.
  *
  * @author Yamashita,Takahiro
  */

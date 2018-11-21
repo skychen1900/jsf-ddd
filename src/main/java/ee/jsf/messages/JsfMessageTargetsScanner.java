@@ -14,7 +14,7 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ee.jsf.context;
+package ee.jsf.messages;
 
 import ee.validation.TargetClientIds;
 import java.util.List;
@@ -23,13 +23,14 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlMessage;
 import javax.faces.context.FacesContext;
+import spec.message.MessageTargetsScanner;
 
 /**
  *
  * @author Yamashita,Takahiro
  */
 @RequestScoped
-public class UIComponentHandler {
+public class JsfMessageTargetsScanner implements MessageTargetsScanner {
 
     FacesContext context;
 
@@ -38,7 +39,11 @@ public class UIComponentHandler {
         context = FacesContext.getCurrentInstance();
     }
 
-    public TargetClientIds filterMessageTargets() {
+    /**
+     * {@inheritDoc }
+     */
+    @Override
+    public TargetClientIds scan() {
         return this.targetClientId(context.getViewRoot().getChildren(), 0, new TargetClientIds());
     }
 

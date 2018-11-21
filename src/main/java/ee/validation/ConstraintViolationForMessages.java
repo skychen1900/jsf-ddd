@@ -17,9 +17,13 @@
 package ee.validation;
 
 import java.util.Collections;
+import static java.util.Comparator.comparing;
 import java.util.List;
+import java.util.function.Function;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
+import spec.message.ClientidMessage;
+import spec.message.ClientidMessages;
 
 /**
  * SortKeyとConstraintViolationのペアを扱うクラスです.
@@ -52,6 +56,23 @@ public class ConstraintViolationForMessages {
                         .map(c -> unaryOperator.apply(c))
                         .collect(Collectors.toList())
         );
+    }
+
+    /**
+     * クライアントＩＤとメッセージの組み合わせた情報に変換した情報を返却します.
+     * <p>
+     * 出力順序は本メソッドで行い、メッセージの出力用変換は呼び出し側のクラスから関数によって編集を行います.
+     *
+     * @param function メッセージの出力変換を行う関数
+     * @return 変換したクライアントＩＤとメッセージの組み合わせた情報
+     */
+    public ClientidMessages toClientidMessages(Function<ConstraintViolationForMessage, ClientidMessage> function) {
+        List<ClientidMessage> clientidMessages = this.items.stream()
+                .sorted(comparing(ConstraintViolationForMessage::getSortKey)
+                        .thenComparing(s -> s.getConstraintViolation().getMessageTemplate()))
+                .map(c -> function.apply(c))
+                .collect(Collectors.toList());
+        return new ClientidMessages(clientidMessages);
     }
 
 }

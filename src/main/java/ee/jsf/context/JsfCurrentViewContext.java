@@ -27,14 +27,14 @@ import javax.faces.context.FacesContext;
 import spec.interfaces.infrastructure.CurrentViewContext;
 
 /**
- * JSFでクライアントページのURLを扱う機能を提供します.
+ * 現在のクライアントコンテキストを扱う機能を提供します.
  *
  * @author Yamashita,Takahiro
  */
 @RequestScoped
 public class JsfCurrentViewContext implements CurrentViewContext {
 
-    FacesContext context;
+    private FacesContext context;
 
     @PostConstruct
     private void init() {

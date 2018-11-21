@@ -14,7 +14,7 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package spec.interfaces.infrastructure;
+package spec.message;
 
 import java.util.List;
 import spec.message.ClientidMessages;
@@ -24,7 +24,7 @@ import spec.message.ClientidMessages;
  *
  * @author Yamashita,Takahiro
  */
-public interface MessageHandler {
+public interface MessageWriter {
 
     /**
      * クライアントのメッセージ領域に検証結果を出力します.

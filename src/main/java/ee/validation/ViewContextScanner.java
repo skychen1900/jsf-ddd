@@ -22,8 +22,10 @@ import spec.annotation.presentation.controller.ViewContext;
 import spec.annotation.presentation.view.InvalidMessageMapping;
 
 /**
- * {@link spec.annotation.presentation.view.InvalidMessageMapping}が付与されたフィールド情報を取得して{@link spec.annotation.FieldOrder} 順で
- * 並び替えた検証不正メッセージを返却する機能を提供します.
+ * Controllerと関連付くViewクラス（{@link spec.annotation.presentation.controller.ViewContext}で特定したクラス）から
+ * {@link spec.annotation.presentation.view.InvalidMessageMapping}が付与されたフィールド情報を取得する機能を提供します.
+ * <p>
+ * {@link spec.annotation.FieldOrder} により 出力するメッセージの順序を指定します。
  *
  * @author Yamashita,Takahiro
  */
@@ -41,6 +43,13 @@ public class ViewContextScanner {
         return new ViewContextScanner(actionClass);
     }
 
+    /**
+     * メッセージとプロパティを関連付けた情報を返却します.
+     * <p>
+     * 保持しているクライアントＩＤは、取得したプロパティ名のまま（クライアントＩＤへ変換する前の状態）です.
+     *
+     * @return メッセージとプロパティを関連付けた情報
+     */
     public MessageMappingInfos messageMappingInfosNotYetReplaceClientId() {
         Field[] fields = actionClass.getDeclaredFields();
         for (Field field : fields) {

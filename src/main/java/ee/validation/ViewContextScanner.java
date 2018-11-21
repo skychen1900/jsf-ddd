@@ -16,6 +16,7 @@
  */
 package ee.validation;
 
+import spec.message.validation.MessageMappingInfos;
 import java.lang.reflect.Field;
 import spec.annotation.FieldOrder;
 import spec.annotation.presentation.controller.ViewContext;

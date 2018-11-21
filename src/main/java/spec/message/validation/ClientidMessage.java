@@ -14,7 +14,7 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package spec.message;
+package spec.message.validation;
 
 /**
  * クライアントＩＤと 出力するメッセージのペアを扱う機能を提供します.

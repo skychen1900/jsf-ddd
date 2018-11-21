@@ -16,6 +16,9 @@
  */
 package ee.validation;
 
+import spec.message.validation.TargetClientIds;
+import spec.message.validation.ConstraintViolationForMessage;
+import spec.message.validation.ConstraintViolationForMessages;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;

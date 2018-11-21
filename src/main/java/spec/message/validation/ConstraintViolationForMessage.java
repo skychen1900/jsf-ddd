@@ -14,7 +14,7 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ee.validation;
+package spec.message.validation;
 
 import javax.validation.ConstraintViolation;
 

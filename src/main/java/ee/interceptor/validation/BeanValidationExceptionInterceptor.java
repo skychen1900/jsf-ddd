@@ -4,7 +4,6 @@
  */
 package ee.interceptor.validation;
 
-import ee.validation.MessageMappingInfos;
 import ee.validation.ViewContextScanner;
 import javax.annotation.Priority;
 import javax.enterprise.context.Dependent;
@@ -14,9 +13,10 @@ import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
 import spec.annotation.presentation.controller.Action;
 import spec.interfaces.infrastructure.CurrentViewContext;
-import spec.message.ClientidMessages;
 import spec.message.MessageConverter;
 import spec.message.MessageWriter;
+import spec.message.validation.ClientidMessages;
+import spec.message.validation.MessageMappingInfos;
 import spec.validation.BeanValidationException;
 
 @Action

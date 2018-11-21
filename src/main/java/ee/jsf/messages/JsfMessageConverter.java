@@ -16,11 +16,7 @@
  */
 package ee.jsf.messages;
 
-import ee.validation.ConstraintViolationForMessage;
-import ee.validation.ConstraintViolationForMessages;
-import ee.validation.MessageMappingInfos;
 import ee.validation.PresentationConstraintViolationForMessages;
-import ee.validation.TargetClientIds;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -35,9 +31,13 @@ import javax.validation.ConstraintViolation;
 import org.vermeerlab.beanvalidation.messageinterpolator.MessageInterpolator;
 import org.vermeerlab.beanvalidation.messageinterpolator.MessageInterpolatorFactory;
 import spec.interfaces.infrastructure.CurrentViewContext;
-import spec.message.ClientidMessage;
-import spec.message.ClientidMessages;
 import spec.message.MessageConverter;
+import spec.message.validation.ClientidMessage;
+import spec.message.validation.ClientidMessages;
+import spec.message.validation.ConstraintViolationForMessage;
+import spec.message.validation.ConstraintViolationForMessages;
+import spec.message.validation.MessageMappingInfos;
+import spec.message.validation.TargetClientIds;
 
 /**
  *
@@ -59,10 +59,13 @@ public class JsfMessageConverter implements MessageConverter {
     }
 
     @PostConstruct
-    public void init() {
+    protected void init() {
         this.interpolatorFactory = MessageInterpolatorFactory.of("Messages", "FormMessages", "FormLabels");
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public List<String> toMessages(Collection<ConstraintViolation<?>> constraintViolations) {
         MessageInterpolator interpolator = interpolatorFactory.create(context.clientLocate());
@@ -71,6 +74,9 @@ public class JsfMessageConverter implements MessageConverter {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public ClientidMessages toClientidMessages(Set<ConstraintViolation<?>> constraintViolationSet, MessageMappingInfos messageMappingInfosNotYetReplaceClientId) {
 

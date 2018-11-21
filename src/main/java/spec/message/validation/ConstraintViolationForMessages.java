@@ -14,19 +14,21 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ee.validation;
+package spec.message.validation;
 
-import java.util.Collections;
+import spec.message.validation.ConstraintViolationForMessage;
 import static java.util.Comparator.comparing;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
-import spec.message.ClientidMessage;
-import spec.message.ClientidMessages;
+import spec.message.validation.ClientidMessage;
+import spec.message.validation.ClientidMessage;
+import spec.message.validation.ClientidMessages;
+import spec.message.validation.ClientidMessages;
 
 /**
- * SortKeyとConstraintViolationのペアを扱うクラスです.
+ * {@link ConstraintViolationForMessage} の集約を扱う機能を提供します.
  *
  * @author Yamashita,Takahiro
  */
@@ -36,10 +38,6 @@ public class ConstraintViolationForMessages {
 
     public ConstraintViolationForMessages(List<ConstraintViolationForMessage> constraintViolationForMessages) {
         this.items = constraintViolationForMessages;
-    }
-
-    public List<ConstraintViolationForMessage> list() {
-        return Collections.unmodifiableList(items);
     }
 
     /**

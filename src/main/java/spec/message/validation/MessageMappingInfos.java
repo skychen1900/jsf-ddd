@@ -14,8 +14,9 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ee.validation;
+package spec.message.validation;
 
+import spec.message.validation.ConstraintViolationForMessage;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

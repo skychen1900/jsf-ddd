@@ -14,7 +14,7 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ee.validation;
+package spec.message.validation;
 
 import java.util.HashMap;
 import java.util.HashSet;

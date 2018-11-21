@@ -14,7 +14,7 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package spec.message;
+package spec.message.validation;
 
 import java.util.Collections;
 import java.util.List;

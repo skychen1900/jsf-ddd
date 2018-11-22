@@ -21,16 +21,14 @@ import java.util.function.Consumer;
 import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.inject.Named;
-import spec.message.validation.ClientidMessages;
 import spec.message.MessageWriter;
+import spec.message.validation.ClientidMessages;
 
 /**
  * メッセージ出力する機能を提供します.
  *
  * @author Yamashita,Takahiro
  */
-@Named
 @ApplicationScoped
 public class JsfMessageWriter implements MessageWriter {
 

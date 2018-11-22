@@ -16,16 +16,11 @@
  */
 package spec.message.validation;
 
-import spec.message.validation.ConstraintViolationForMessage;
 import static java.util.Comparator.comparing;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
-import spec.message.validation.ClientidMessage;
-import spec.message.validation.ClientidMessage;
-import spec.message.validation.ClientidMessages;
-import spec.message.validation.ClientidMessages;
 
 /**
  * {@link ConstraintViolationForMessage} の集約を扱う機能を提供します.

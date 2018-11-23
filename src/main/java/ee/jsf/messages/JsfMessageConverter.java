@@ -81,7 +81,7 @@ public class JsfMessageConverter implements MessageConverter {
     public ClientidMessages toClientidMessages(Set<ConstraintViolation<?>> constraintViolationSet, MessageMappingInfos messageMappingInfosNotYetReplaceClientId) {
 
         TargetClientIds targetClientIds = this.scanTargetClientIds(
-                FacesContext.getCurrentInstance().getViewRoot().getChildren(), 0, new TargetClientIds());
+                FacesContext.getCurrentInstance().getViewRoot().getChildren(), new TargetClientIds());
 
         MessageMappingInfos messageMappingInfos
                             = messageMappingInfosNotYetReplaceClientId.replacedClientIds(targetClientIds);
@@ -95,7 +95,7 @@ public class JsfMessageConverter implements MessageConverter {
                 .toClientidMessages(c -> this.toClientidMessage(c));
     }
 
-    private TargetClientIds scanTargetClientIds(List<UIComponent> uiComponents, int depth, TargetClientIds targetClientIds) {
+    private TargetClientIds scanTargetClientIds(List<UIComponent> uiComponents, TargetClientIds targetClientIds) {
         for (UIComponent uiComponent : uiComponents) {
 
             /**
@@ -113,7 +113,7 @@ public class JsfMessageConverter implements MessageConverter {
             }
 
             if (uiComponent.getChildren().isEmpty() == false) {
-                this.scanTargetClientIds(uiComponent.getChildren(), depth + 1, targetClientIds);
+                this.scanTargetClientIds(uiComponent.getChildren(), targetClientIds);
             }
 
         }

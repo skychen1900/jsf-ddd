@@ -4,8 +4,10 @@
  */
 package ee.jsf.exceptionhandler;
 
+import ee.interceptor.scope.conversation.ConversationLifecycleManager;
 import javax.faces.context.ExceptionHandler;
 import javax.faces.context.ExceptionHandlerFactory;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import spec.message.MessageConverter;
 import spec.message.MessageWriter;
@@ -25,7 +27,10 @@ public class CustomExceptionHandlerFactory extends ExceptionHandlerFactory {
     MessageConverter messageConverter;
 
     @Inject
-    MessageWriter messageHandler;
+    MessageWriter messageWriter;
+
+    @Inject
+    ConversationLifecycleManager conversationLifecycleManager;
 
     public CustomExceptionHandlerFactory(ExceptionHandlerFactory parent) {
         this.parent = parent;
@@ -33,7 +38,9 @@ public class CustomExceptionHandlerFactory extends ExceptionHandlerFactory {
 
     @Override
     public ExceptionHandler getExceptionHandler() {
-        ExceptionHandler handler = new CustomExceptionHandler(parent.getExceptionHandler(), messageConverter, messageHandler);
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ExceptionHandler handler = new CustomExceptionHandler(
+                parent.getExceptionHandler(), messageConverter, messageWriter, facesContext, conversationLifecycleManager);
         return handler;
     }
 }

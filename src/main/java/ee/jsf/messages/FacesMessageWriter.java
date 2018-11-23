@@ -21,6 +21,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlMessages;
 import javax.faces.context.FacesContext;
+import spec.message.CanNotMappingHtmlMessagesException;
 
 /**
  * 指定先にメッセージを出力する機能を提供します.
@@ -44,7 +45,7 @@ class FacesMessageWriter {
 
     void write(String clientId, FacesMessage facesMessage) {
         if (clientId == null && this.hasHtmlMessages == false) {
-            this.forwardErrorPage();
+            throw new CanNotMappingHtmlMessagesException(facesMessage.getSummary());
         }
         this.facesContext.addMessage(clientId, facesMessage);
     }
@@ -69,10 +70,6 @@ class FacesMessageWriter {
             }
         }
         return _hasHtmlMessages;
-    }
-
-    private void forwardErrorPage() {
-        System.err.println("to error page");
     }
 
 }

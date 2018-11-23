@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
+
+    <head jsfc="h:head">
+        <ui:remove>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.css"/>
+            <link rel="stylesheet" href="../../../../../resources/css/userregistration.css"/>
+        </ui:remove>
+        <h:outputStylesheet library="css" name="userregistration.css" />
+    </head>
+
+    <body jsfc="h:body">
+
+        <div class="ui container">
+
+            <div class="ui vertical segment">
+                <h1 class="ui header">利用者情報の変更</h1>
+            </div>
+
+            <form id="f" class="ui form" jsfc="h:form">
+
+                <div class="ui vertical segment">
+                    <div class="field">
+                        <label>利用者ID</label>
+                        <input class="short-input" type="text" placeholder="someone@example.com" jsf:id="email" jsf:value="#{userRegistrationPage.email}"/>
+                        <h:message for="email" styleClass="error-message ui left pointing red basic label" />
+                    </div>
+
+
+                    <div class="field">
+                        <label>名前</label>
+                        <input class="short-input" type="text" placeholder="名前" pt:placeholder="名前" jsf:id="name" jsf:value="#{userRegistrationPage.name}"/>
+                        <h:message for="name" styleClass="error-message ui left pointing red basic label" />
+                    </div>
+
+                    <div class="field">
+                        <label>生年月日</label>
+                        <input class="short-input" type="text" placeholder="2000-01-01" jsf:id="dateOfBirth" jsf:value="#{userRegistrationPage.dateOfBirth}"/>
+                        <h:message for="dateOfBirth" styleClass="error-message ui left pointing red basic label" />
+                    </div>
+
+                    <div class="field">
+                        <label>電話番号</label>
+                        <input class="short-input" type="text" placeholder="03-1234-5678" jsf:id="phoneNumber" jsf:value="#{userRegistrationPage.phoneNumber}"/>
+                        <h:message for="phoneNumber" styleClass="error-message ui left pointing red basic label" />
+                    </div>
+
+                    <div class="inline fields">
+
+                        <label>性別</label>
+                        <div class="field">
+                            <div class="ui radio checkbox">
+                                <input type="radio" jsf:value="MAN" pt:name="gender" jsf:id="gender0">
+                                    <f:passThroughAttributes value="#{userRegistrationPage.checked(0)}"/>
+                                    <f:ajax event="click"  listener="#{userRegistrationActionListener.changeGender(0)}"/>
+                                </input>
+                                <label for="#{userRegistrationPage.targetFor(component.clientId,'gender0')}">男性</label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui radio checkbox">
+                                <input type="radio" jsf:value="WOMAN" pt:name="gender" jsf:id="gender1">
+                                    <f:passThroughAttributes value="#{userRegistrationPage.checked(1)}"/>
+                                    <f:ajax event="click"  listener="#{userRegistrationActionListener.changeGender(1)}"/>
+                                </input>
+                                <label for="#{userRegistrationPage.targetFor(component.clientId,'gender1')}">女性</label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui radio checkbox">
+                                <input type="radio" value="OTHER" pt:name="gender" jsf:id="gender2">
+                                    <f:passThroughAttributes value="#{userRegistrationPage.checked(2)}"/>
+                                    <f:ajax event="click"  listener="#{userRegistrationActionListener.changeGender(2)}"/>
+                                </input>
+                                <label for="#{userRegistrationPage.targetFor(component.clientId,'gender2')}">その他</label>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+                <h:messages globalOnly="true" errorClass="error-message" showSummary="true" showDetail="false" layout="list" />
+
+                <div class="ui basic segment">
+                    <button class="ui positive basic button" jsf:id="confirmButton" jsf:action="#{userUpdateAction.confirm()}">確認する</button>
+                    <a href="#" jsf:id="fwSearchPage" jsf:action="#{userUpdateAction.fwTop()}">一覧に戻る</a>
+                </div>
+
+            </form>
+
+        </div>
+
+    </body>
+</html>

@@ -14,29 +14,26 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ee.validation;
+package spec.message.validation;
 
-import javax.validation.ConstraintViolation;
+import java.util.Collections;
+import java.util.List;
 
 /**
+ * {@link ClientidMessage}の集約を扱う機能を提供します.
  *
  * @author Yamashita,Takahiro
  */
-public class SortKeyConstraintViolation {
+public class ClientidMessages {
 
-    private final String sortkey;
-    private final ConstraintViolation<?> constraintViolation;
+    private final List<ClientidMessage> clientidMessages;
 
-    public SortKeyConstraintViolation(String sortkey, ConstraintViolation<?> constraintViolation) {
-        this.sortkey = sortkey;
-        this.constraintViolation = constraintViolation;
+    public ClientidMessages(List<ClientidMessage> clientidMessage) {
+        this.clientidMessages = clientidMessage;
     }
 
-    public String getSortkey() {
-        return sortkey;
+    public List<ClientidMessage> getList() {
+        return Collections.unmodifiableList(clientidMessages);
     }
 
-    public ConstraintViolation<?> getConstraintViolation() {
-        return constraintViolation;
-    }
 }

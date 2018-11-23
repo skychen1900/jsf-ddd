@@ -16,10 +16,6 @@
  */
 package exsample.jsf.presentation.userregistration;
 
-import spec.annotation.FieldOrder;
-import spec.validation.Validator;
-import spec.annotation.presentation.view.InvalidMessageMapping;
-import spec.annotation.presentation.view.View;
 import exsample.jsf.application.service.RegisterUser;
 import exsample.jsf.domain.model.user.GenderType;
 import exsample.jsf.domain.model.user.User;
@@ -34,6 +30,10 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.inject.Inject;
 import javax.validation.Valid;
+import spec.annotation.FieldOrder;
+import spec.annotation.presentation.view.InvalidMessageMapping;
+import spec.annotation.presentation.view.View;
+import spec.validation.Validator;
 
 /**
  *
@@ -51,7 +51,7 @@ public class UserRegistrationPage implements Serializable {
     @Valid
     @FieldOrder(1)
     @InvalidMessageMapping(RegisterUser.Error.SAME_EMAIL_USER_ALREADY_EXIST)
-    private EmailForm userEmail;
+    private EmailForm email;
 
     @Valid
     @FieldOrder(2)
@@ -79,7 +79,7 @@ public class UserRegistrationPage implements Serializable {
 
     public void init() {
         this.userId = new UserId();
-        this.userEmail = new EmailForm();
+        this.email = new EmailForm();
         this.name = new NameForm();
         this.dateOfBirth = new DateOfBirthForm();
         this.phoneNumber = new PhoneNumberForm();
@@ -88,7 +88,7 @@ public class UserRegistrationPage implements Serializable {
 
     public void update(User user) {
         this.userId = user.getUserId();
-        this.userEmail = new EmailForm(user.getUserEmail().getValue());
+        this.email = new EmailForm(user.getUserEmail().getValue());
         this.name = new NameForm(user.getName().getValue());
         this.dateOfBirth = new DateOfBirthForm(user.getDateOfBirth().getValue());
         this.phoneNumber = new PhoneNumberForm(user.getPhoneNumber().getValue());
@@ -97,7 +97,7 @@ public class UserRegistrationPage implements Serializable {
 
     public User toUser() {
         this.validator.validate(this);
-        return new User(this.userId, userEmail.getValue(), name.getValue(), dateOfBirth.getValue(), phoneNumber.getValue(), gender.getValue());
+        return new User(this.userId, email.getValue(), name.getValue(), dateOfBirth.getValue(), phoneNumber.getValue(), gender.getValue());
     }
 
     public Map<String, String> checked(Integer index) {
@@ -118,7 +118,7 @@ public class UserRegistrationPage implements Serializable {
     }
 
     public void setEmail(String email) {
-        this.userEmail = new EmailForm(email);
+        this.email = new EmailForm(email);
     }
 
     public void setName(String name) {
@@ -134,7 +134,7 @@ public class UserRegistrationPage implements Serializable {
     }
 
     public String getEmail() {
-        return userEmail.display();
+        return email.display();
     }
 
     public String getName() {

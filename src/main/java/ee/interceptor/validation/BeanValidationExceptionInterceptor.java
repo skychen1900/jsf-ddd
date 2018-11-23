@@ -4,10 +4,7 @@
  */
 package ee.interceptor.validation;
 
-import ee.jsf.messages.JsfMessageConverter;
-import ee.validation.ConstraintViolationsHandler;
 import ee.validation.ViewContextScanner;
-import java.util.List;
 import javax.annotation.Priority;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
@@ -16,8 +13,10 @@ import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
 import spec.annotation.presentation.controller.Action;
 import spec.interfaces.infrastructure.CurrentViewContext;
-import spec.interfaces.infrastructure.MessageConverter;
-import spec.interfaces.infrastructure.MessageHandler;
+import spec.message.MessageConverter;
+import spec.message.MessageWriter;
+import spec.message.validation.ClientidMessages;
+import spec.message.validation.MessageMappingInfos;
 import spec.validation.BeanValidationException;
 
 @Action
@@ -29,14 +28,13 @@ public class BeanValidationExceptionInterceptor {
     private final CurrentViewContext context;
 
     private final MessageConverter messageConverter;
-
-    private final MessageHandler messageHandler;
+    private final MessageWriter messageWriter;
 
     @Inject
-    public BeanValidationExceptionInterceptor(CurrentViewContext context, JsfMessageConverter messageConverter, MessageHandler messageHandler) {
+    public BeanValidationExceptionInterceptor(CurrentViewContext context, MessageConverter messageConverter, MessageWriter messageWriter) {
         this.context = context;
         this.messageConverter = messageConverter;
-        this.messageHandler = messageHandler;
+        this.messageWriter = messageWriter;
     }
 
     @AroundInvoke
@@ -47,12 +45,15 @@ public class BeanValidationExceptionInterceptor {
         try {
             return ic.proceed();
         } catch (BeanValidationException ex) {
-            ConstraintViolationsHandler handler = new ConstraintViolationsHandler.Builder()
-                    .messageSortkeyMap(ViewContextScanner.of(ic.getTarget().getClass().getSuperclass()).scan())
-                    .constraintViolationSet(ex.getValidatedResults())
-                    .build();
-            List<String> messages = messageConverter.toMessages(handler.sortedConstraintViolations());
-            messageHandler.appendMessages(messages);
+            MessageMappingInfos messageMappingInfosNotYetReplaceClientId
+                                = ViewContextScanner
+                            .of(ic.getTarget().getClass().getSuperclass())
+                            .messageMappingInfosNotYetReplaceClientId();
+
+            ClientidMessages clientidMessages
+                             = messageConverter.toClientidMessages(ex.getValidatedResults(), messageMappingInfosNotYetReplaceClientId);
+
+            messageWriter.appendErrorMessages(clientidMessages);
             return currentViewId;
         }
 

@@ -14,28 +14,37 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package spec.interfaces.infrastructure;
+package spec.message;
 
 import java.util.List;
+import spec.message.validation.ClientidMessages;
 
 /**
  * クライアントにメッセージを出力する機能を提供します
  *
  * @author Yamashita,Takahiro
  */
-public interface MessageHandler {
+public interface MessageWriter {
 
     /**
      * クライアントのメッセージ領域に検証結果を出力します.
      *
      * @param message 出力メッセージ
      */
-    public void appendMessage(String message);
+    public void appendErrorMessage(String message);
 
     /**
      * クライアントのメッセージ領域に検証結果を出力します.
      *
      * @param messages 出力メッセージ
      */
-    public void appendMessages(List<String> messages);
+    public void appendErrorMessages(List<String> messages);
+
+    /**
+     * クライアントのメッセージ領域に検証結果を出力します.
+     *
+     * @param messages 出力メッセージ
+     */
+    public void appendErrorMessages(ClientidMessages messages);
+
 }

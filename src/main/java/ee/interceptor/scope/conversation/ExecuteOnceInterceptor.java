@@ -12,7 +12,7 @@ import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
 import spec.annotation.presentation.controller.ExecuteOnce;
 import spec.interfaces.infrastructure.CurrentViewContext;
-import spec.interfaces.infrastructure.MessageHandler;
+import spec.message.MessageWriter;
 
 @ExecuteOnce
 @Interceptor
@@ -21,10 +21,10 @@ public class ExecuteOnceInterceptor {
 
     private final DoubleSubmitLifecycle doubleSubmitLifecycle;
     private final CurrentViewContext context;
-    private final MessageHandler messageHandler;
+    private final MessageWriter messageHandler;
 
     @Inject
-    public ExecuteOnceInterceptor(DoubleSubmitLifecycle doubleSubmitLifecycle, CurrentViewContext context, MessageHandler messageHandler) {
+    public ExecuteOnceInterceptor(DoubleSubmitLifecycle doubleSubmitLifecycle, CurrentViewContext context, MessageWriter messageHandler) {
         this.doubleSubmitLifecycle = doubleSubmitLifecycle;
         this.context = context;
         this.messageHandler = messageHandler;
@@ -50,7 +50,7 @@ public class ExecuteOnceInterceptor {
     Object toErrorPage(ExecuteOnce annotation) {
         String message = annotation.message();
         if (Objects.equals(message, "") == false) {
-            messageHandler.appendMessage(message);
+            messageHandler.appendErrorMessage(message);
         }
 
         // エラーページを指定していない場合は自画面へ遷移

@@ -18,8 +18,8 @@ import javax.faces.event.ExceptionQueuedEvent;
 import javax.faces.event.ExceptionQueuedEventContext;
 import org.vermeerlab.resourcebundle.CustomControl;
 import spec.exception.UnexpectedApplicationException;
-import spec.interfaces.infrastructure.MessageConverter;
-import spec.interfaces.infrastructure.MessageHandler;
+import spec.message.MessageConverter;
+import spec.message.MessageWriter;
 import spec.validation.BeanValidationException;
 
 /**
@@ -33,12 +33,12 @@ public class CustomExceptionHandler extends ExceptionHandlerWrapper {
 
     private final ExceptionHandler wrapped;
     private final MessageConverter messageConverter;
-    private final MessageHandler messageHandler;
+    private final MessageWriter messageWriter;
 
-    CustomExceptionHandler(ExceptionHandler exception, MessageConverter messageConverter, MessageHandler messageHandler) {
+    CustomExceptionHandler(ExceptionHandler exception, MessageConverter messageConverter, MessageWriter messageWriter) {
         this.wrapped = exception;
         this.messageConverter = messageConverter;
-        this.messageHandler = messageHandler;
+        this.messageWriter = messageWriter;
     }
 
     @Override
@@ -83,7 +83,7 @@ public class CustomExceptionHandler extends ExceptionHandlerWrapper {
         BeanValidationException ex = (BeanValidationException) th;
 
         List<String> messages = messageConverter.toMessages(ex.getValidatedResults());
-        messageHandler.appendMessages(messages);
+        messageWriter.appendErrorMessages(messages);
 
         FacesContext context = FacesContext.getCurrentInstance();
 

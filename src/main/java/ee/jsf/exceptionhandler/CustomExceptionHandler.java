@@ -63,6 +63,7 @@ public class CustomExceptionHandler extends ExceptionHandlerWrapper {
                 this.handleNoExistsHtmlMessagesException(throwable);
                 this.handleBeanValidationException(throwable);
                 this.handleUnexpectedApplicationException(throwable);
+                this.handleDefaultException(throwable);
 
             } catch (IOException ex) {
                 System.err.println(Arrays.toString(ex.getStackTrace()));
@@ -140,6 +141,23 @@ public class CustomExceptionHandler extends ExceptionHandlerWrapper {
         String currentPage = facesContext.getViewRoot().getViewId();
 
         String forwardPage = contextPath + currentPage + "?faces-redirect=true";
+        navigationHandler.handleNavigation(facesContext, null, forwardPage);
+        this.facesContext.renderResponse();
+    }
+
+    //
+    void handleDefaultException(Throwable throwable) throws IOException {
+
+        String message = messageConverter.toMessage(throwable.getMessage());
+        System.err.println(
+                throwable.getClass().getCanonicalName() + "::" + message
+        );
+
+        messageWriter.appendErrorMessage(message);
+
+        this.conversationLifecycleManager.endConversation();
+        NavigationHandler navigationHandler = this.facesContext.getApplication().getNavigationHandler();
+        String forwardPage = "/error.xhtml?faces-redirect=true";
         navigationHandler.handleNavigation(facesContext, null, forwardPage);
         this.facesContext.renderResponse();
     }

@@ -106,14 +106,21 @@ public class CustomExceptionHandler extends ExceptionHandlerWrapper {
 
         BeanValidationException ex = (BeanValidationException) th;
 
+        System.err.println(
+                "Target class must dependency by @Controller or @Action for BeanValidationException."
+        );
+
         List<String> messages = messageConverter.toMessages(ex.getValidatedResults());
         messageWriter.appendErrorMessages(messages);
 
-        FacesContext context = FacesContext.getCurrentInstance();
+        NavigationHandler navigationHandler = this.facesContext.getApplication().getNavigationHandler();
 
-        String contextPath = context.getExternalContext().getRequestContextPath();
-        String currentPage = context.getViewRoot().getViewId();
-        context.getExternalContext().redirect(contextPath + currentPage);
+        String contextPath = facesContext.getExternalContext().getRequestContextPath();
+        String currentPage = facesContext.getViewRoot().getViewId();
+
+        String forwardPage = contextPath + currentPage + "?faces-redirect=true";
+        navigationHandler.handleNavigation(facesContext, null, forwardPage);
+        this.facesContext.renderResponse();
     }
 
     //

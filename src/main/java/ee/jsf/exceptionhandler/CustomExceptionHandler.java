@@ -9,16 +9,12 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
-import javax.faces.application.FacesMessage;
 import javax.faces.application.NavigationHandler;
 import javax.faces.context.ExceptionHandler;
 import javax.faces.context.ExceptionHandlerWrapper;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ExceptionQueuedEvent;
 import javax.faces.event.ExceptionQueuedEventContext;
-import org.vermeerlab.resourcebundle.CustomControl;
 import spec.exception.UnexpectedApplicationException;
 import spec.message.CanNotMappingHtmlMessagesException;
 import spec.message.MessageConverter;
@@ -66,7 +62,7 @@ public class CustomExceptionHandler extends ExceptionHandlerWrapper {
                 // 任意の例外毎に処理を行う
                 this.handleNoExistsHtmlMessagesException(throwable);
                 this.handleBeanValidationException(throwable);
-                this.handleEntityNotExistException(throwable);
+                this.handleUnexpectedApplicationException(throwable);
 
             } catch (IOException ex) {
                 System.err.println(Arrays.toString(ex.getStackTrace()));
@@ -124,36 +120,28 @@ public class CustomExceptionHandler extends ExceptionHandlerWrapper {
     }
 
     //
-    void handleEntityNotExistException(Throwable throwable) throws IOException {
+    void handleUnexpectedApplicationException(Throwable throwable) throws IOException {
         if (throwable instanceof UnexpectedApplicationException == false) {
             return;
         }
 
         UnexpectedApplicationException ex = (UnexpectedApplicationException) throwable;
 
-        String message = ex.getMessage();
+        String message = messageConverter.toMessage(ex.getMessage());
+        System.err.println(
+                message
+        );
 
-        FacesContext context = FacesContext.getCurrentInstance();
+        messageWriter.appendErrorMessage(message);
 
-        Locale locale = context.getViewRoot().getLocale();
+        NavigationHandler navigationHandler = this.facesContext.getApplication().getNavigationHandler();
 
-        ResourceBundle.Control control = CustomControl.builder().build();
-        ResourceBundle resourceBundle = ResourceBundle.getBundle("Messages", locale, control);
+        String contextPath = facesContext.getExternalContext().getRequestContextPath();
+        String currentPage = facesContext.getViewRoot().getViewId();
 
-        String convertedMessage = message == null
-                                  ? "System.Error"
-                                  : resourceBundle.containsKey(message) == false
-                                    ? message
-                                    : resourceBundle.getString(message);
-
-        FacesMessage facemsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, convertedMessage, null);
-        context.addMessage(null, facemsg);
-        // リダイレクトしてもFacesMessageが消えないように設定
-        context.getExternalContext().getFlash().setKeepMessages(true);
-
-        String contextPath = context.getExternalContext().getRequestContextPath();
-        String currentPage = context.getViewRoot().getViewId();
-        context.getExternalContext().redirect(contextPath + currentPage);
+        String forwardPage = contextPath + currentPage + "?faces-redirect=true";
+        navigationHandler.handleNavigation(facesContext, null, forwardPage);
+        this.facesContext.renderResponse();
     }
 
 }

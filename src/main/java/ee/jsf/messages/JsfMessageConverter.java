@@ -19,6 +19,7 @@ package ee.jsf.messages;
 import ee.validation.PresentationConstraintViolationForMessages;
 import java.util.Collection;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
@@ -30,6 +31,7 @@ import javax.inject.Inject;
 import javax.validation.ConstraintViolation;
 import org.vermeerlab.beanvalidation.messageinterpolator.MessageInterpolator;
 import org.vermeerlab.beanvalidation.messageinterpolator.MessageInterpolatorFactory;
+import org.vermeerlab.resourcebundle.CustomControl;
 import spec.interfaces.infrastructure.CurrentViewContext;
 import spec.message.MessageConverter;
 import spec.message.validation.ClientidMessage;
@@ -61,6 +63,21 @@ public class JsfMessageConverter implements MessageConverter {
     @PostConstruct
     protected void init() {
         this.interpolatorFactory = MessageInterpolatorFactory.of("Messages", "FormMessages", "FormLabels");
+    }
+
+    /**
+     * {@inheritDoc }
+     */
+    @Override
+    public String toMessage(String message) {
+        ResourceBundle.Control control = CustomControl.builder().build();
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("Messages", context.clientLocate(), control);
+
+        return message == null
+               ? "System.Error"
+               : resourceBundle.containsKey(message)
+                 ? resourceBundle.getString(message)
+                 : message;
     }
 
     /**

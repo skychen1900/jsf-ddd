@@ -16,18 +16,26 @@
  */
 package spec.message;
 
-import spec.message.validation.MessageMappingInfos;
-import spec.message.validation.ClientidMessages;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import javax.validation.ConstraintViolation;
+import spec.message.validation.ClientidMessages;
+import spec.message.validation.MessageMappingInfos;
 
 /**
  *
  * @author Yamashita,Takahiro
  */
 public interface MessageConverter {
+
+    /**
+     * 例外のメッセージ情報を元にリソースで表示用に編集したメッセージを返却します.
+     *
+     * @param message 変換前のメッセージ
+     * @return 変換後のメッセージ
+     */
+    String toMessage(String message);
 
     /**
      * 検証結果から変換したメッセージを返却します.

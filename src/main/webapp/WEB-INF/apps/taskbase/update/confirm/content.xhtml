@@ -52,6 +52,8 @@
             </div>
 
             <h:form id="f">
+                <h:messages globalOnly="true" errorClass="error-message" showSummary="true" showDetail="false" layout="list" />
+
                 <div class="ui basic segment">
                     <button id="registerButton" class="ui secondary basic button" jsf:action="#{userUpdateAction.register()}">
                         更新する

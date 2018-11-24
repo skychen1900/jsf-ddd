@@ -34,6 +34,8 @@ public class JsfMessageWriter implements MessageWriter {
 
     /**
      * {@inheritDoc }
+     *
+     * @throws spec.message.CanNotMappingHtmlMessagesException クライアントにメッセージリストを出力する記述({@code h:messages})が無い場合
      */
     @Override
     public void appendErrorMessage(String message) {
@@ -45,6 +47,8 @@ public class JsfMessageWriter implements MessageWriter {
 
     /**
      * {@inheritDoc }
+     *
+     * @throws spec.message.CanNotMappingHtmlMessagesException クライアントにメッセージリストを出力する記述({@code h:messages})が無い場合
      */
     @Override
     public void appendErrorMessages(List<String> messages) {
@@ -59,6 +63,8 @@ public class JsfMessageWriter implements MessageWriter {
 
     /**
      * {@inheritDoc }
+     *
+     * @throws spec.message.CanNotMappingHtmlMessagesException クライアントにメッセージリストを出力する記述({@code h:messages})が無い場合
      */
     @Override
     public void appendErrorMessages(ClientidMessages clientidMessages) {

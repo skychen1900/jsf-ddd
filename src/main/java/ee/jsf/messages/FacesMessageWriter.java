@@ -43,6 +43,13 @@ class FacesMessageWriter {
         return new FacesMessageWriter(_hasHtmlMessages, facesContext);
     }
 
+    /**
+     * 指定のクライアントＩＤへメッセージを出力します.
+     *
+     * @param clientId
+     * @param facesMessage
+     * @throws spec.message.CanNotMappingHtmlMessagesException クライアントにメッセージリストを出力する記述({@code h:messages})が無い場合
+     */
     void write(String clientId, FacesMessage facesMessage) {
         if (clientId == null && this.hasHtmlMessages == false) {
             throw new CanNotMappingHtmlMessagesException(facesMessage.getSummary());
@@ -50,6 +57,12 @@ class FacesMessageWriter {
         this.facesContext.addMessage(clientId, facesMessage);
     }
 
+    /**
+     * メッセージリストへメッセージを出力します.
+     *
+     * @param facesMessage
+     * @throws spec.message.CanNotMappingHtmlMessagesException クライアントにメッセージリストを出力する記述({@code h:messages})が無い場合
+     */
     void writeHtmlMessages(FacesMessage facesMessage) {
         this.write(null, facesMessage);
     }

@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.Set;
 import javax.validation.ConstraintViolation;
 import spec.message.validation.ClientidMessages;
-import spec.message.validation.MessageMappingInfos;
 
 /**
  *
@@ -49,9 +48,9 @@ public interface MessageConverter {
      * メッセージ出力先ＩＤとメッセージの組み合わせ情報を返却します.
      *
      * @param constraintViolationSet 検証結果
-     * @param messageMappingInfosNotYetReplaceClientId クライアントＩＤへ変換する前の UIComponentから取得したメッセージ出力対象となるＩＤ（親となる要素の情報を付与していないＩＤ）
+     * @param actionClass 実行元であるActionクラス
      * @return メッセージ出力先ＩＤとメッセージの組み合わせ情報
      */
-    public ClientidMessages toClientidMessages(Set<ConstraintViolation<?>> constraintViolationSet, MessageMappingInfos messageMappingInfosNotYetReplaceClientId);
+    public ClientidMessages toClientidMessages(Set<ConstraintViolation<?>> constraintViolationSet, Class<?> actionClass);
 
 }

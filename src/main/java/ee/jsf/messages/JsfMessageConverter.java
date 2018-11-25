@@ -16,7 +16,6 @@
  */
 package ee.jsf.messages;
 
-import ee.validation.PresentationConstraintViolationForMessages;
 import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -95,7 +94,10 @@ public class JsfMessageConverter implements MessageConverter {
      * {@inheritDoc }
      */
     @Override
-    public ClientidMessages toClientidMessages(Set<ConstraintViolation<?>> constraintViolationSet, MessageMappingInfos messageMappingInfosNotYetReplaceClientId) {
+    public ClientidMessages toClientidMessages(Set<ConstraintViolation<?>> constraintViolationSet, Class<?> actionClass) {
+
+        MessageMappingInfos messageMappingInfosNotYetReplaceClientId
+                            = ViewContextScanner.of(actionClass).messageMappingInfosNotYetReplaceClientId();
 
         TargetClientIds targetClientIds = this.scanTargetClientIds(
                 FacesContext.getCurrentInstance().getViewRoot().getChildren(), new TargetClientIds());

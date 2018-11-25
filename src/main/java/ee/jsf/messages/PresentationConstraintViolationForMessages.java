@@ -14,11 +14,8 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ee.validation;
+package ee.jsf.messages;
 
-import spec.message.validation.TargetClientIds;
-import spec.message.validation.ConstraintViolationForMessage;
-import spec.message.validation.ConstraintViolationForMessages;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
@@ -27,6 +24,10 @@ import java.util.stream.Collectors;
 import javax.validation.ConstraintViolation;
 import spec.annotation.FieldOrder;
 import spec.annotation.presentation.view.View;
+import spec.exception.UnexpectedApplicationException;
+import spec.message.validation.ConstraintViolationForMessage;
+import spec.message.validation.ConstraintViolationForMessages;
+import spec.message.validation.TargetClientIds;
 
 /**
  * クライアントメッセージの出力に必要な情報をPresentation層から取得して
@@ -39,21 +40,21 @@ import spec.annotation.presentation.view.View;
  *
  * @author Yamashita,Takahiro
  */
-public class PresentationConstraintViolationForMessages {
+class PresentationConstraintViolationForMessages {
 
     private final Set<ConstraintViolation<?>> constraintViolationSet;
     private final TargetClientIds targetClientIds;
 
-    PresentationConstraintViolationForMessages(Set<ConstraintViolation<?>> constraintViolationSet, TargetClientIds targetClientIds) {
+    private PresentationConstraintViolationForMessages(Set<ConstraintViolation<?>> constraintViolationSet, TargetClientIds targetClientIds) {
         this.constraintViolationSet = constraintViolationSet;
         this.targetClientIds = targetClientIds;
     }
 
-    public static PresentationConstraintViolationForMessages of(Set<ConstraintViolation<?>> constraintViolationSet, TargetClientIds targetClientIds) {
+    static PresentationConstraintViolationForMessages of(Set<ConstraintViolation<?>> constraintViolationSet, TargetClientIds targetClientIds) {
         return new PresentationConstraintViolationForMessages(constraintViolationSet, targetClientIds);
     }
 
-    public ConstraintViolationForMessages toConstraintViolationForMessages() {
+    ConstraintViolationForMessages toConstraintViolationForMessages() {
         return new ConstraintViolationForMessages(
                 constraintViolationSet
                         .stream()
@@ -85,7 +86,7 @@ public class PresentationConstraintViolationForMessages {
             Class<?> nextClass = clazz.getDeclaredField(field).getType();
             return this.recursiveAppendKey(nextClass, paths, index + 1, key);
         } catch (NoSuchFieldException | SecurityException ex) {
-            throw new ConstraintViolationConverterException("Target field or filedtype can not get.", ex);
+            throw new UnexpectedApplicationException("Target field or filedtype can not get.", ex);
         }
     }
 
@@ -100,7 +101,7 @@ public class PresentationConstraintViolationForMessages {
                 index = fieldOrder.value();
             }
         } catch (NoSuchFieldException | SecurityException ex) {
-            throw new ConstraintViolationConverterException("Target field can not get.", ex);
+            throw new UnexpectedApplicationException("Target field can not get.", ex);
         }
 
         return String.format("%03d", index);

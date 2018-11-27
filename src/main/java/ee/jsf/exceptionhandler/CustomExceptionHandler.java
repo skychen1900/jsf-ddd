@@ -10,6 +10,7 @@ import javax.faces.context.ExceptionHandler;
 import javax.faces.context.ExceptionHandlerWrapper;
 import javax.faces.event.ExceptionQueuedEvent;
 import javax.faces.event.ExceptionQueuedEventContext;
+import spec.exception.ThrowableHandler;
 
 /**
  * ExceptionHandler
@@ -41,8 +42,10 @@ public class CustomExceptionHandler extends ExceptionHandlerWrapper {
             ExceptionQueuedEventContext eventContext = (ExceptionQueuedEventContext) it.next().getSource();
             Throwable throwable = getRootCause(eventContext.getException()).getCause();
 
+            ThrowableHandler throwableHandler = this.throwableHandlerFactory.createThrowableHandler(throwable, eventContext);
+
             try {
-                this.throwableHandlerFactory.createThrowableHandler(throwable).execute();
+                throwableHandler.execute();
 
             } catch (Exception ex) {
                 System.err.println(Arrays.toString(ex.getStackTrace()));

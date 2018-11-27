@@ -17,11 +17,17 @@
 package ee.jsf.exceptionhandler;
 
 import ee.interceptor.scope.conversation.ConversationLifecycleManager;
+import ee.interceptor.scope.conversation.NonexistentConversationExceptionMessage;
+import java.io.IOException;
 import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.NonexistentConversationException;
 import javax.faces.application.NavigationHandler;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ExceptionQueuedEventContext;
 import javax.inject.Inject;
+import javax.servlet.ServletContext;
 import spec.exception.ThrowableHandler;
 import spec.exception.UnexpectedApplicationException;
 import spec.message.CanNotMappingHtmlMessagesException;
@@ -40,15 +46,17 @@ public class ThrowableHandlerFactory {
     private MessageConverter messageConverter;
     private MessageWriter messageWriter;
     private ConversationLifecycleManager conversationLifecycleManager;
+    private NonexistentConversationExceptionMessage nonexistentConversationExceptionMessage;
 
     public ThrowableHandlerFactory() {
     }
 
     @Inject
-    public ThrowableHandlerFactory(MessageConverter messageConverter, MessageWriter messageWriter, ConversationLifecycleManager conversationLifecycleManager) {
+    public ThrowableHandlerFactory(MessageConverter messageConverter, MessageWriter messageWriter, ConversationLifecycleManager conversationLifecycleManager, NonexistentConversationExceptionMessage nonexistentConversationExceptionMessage) {
         this.messageConverter = messageConverter;
         this.messageWriter = messageWriter;
         this.conversationLifecycleManager = conversationLifecycleManager;
+        this.nonexistentConversationExceptionMessage = nonexistentConversationExceptionMessage;
     }
 
     /**
@@ -57,8 +65,10 @@ public class ThrowableHandlerFactory {
      * @param throwable 例外
      * @return 例外に応じた操作を行うクラス
      */
-    public ThrowableHandler createThrowableHandler(Throwable throwable) {
+    public ThrowableHandler createThrowableHandler(Throwable throwable, ExceptionQueuedEventContext eventContext) {
+
         FacesContext facesContext = FacesContext.getCurrentInstance();
+
         if (throwable instanceof CanNotMappingHtmlMessagesException) {
             return new CanNotMappingHtmlMessagesExceptionHandler(throwable, conversationLifecycleManager, facesContext);
         }
@@ -70,6 +80,10 @@ public class ThrowableHandlerFactory {
 
         if (throwable instanceof UnexpectedApplicationException) {
             return new UnexpectedApplicationExceptionHandler(throwable, messageConverter, messageWriter, facesContext);
+        }
+
+        if (throwable instanceof NonexistentConversationException) {
+            return new NonexistentConversationExceptionHandler(conversationLifecycleManager, nonexistentConversationExceptionMessage, facesContext);
         }
 
         return new DefaultThrowableHandler(throwable, messageConverter, messageWriter, conversationLifecycleManager, facesContext);
@@ -93,9 +107,6 @@ public class ThrowableHandlerFactory {
         /**
          * {@inheritDoc }
          */
-        /**
-         * {@inheritDoc }
-         */
         @Override
         public void execute() {
             System.err.println(
@@ -110,7 +121,7 @@ public class ThrowableHandlerFactory {
     }
 
     /**
-     * BeanValidationException の補足後の処理を行うクラス
+     * BeanValidationException の捕捉後の処理を行うクラス
      */
     public static class BeanValidationExceptionHandler implements ThrowableHandler {
 
@@ -151,7 +162,7 @@ public class ThrowableHandlerFactory {
     }
 
     /**
-     * UnexpectedApplicationException の補足後の処理を行うクラス
+     * UnexpectedApplicationException の捕捉後の処理を行うクラス
      */
     public static class UnexpectedApplicationExceptionHandler implements ThrowableHandler {
 
@@ -190,6 +201,57 @@ public class ThrowableHandlerFactory {
     }
 
     /**
+     * NonexistentConversationException の捕捉後の処理を行うクラス.
+     * <p>
+     * 会話スコープが既に終わっている場合の実行時例外なので、会話のスタートに位置する{@code index.xhtml}へ遷移させる。
+     * 同時に会話スコープも終了（終了しているが念のため終了）させてから、再開させる。
+     */
+    public static class NonexistentConversationExceptionHandler implements ThrowableHandler {
+
+        private final ConversationLifecycleManager conversationLifecycleManager;
+        private final FacesContext facesContext;
+        private final NonexistentConversationExceptionMessage nonexistentConversationExceptionMessage;
+
+        public NonexistentConversationExceptionHandler(ConversationLifecycleManager conversationLifecycleManager, NonexistentConversationExceptionMessage nonexistentConversationExceptionMessage, FacesContext facesContext) {
+            this.conversationLifecycleManager = conversationLifecycleManager;
+            this.facesContext = facesContext;
+            this.nonexistentConversationExceptionMessage = nonexistentConversationExceptionMessage;
+        }
+
+        /**
+         * {@inheritDoc }
+         * <p>
+         * {@code NavigationHandler} では正しく画面遷移が実現しなかったので、{@code ExternalContext} で遷移させます.
+         */
+        @Override
+        public void execute() {
+            conversationLifecycleManager.endConversation();
+
+            String contextPath = facesContext.getExternalContext().getRequestContextPath();
+            String currentPage = facesContext.getViewRoot().getViewId();
+            String indexRootPath = currentPage.substring(0, currentPage.lastIndexOf("/") + 1);
+            String indexPage = indexRootPath + "index.xhtml";
+            String forwardPage = contextPath + indexPage;
+
+            ExternalContext externalContext = facesContext.getExternalContext();
+
+            try {
+                ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
+                if (servletContext.getRealPath(indexPage) == null) {
+                    throw new UnexpectedApplicationException("Target context file could not find.");
+                }
+                nonexistentConversationExceptionMessage.setException();
+                externalContext.redirect(forwardPage);
+            } catch (IOException | UnexpectedApplicationException | CanNotMappingHtmlMessagesException ex) {
+                NavigationHandler navigationHandler = this.facesContext.getApplication().getNavigationHandler();
+                String errorPage = "/error.xhtml?faces-redirect=true";
+                navigationHandler.handleNavigation(facesContext, null, errorPage);
+                this.facesContext.renderResponse();
+            }
+        }
+    }
+
+    /**
      * 例外発生後の処理を行うデフォルトクラス.
      * <p>
      * 該当するものが無い場合に摘要します.
@@ -215,13 +277,16 @@ public class ThrowableHandlerFactory {
          */
         @Override
         public void execute() {
-            String message = messageConverter.toMessage(throwable.getMessage());
-            System.err.println(
-                    throwable.getClass().getCanonicalName() + "::" + message
-            );
+            if (throwable == null) {
+                System.err.println("Throwable is null.");
+            } else {
+                String message = messageConverter.toMessage(throwable.getMessage());
+                System.err.println(
+                        throwable.getClass().getCanonicalName() + "::" + message
+                );
 
-            messageWriter.appendErrorMessage(message);
-
+                messageWriter.appendErrorMessage(message);
+            }
             this.conversationLifecycleManager.endConversation();
             NavigationHandler navigationHandler = this.facesContext.getApplication().getNavigationHandler();
             String forwardPage = "/error.xhtml?faces-redirect=true";

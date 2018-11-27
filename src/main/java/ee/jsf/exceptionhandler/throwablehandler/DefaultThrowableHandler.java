@@ -16,12 +16,9 @@
  */
 package ee.jsf.exceptionhandler.throwablehandler;
 
-import ee.interceptor.scope.conversation.ConversationLifecycleManager;
-import javax.faces.application.NavigationHandler;
-import javax.faces.context.FacesContext;
 import spec.exception.ThrowableHandler;
+import spec.exception.ThrowableHandlerException;
 import spec.message.MessageConverter;
-import spec.message.MessageWriter;
 
 /**
  * 例外発生後の処理を行うデフォルトの処理を行う機能を提供します..
@@ -34,16 +31,10 @@ public class DefaultThrowableHandler implements ThrowableHandler {
 
     private final Throwable throwable;
     private final MessageConverter messageConverter;
-    private final MessageWriter messageWriter;
-    private final ConversationLifecycleManager conversationLifecycleManager;
-    private final FacesContext facesContext;
 
-    public DefaultThrowableHandler(Throwable throwable, MessageConverter messageConverter, MessageWriter messageWriter, ConversationLifecycleManager conversationLifecycleManager, FacesContext facesContext) {
+    public DefaultThrowableHandler(Throwable throwable, MessageConverter messageConverter) {
         this.throwable = throwable;
         this.messageConverter = messageConverter;
-        this.messageWriter = messageWriter;
-        this.conversationLifecycleManager = conversationLifecycleManager;
-        this.facesContext = facesContext;
     }
 
     /**
@@ -51,18 +42,10 @@ public class DefaultThrowableHandler implements ThrowableHandler {
      */
     @Override
     public void execute() {
-        if (throwable == null) {
-            System.err.println("Throwable is null.");
-        } else {
-            String message = messageConverter.toMessage(throwable.getMessage());
-            System.err.println(throwable.getClass().getCanonicalName() + "::" + message);
-            messageWriter.appendErrorMessage(message);
-        }
-        this.conversationLifecycleManager.endConversation();
-        NavigationHandler navigationHandler = this.facesContext.getApplication().getNavigationHandler();
-        String forwardPage = "/error.xhtml?faces-redirect=true";
-        navigationHandler.handleNavigation(facesContext, null, forwardPage);
-        this.facesContext.renderResponse();
+        String message = throwable == null
+                         ? "Throwable is null."
+                         : messageConverter.toMessage(throwable.getMessage());
+        throw new ThrowableHandlerException(message);
     }
 
 }

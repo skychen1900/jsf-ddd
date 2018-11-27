@@ -16,13 +16,13 @@
  */
 package ee.jsf.exceptionhandler;
 
-import ee.jsf.exceptionhandler.throwablehandler.BeanValidationExceptionHandler;
-import ee.jsf.exceptionhandler.throwablehandler.DefaultThrowableHandler;
-import ee.jsf.exceptionhandler.throwablehandler.NonexistentConversationExceptionHandler;
-import ee.jsf.exceptionhandler.throwablehandler.CanNotMappingHtmlMessagesExceptionHandler;
-import ee.jsf.exceptionhandler.throwablehandler.UnexpectedApplicationExceptionHandler;
 import ee.interceptor.scope.conversation.ConversationLifecycleManager;
 import ee.interceptor.scope.conversation.NonexistentConversationExceptionMessage;
+import ee.jsf.exceptionhandler.throwablehandler.BeanValidationExceptionHandler;
+import ee.jsf.exceptionhandler.throwablehandler.CanNotMappingHtmlMessagesExceptionHandler;
+import ee.jsf.exceptionhandler.throwablehandler.DefaultThrowableHandler;
+import ee.jsf.exceptionhandler.throwablehandler.NonexistentConversationExceptionHandler;
+import ee.jsf.exceptionhandler.throwablehandler.UnexpectedApplicationExceptionHandler;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.NonexistentConversationException;
 import javax.faces.context.FacesContext;
@@ -70,7 +70,7 @@ public class ThrowableHandlerFactory {
         FacesContext facesContext = FacesContext.getCurrentInstance();
 
         if (throwable instanceof CanNotMappingHtmlMessagesException) {
-            return new CanNotMappingHtmlMessagesExceptionHandler(throwable, conversationLifecycleManager, facesContext);
+            return new CanNotMappingHtmlMessagesExceptionHandler(throwable);
         }
 
         if (throwable instanceof BeanValidationException) {
@@ -86,7 +86,7 @@ public class ThrowableHandlerFactory {
             return new NonexistentConversationExceptionHandler(conversationLifecycleManager, nonexistentConversationExceptionMessage, facesContext);
         }
 
-        return new DefaultThrowableHandler(throwable, messageConverter, messageWriter, conversationLifecycleManager, facesContext);
+        return new DefaultThrowableHandler(throwable, messageConverter);
     }
 
 }

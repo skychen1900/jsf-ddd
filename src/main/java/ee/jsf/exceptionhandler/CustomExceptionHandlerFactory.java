@@ -22,13 +22,16 @@ public class CustomExceptionHandlerFactory extends ExceptionHandlerFactory {
     @Inject
     private ThrowableHandlerFactory throwableHandlerFactory;
 
+    @Inject
+    private ErrorPageNavigator errorPageNavigator;
+
     public CustomExceptionHandlerFactory(ExceptionHandlerFactory parent) {
         this.parent = parent;
     }
 
     @Override
     public ExceptionHandler getExceptionHandler() {
-        ExceptionHandler handler = new CustomExceptionHandler(parent.getExceptionHandler(), throwableHandlerFactory);
+        ExceptionHandler handler = new CustomExceptionHandler(parent.getExceptionHandler(), throwableHandlerFactory, errorPageNavigator);
         return handler;
     }
 }

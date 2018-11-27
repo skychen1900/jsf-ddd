@@ -19,13 +19,11 @@ package ee.jsf.exceptionhandler.throwablehandler;
 import ee.interceptor.scope.conversation.ConversationLifecycleManager;
 import ee.interceptor.scope.conversation.NonexistentConversationExceptionMessage;
 import java.io.IOException;
-import javax.faces.application.NavigationHandler;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
 import spec.exception.ThrowableHandler;
-import spec.exception.UnexpectedApplicationException;
-import spec.message.CanNotMappingHtmlMessagesException;
+import spec.exception.ThrowableHandlerException;
 
 /**
  * NonexistentConversationException の捕捉後の処理を行う機能を提供します.
@@ -64,15 +62,12 @@ public class NonexistentConversationExceptionHandler implements ThrowableHandler
         try {
             ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
             if (servletContext.getRealPath(indexPage) == null) {
-                throw new UnexpectedApplicationException("Target context file could not find.");
+                throw new ThrowableHandlerException("Target context file could not find.");
             }
             nonexistentConversationExceptionMessage.setException();
             externalContext.redirect(forwardPage);
-        } catch (IOException | UnexpectedApplicationException | CanNotMappingHtmlMessagesException ex) {
-            NavigationHandler navigationHandler = this.facesContext.getApplication().getNavigationHandler();
-            String errorPage = "/error.xhtml?faces-redirect=true";
-            navigationHandler.handleNavigation(facesContext, null, errorPage);
-            this.facesContext.renderResponse();
+        } catch (IOException ex) {
+            throw new ThrowableHandlerException(ex);
         }
     }
 

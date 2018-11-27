@@ -4,7 +4,6 @@
  */
 package ee.jsf.exceptionhandler;
 
-import java.util.Arrays;
 import java.util.Iterator;
 import javax.faces.context.ExceptionHandler;
 import javax.faces.context.ExceptionHandlerWrapper;
@@ -21,10 +20,12 @@ public class CustomExceptionHandler extends ExceptionHandlerWrapper {
 
     private final ExceptionHandler wrapped;
     private final ThrowableHandlerFactory throwableHandlerFactory;
+    private final ErrorPageNavigator errorPageNavigator;
 
-    CustomExceptionHandler(ExceptionHandler exception, ThrowableHandlerFactory throwableHandlerFactory) {
+    CustomExceptionHandler(ExceptionHandler exception, ThrowableHandlerFactory throwableHandlerFactory, ErrorPageNavigator errorPageNavigator) {
         this.wrapped = exception;
         this.throwableHandlerFactory = throwableHandlerFactory;
+        this.errorPageNavigator = errorPageNavigator;
     }
 
     @Override
@@ -48,7 +49,7 @@ public class CustomExceptionHandler extends ExceptionHandlerWrapper {
                 throwableHandler.execute();
 
             } catch (Exception ex) {
-                System.err.println(Arrays.toString(ex.getStackTrace()));
+                this.errorPageNavigator.navigate(ex);
 
             } finally {
                 // 未ハンドリングキューから削除する

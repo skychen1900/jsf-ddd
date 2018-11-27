@@ -17,29 +17,32 @@
 package spec.exception;
 
 /**
+ * {@code ExceptionHandlerWrapper} の具象クラスにて 例外に関する操作を行う際に発行する独自の実行時例外です.
+ * <p>
+ * 主にエラー画面への遷移へ誘導するために使用します。
  *
  * @author Yamashita,Takahiro
  */
-public class ExceptionHandlerWrapperException extends RuntimeException {
+public class ThrowableHandlerException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
-    public ExceptionHandlerWrapperException() {
+    public ThrowableHandlerException() {
     }
 
-    public ExceptionHandlerWrapperException(String message) {
+    public ThrowableHandlerException(String message) {
         super(message);
     }
 
-    public ExceptionHandlerWrapperException(String message, Throwable cause) {
+    public ThrowableHandlerException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public ExceptionHandlerWrapperException(Throwable cause) {
+    public ThrowableHandlerException(Throwable cause) {
         super(cause);
     }
 
-    public ExceptionHandlerWrapperException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    public ThrowableHandlerException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 

@@ -16,10 +16,8 @@
  */
 package ee.jsf.exceptionhandler.throwablehandler;
 
-import ee.interceptor.scope.conversation.ConversationLifecycleManager;
-import javax.faces.application.NavigationHandler;
-import javax.faces.context.FacesContext;
 import spec.exception.ThrowableHandler;
+import spec.exception.ThrowableHandlerException;
 
 /**
  * CanNotMappingHtmlMessagesException の補足後の処理を行う機能を提供します.
@@ -29,26 +27,19 @@ import spec.exception.ThrowableHandler;
 public class CanNotMappingHtmlMessagesExceptionHandler implements ThrowableHandler {
 
     private final Throwable throwable;
-    private final ConversationLifecycleManager conversationLifecycleManager;
-    private final FacesContext facesContext;
 
-    public CanNotMappingHtmlMessagesExceptionHandler(Throwable throwable, ConversationLifecycleManager conversationLifecycleManager, FacesContext facesContext) {
+    public CanNotMappingHtmlMessagesExceptionHandler(Throwable throwable) {
         this.throwable = throwable;
-        this.conversationLifecycleManager = conversationLifecycleManager;
-        this.facesContext = facesContext;
     }
 
     /**
      * {@inheritDoc }
+     * <p>
+     * メッセージの出力先領域が無いため、エラー画面へ遷移します.
      */
     @Override
     public void execute() {
-        System.err.println("h:messages is not exist page, message '" + throwable.getMessage() + "' can not mapping page.");
-        this.conversationLifecycleManager.endConversation();
-        NavigationHandler navigationHandler = this.facesContext.getApplication().getNavigationHandler();
-        String forwardPage = "/error.xhtml?faces-redirect=true";
-        navigationHandler.handleNavigation(facesContext, null, forwardPage);
-        this.facesContext.renderResponse();
+        throw new ThrowableHandlerException("h:messages is not exist page, message '" + throwable.getMessage() + "' can not mapping page.");
     }
 
 }

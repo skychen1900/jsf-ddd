@@ -1,44 +1,43 @@
 /*
- * Copyright(C) 2016 Sanyu Academy All rights reserved.
  *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *  Copyright © 2018 Yamashita,Takahiro
  */
 package ee.jsf.exceptionhandler;
 
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
-import javax.faces.application.FacesMessage;
 import javax.faces.context.ExceptionHandler;
 import javax.faces.context.ExceptionHandlerWrapper;
-import javax.faces.context.FacesContext;
 import javax.faces.event.ExceptionQueuedEvent;
 import javax.faces.event.ExceptionQueuedEventContext;
-import org.vermeerlab.resourcebundle.CustomControl;
-import spec.exception.UnexpectedApplicationException;
-import spec.message.MessageConverter;
-import spec.message.MessageWriter;
-import spec.validation.BeanValidationException;
+import spec.exception.ThrowableHandler;
 
 /**
  * ExceptionHandler
- * <P>
- * 参考：{@link http://n-agetsuma.hatenablog.com/entry/2013/02/11/134531}
  *
  * @author takahiro.yamashita
  */
 public class CustomExceptionHandler extends ExceptionHandlerWrapper {
 
     private final ExceptionHandler wrapped;
-    private final MessageConverter messageConverter;
-    private final MessageWriter messageWriter;
+    private final ThrowableHandlerFactory throwableHandlerFactory;
+    private final ErrorPageNavigator errorPageNavigator;
 
-    CustomExceptionHandler(ExceptionHandler exception, MessageConverter messageConverter, MessageWriter messageWriter) {
+    CustomExceptionHandler(ExceptionHandler exception, ThrowableHandlerFactory throwableHandlerFactory, ErrorPageNavigator errorPageNavigator) {
         this.wrapped = exception;
-        this.messageConverter = messageConverter;
-        this.messageWriter = messageWriter;
+        this.throwableHandlerFactory = throwableHandlerFactory;
+        this.errorPageNavigator = errorPageNavigator;
     }
 
     @Override
@@ -53,76 +52,24 @@ public class CustomExceptionHandler extends ExceptionHandlerWrapper {
 
         while (it.hasNext()) {
 
-            ExceptionQueuedEventContext eventContext = it.next().getContext();
+            ExceptionQueuedEventContext eventContext = (ExceptionQueuedEventContext) it.next().getSource();
+            Throwable throwable = getRootCause(eventContext.getException()).getCause();
+
+            ThrowableHandler throwableHandler = this.throwableHandlerFactory.createThrowableHandler(throwable, eventContext);
 
             try {
-                // ハンドリング対象のアプリケーション例外を取得
-                Throwable th = getRootCause(eventContext.getException()).getCause();
+                throwableHandler.execute();
 
-                // 任意の例外毎に処理を行う
-                this.handleBeanValidationException(th);
-                this.handleEntityNotExistException(th);
-
-            } catch (IOException ex) {
-                System.err.println(Arrays.toString(ex.getStackTrace()));
+            } catch (Exception ex) {
+                this.errorPageNavigator.navigate(ex);
 
             } finally {
                 // 未ハンドリングキューから削除する
                 it.remove();
             }
-        }
-        getWrapped().handle();
-    }
 
-    //
-    void handleBeanValidationException(Throwable th) throws IOException {
-        if (th instanceof BeanValidationException == false) {
-            return;
+            getWrapped().handle();
         }
 
-        BeanValidationException ex = (BeanValidationException) th;
-
-        List<String> messages = messageConverter.toMessages(ex.getValidatedResults());
-        messageWriter.appendErrorMessages(messages);
-
-        FacesContext context = FacesContext.getCurrentInstance();
-
-        String contextPath = context.getExternalContext().getRequestContextPath();
-        String currentPage = context.getViewRoot().getViewId();
-        context.getExternalContext().redirect(contextPath + currentPage);
     }
-
-    //
-    void handleEntityNotExistException(Throwable th) throws IOException {
-        if (th instanceof UnexpectedApplicationException == false) {
-            return;
-        }
-
-        UnexpectedApplicationException ex = (UnexpectedApplicationException) th;
-
-        String message = ex.getMessage();
-
-        FacesContext context = FacesContext.getCurrentInstance();
-
-        Locale locale = context.getViewRoot().getLocale();
-
-        ResourceBundle.Control control = CustomControl.builder().build();
-        ResourceBundle resourceBundle = ResourceBundle.getBundle("Messages", locale, control);
-
-        String convertedMessage = message == null
-                                  ? "System.Error"
-                                  : resourceBundle.containsKey(message) == false
-                                    ? message
-                                    : resourceBundle.getString(message);
-
-        FacesMessage facemsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, convertedMessage, null);
-        context.addMessage(null, facemsg);
-        // リダイレクトしてもFacesMessageが消えないように設定
-        context.getExternalContext().getFlash().setKeepMessages(true);
-
-        String contextPath = context.getExternalContext().getRequestContextPath();
-        String currentPage = context.getViewRoot().getViewId();
-        context.getExternalContext().redirect(contextPath + currentPage);
-    }
-
 }

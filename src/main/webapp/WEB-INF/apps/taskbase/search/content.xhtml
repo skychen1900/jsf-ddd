@@ -34,6 +34,8 @@
                     利用者の新規登録
                 </button>
 
+                <h:messages id="ssss" globalOnly="true" errorClass="error-message" showSummary="true" showDetail="false" layout="list" />
+
                 <div class="ui basic segment">
 
                     <table class="ui celled table">
@@ -48,9 +50,9 @@
                         </thead>
                         <tbody>
                             <tr jsfc="ui:repeat" value="#{userSearchPage.items}" var="items" id="items">
-                                <td jsf:id="userEmail">#{items.userEmail}</td>
-                                <td jsf:id="userName">#{items.name}</td>
-                                <td jsf:id="userAge">#{items.age}</td>
+                                <td jsf:id="email">#{items.email}</td>
+                                <td jsf:id="name">#{items.name}</td>
+                                <td jsf:id="age">#{items.age}</td>
                                 <td>
                                     <button class="ui secondary basic button" jsf:id="updateButton" jsf:action="#{userUpdateAction.fwUpdate(items.userId)}">
                                         変更

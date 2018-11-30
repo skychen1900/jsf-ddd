@@ -16,9 +16,9 @@
  */
 package ee.jsf.messages;
 
-import ee.validation.PresentationConstraintViolationForMessages;
 import java.util.Collection;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
@@ -30,6 +30,7 @@ import javax.inject.Inject;
 import javax.validation.ConstraintViolation;
 import org.vermeerlab.beanvalidation.messageinterpolator.MessageInterpolator;
 import org.vermeerlab.beanvalidation.messageinterpolator.MessageInterpolatorFactory;
+import org.vermeerlab.resourcebundle.CustomControl;
 import spec.interfaces.infrastructure.CurrentViewContext;
 import spec.message.MessageConverter;
 import spec.message.validation.ClientidMessage;
@@ -67,6 +68,21 @@ public class JsfMessageConverter implements MessageConverter {
      * {@inheritDoc }
      */
     @Override
+    public String toMessage(String message) {
+        ResourceBundle.Control control = CustomControl.builder().build();
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("Messages", context.clientLocate(), control);
+
+        return message == null
+               ? "System.Error"
+               : resourceBundle.containsKey(message)
+                 ? resourceBundle.getString(message)
+                 : message;
+    }
+
+    /**
+     * {@inheritDoc }
+     */
+    @Override
     public List<String> toMessages(Collection<ConstraintViolation<?>> constraintViolations) {
         MessageInterpolator interpolator = interpolatorFactory.create(context.clientLocate());
         return constraintViolations.stream()
@@ -78,10 +94,13 @@ public class JsfMessageConverter implements MessageConverter {
      * {@inheritDoc }
      */
     @Override
-    public ClientidMessages toClientidMessages(Set<ConstraintViolation<?>> constraintViolationSet, MessageMappingInfos messageMappingInfosNotYetReplaceClientId) {
+    public ClientidMessages toClientidMessages(Set<ConstraintViolation<?>> constraintViolationSet, Class<?> actionClass) {
+
+        MessageMappingInfos messageMappingInfosNotYetReplaceClientId
+                            = ViewContextScanner.of(actionClass).messageMappingInfosNotYetReplaceClientId();
 
         TargetClientIds targetClientIds = this.scanTargetClientIds(
-                FacesContext.getCurrentInstance().getViewRoot().getChildren(), 0, new TargetClientIds());
+                FacesContext.getCurrentInstance().getViewRoot().getChildren(), new TargetClientIds());
 
         MessageMappingInfos messageMappingInfos
                             = messageMappingInfosNotYetReplaceClientId.replacedClientIds(targetClientIds);
@@ -95,7 +114,7 @@ public class JsfMessageConverter implements MessageConverter {
                 .toClientidMessages(c -> this.toClientidMessage(c));
     }
 
-    private TargetClientIds scanTargetClientIds(List<UIComponent> uiComponents, int depth, TargetClientIds targetClientIds) {
+    private TargetClientIds scanTargetClientIds(List<UIComponent> uiComponents, TargetClientIds targetClientIds) {
         for (UIComponent uiComponent : uiComponents) {
 
             /**
@@ -113,7 +132,7 @@ public class JsfMessageConverter implements MessageConverter {
             }
 
             if (uiComponent.getChildren().isEmpty() == false) {
-                this.scanTargetClientIds(uiComponent.getChildren(), depth + 1, targetClientIds);
+                this.scanTargetClientIds(uiComponent.getChildren(), targetClientIds);
             }
 
         }

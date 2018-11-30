@@ -14,23 +14,19 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package spec.annotation.presentation.controller;
+package spec.exception;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-import javax.enterprise.util.Nonbinding;
-import javax.interceptor.InterceptorBinding;
+/**
+ * {
+ *
+ * @linnk ExceptionHandlerWrapper} にて実行時例外に応じた処理を行う昨日を提供します.
+ * @author Yamashita,Takahiro
+ */
+public interface ThrowableHandler {
 
-@Target(value = {ElementType.TYPE, ElementType.METHOD})
-@Retention(RetentionPolicy.RUNTIME)
-@InterceptorBinding
-public @interface ExecuteOnce {
+    /**
+     * 処理を実行します.
+     */
+    public void execute();
 
-    @Nonbinding
-    public String message() default "";
-
-    @Nonbinding
-    public String forwardPage() default "";
 }

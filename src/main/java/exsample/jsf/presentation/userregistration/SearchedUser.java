@@ -29,7 +29,7 @@ public class SearchedUser implements Serializable {
 
     private final UserId userId;
 
-    private final EmailForm userEmail;
+    private final EmailForm email;
 
     private final NameForm name;
 
@@ -37,7 +37,7 @@ public class SearchedUser implements Serializable {
 
     public SearchedUser(User user) {
         this.userId = user.getUserId();
-        this.userEmail = new EmailForm(user.getUserEmail().getValue());
+        this.email = new EmailForm(user.getUserEmail().getValue());
         this.name = new NameForm(user.getName().getValue());
         this.age = user.getAge();
     }
@@ -46,8 +46,8 @@ public class SearchedUser implements Serializable {
         return this.userId.getValue();
     }
 
-    public String getUserEmail() {
-        return userEmail.display();
+    public String getEmail() {
+        return email.display();
     }
 
     public String getName() {

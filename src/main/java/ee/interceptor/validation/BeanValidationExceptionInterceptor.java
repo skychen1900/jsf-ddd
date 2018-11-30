@@ -1,10 +1,21 @@
 /*
- * Copyright(C) 2013 Sanyu Academy All rights reserved.
  *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *  Copyright © 2018 Yamashita,Takahiro
  */
 package ee.interceptor.validation;
 
-import ee.validation.ViewContextScanner;
 import javax.annotation.Priority;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
@@ -16,7 +27,6 @@ import spec.interfaces.infrastructure.CurrentViewContext;
 import spec.message.MessageConverter;
 import spec.message.MessageWriter;
 import spec.message.validation.ClientidMessages;
-import spec.message.validation.MessageMappingInfos;
 import spec.validation.BeanValidationException;
 
 @Action
@@ -45,13 +55,9 @@ public class BeanValidationExceptionInterceptor {
         try {
             return ic.proceed();
         } catch (BeanValidationException ex) {
-            MessageMappingInfos messageMappingInfosNotYetReplaceClientId
-                                = ViewContextScanner
-                            .of(ic.getTarget().getClass().getSuperclass())
-                            .messageMappingInfosNotYetReplaceClientId();
-
             ClientidMessages clientidMessages
-                             = messageConverter.toClientidMessages(ex.getValidatedResults(), messageMappingInfosNotYetReplaceClientId);
+                             = messageConverter.toClientidMessages(ex.getValidatedResults(),
+                                                                   ic.getTarget().getClass().getSuperclass());
 
             messageWriter.appendErrorMessages(clientidMessages);
             return currentViewId;

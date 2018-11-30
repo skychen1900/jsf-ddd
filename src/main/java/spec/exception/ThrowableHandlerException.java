@@ -14,33 +14,35 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ee.validation;
+package spec.exception;
 
 /**
- * 検証結果の表示順ソート時に発生した実行時例外
+ * {@code ExceptionHandlerWrapper} の具象クラスにて 例外に関する操作を行う際に発行する独自の実行時例外です.
+ * <p>
+ * 主にエラー画面への遷移へ誘導するために使用します。
  *
  * @author Yamashita,Takahiro
  */
-public class ConstraintViolationConverterException extends RuntimeException {
+public class ThrowableHandlerException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
-    public ConstraintViolationConverterException() {
+    public ThrowableHandlerException() {
     }
 
-    public ConstraintViolationConverterException(String message) {
+    public ThrowableHandlerException(String message) {
         super(message);
     }
 
-    public ConstraintViolationConverterException(String message, Throwable cause) {
+    public ThrowableHandlerException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public ConstraintViolationConverterException(Throwable cause) {
+    public ThrowableHandlerException(Throwable cause) {
         super(cause);
     }
 
-    public ConstraintViolationConverterException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    public ThrowableHandlerException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 

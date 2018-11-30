@@ -16,18 +16,25 @@
  */
 package spec.message;
 
-import spec.message.validation.MessageMappingInfos;
-import spec.message.validation.ClientidMessages;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import javax.validation.ConstraintViolation;
+import spec.message.validation.ClientidMessages;
 
 /**
  *
  * @author Yamashita,Takahiro
  */
 public interface MessageConverter {
+
+    /**
+     * 例外のメッセージ情報を元にリソースで表示用に編集したメッセージを返却します.
+     *
+     * @param message 変換前のメッセージ
+     * @return 変換後のメッセージ
+     */
+    String toMessage(String message);
 
     /**
      * 検証結果から変換したメッセージを返却します.
@@ -41,9 +48,9 @@ public interface MessageConverter {
      * メッセージ出力先ＩＤとメッセージの組み合わせ情報を返却します.
      *
      * @param constraintViolationSet 検証結果
-     * @param messageMappingInfosNotYetReplaceClientId クライアントＩＤへ変換する前の UIComponentから取得したメッセージ出力対象となるＩＤ（親となる要素の情報を付与していないＩＤ）
+     * @param actionClass 実行元であるActionクラス
      * @return メッセージ出力先ＩＤとメッセージの組み合わせ情報
      */
-    public ClientidMessages toClientidMessages(Set<ConstraintViolation<?>> constraintViolationSet, MessageMappingInfos messageMappingInfosNotYetReplaceClientId);
+    public ClientidMessages toClientidMessages(Set<ConstraintViolation<?>> constraintViolationSet, Class<?> actionClass);
 
 }

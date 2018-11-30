@@ -22,6 +22,8 @@ import javax.enterprise.context.Conversation;
 import javax.inject.Inject;
 import javax.inject.Named;
 import spec.interfaces.infrastructure.CurrentViewContext;
+import spec.message.MessageConverter;
+import spec.message.MessageWriter;
 
 /**
  * 会話スコープのライフサイクルを操作するクラスです.
@@ -33,16 +35,29 @@ import spec.interfaces.infrastructure.CurrentViewContext;
 public class ConversationLifecycleManager {
 
     private Conversation conversation;
-
     private CurrentViewContext context;
+    private NonexistentConversationExceptionMessage nonexistentConversationExceptionMessage;
+    private MessageWriter messageWriter;
+    private MessageConverter messageConverter;
 
     public ConversationLifecycleManager() {
     }
 
     @Inject
-    public ConversationLifecycleManager(Conversation conversation, CurrentViewContext context) {
+    public ConversationLifecycleManager(Conversation conversation, CurrentViewContext context, MessageWriter messageWriter, MessageConverter messageConverter, NonexistentConversationExceptionMessage nonexistentConversationExceptionMessage) {
         this.conversation = conversation;
         this.context = context;
+        this.nonexistentConversationExceptionMessage = nonexistentConversationExceptionMessage;
+        this.messageWriter = messageWriter;
+        this.messageConverter = messageConverter;
+    }
+
+    /**
+     * 会話スコープを開始します
+     */
+    public void startConversation() {
+        this.conversation.begin();
+        this.conversation.setTimeout(300000);
     }
 
     /**
@@ -53,13 +68,19 @@ public class ConversationLifecycleManager {
      * @return 会話スコープ開始済みの場合は指定のページ、未開始の場合はindexページ
      */
     public String startAndForwardIndexPage() {
+
+        if (nonexistentConversationExceptionMessage.state()
+            == NonexistentConversationExceptionMessage.State.HAS_EXCEPTION) {
+            String message = this.messageConverter.toMessage(nonexistentConversationExceptionMessage.message());
+            this.messageWriter.appendErrorMessage(message);
+        }
+
         String currentViewId = context.currentViewId();
         if (this.conversation.isTransient() == false) {
             return currentViewId;
         }
 
-        this.conversation.begin();
-        this.conversation.setTimeout(300000);
+        this.startConversation();
 
         if (currentViewId.equals("index.xhtml") == false) {
             return (String) context.responseViewId("index.xhtml");

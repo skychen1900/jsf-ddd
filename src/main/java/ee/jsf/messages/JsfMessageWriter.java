@@ -25,7 +25,7 @@ import spec.message.MessageWriter;
 import spec.message.validation.ClientidMessages;
 
 /**
- * メッセージ出力する機能を提供します.
+ * メッセージを出力する機能を提供します.
  *
  * @author Yamashita,Takahiro
  */
@@ -34,47 +34,54 @@ public class JsfMessageWriter implements MessageWriter {
 
     /**
      * {@inheritDoc }
+     *
+     * @throws spec.message.CanNotMappingHtmlMessagesException クライアントにメッセージリストを出力する記述({@code h:messages})が無い場合
      */
     @Override
     public void appendErrorMessage(String message) {
-        this.templateMethod(facesContext -> {
-            FacesMessage facemsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null);
-            facesContext.addMessage(null, facemsg);
+        this.templateMethod(facesMessageWriter -> {
+            FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null);
+            facesMessageWriter.writeHtmlMessages(facesMessage);
         });
     }
 
     /**
      * {@inheritDoc }
+     *
+     * @throws spec.message.CanNotMappingHtmlMessagesException クライアントにメッセージリストを出力する記述({@code h:messages})が無い場合
      */
     @Override
     public void appendErrorMessages(List<String> messages) {
-        this.templateMethod(facesContext -> {
+        this.templateMethod(facesMessageWriter -> {
             messages.stream()
                     .forEachOrdered(message -> {
-                        FacesMessage facemsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null);
-                        facesContext.addMessage(null, facemsg);
+                        FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null);
+                        facesMessageWriter.writeHtmlMessages(facesMessage);
                     });
         });
     }
 
     /**
      * {@inheritDoc }
+     *
+     * @throws spec.message.CanNotMappingHtmlMessagesException クライアントにメッセージリストを出力する記述({@code h:messages})が無い場合
      */
     @Override
     public void appendErrorMessages(ClientidMessages clientidMessages) {
-        this.templateMethod(facesContext -> {
+        this.templateMethod(facesMessageWriter -> {
             clientidMessages.getList().stream()
                     .forEachOrdered(clientidMessage -> {
-                        FacesMessage facemsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, clientidMessage.getMessage(), null);
-                        facesContext.addMessage(clientidMessage.getClientId(), facemsg);
+                        FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, clientidMessage.getMessage(), null);
+                        facesMessageWriter.write(clientidMessage.getClientId(), facesMessage);
                     });
         });
     }
 
-    private void templateMethod(Consumer<FacesContext> consumer) {
+    private void templateMethod(Consumer<FacesMessageWriter> consumer) {
         FacesContext facesContext = FacesContext.getCurrentInstance();
+        FacesMessageWriter facesMessageWriter = FacesMessageWriter.of(facesContext);
 
-        consumer.accept(facesContext);
+        consumer.accept(facesMessageWriter);
 
         // リダイレクトしてもFacesMessageが消えないように設定
         facesContext.getExternalContext().getFlash().setKeepMessages(true);

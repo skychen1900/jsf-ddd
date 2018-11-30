@@ -35,7 +35,7 @@
 
                     <div class="field">
                         <label>名前</label>
-                        <input class="short-input" type="text" placeholder="名前" pt:placeholder="名前" jsf:id="userName" jsf:value="#{userRegistrationPage.name}"/>
+                        <input class="short-input" type="text" placeholder="名前" pt:placeholder="名前" jsf:id="name" jsf:value="#{userRegistrationPage.name}"/>
 
                     </div>
 
@@ -86,7 +86,7 @@
 
                 </div>
 
-                <h:messages globalOnly="true" errorClass="errorMessage" showSummary="true" showDetail="false" layout="list" />
+                <h:messages globalOnly="true" errorClass="error-message" showSummary="true" showDetail="false" layout="list" />
 
                 <div class="ui basic segment">
                     <button class="ui positive basic button" jsf:id="confirmButton" jsf:action="#{userRegistrationAction.confirm()}">確認する</button>

@@ -38,10 +38,9 @@ public class UserSearchAction {
         this.userService = userService;
     }
 
-    public String search() {
+    public void search() {
         List<User> users = this.userService.findAll();
         this.searchForm.init(users);
-        return "index.xhtml";
     }
 
 }

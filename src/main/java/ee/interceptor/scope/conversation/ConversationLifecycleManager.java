@@ -22,7 +22,7 @@ import javax.enterprise.context.Conversation;
 import javax.inject.Inject;
 import javax.inject.Named;
 import spec.interfaces.infrastructure.CurrentViewContext;
-import spec.scope.conversation.ConversationException;
+import spec.scope.conversation.IllegalConversationStartpathException;
 
 /**
  * 会話スコープのライフサイクルを操作するクラスです.
@@ -54,7 +54,7 @@ public class ConversationLifecycleManager {
         }
 
         if (context.currentViewId().endsWith("/index.xhtml") == false) {
-            throw new ConversationException();
+            throw new IllegalConversationStartpathException();
         }
 
         this.conversation.begin();

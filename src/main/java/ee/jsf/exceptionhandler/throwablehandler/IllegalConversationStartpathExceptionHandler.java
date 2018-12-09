@@ -25,19 +25,19 @@ import spec.exception.ThrowableHandler;
 import spec.exception.ThrowableHandlerException;
 
 /**
- * {@link spec.scope.conversation.ConversationException}の捕捉後の処理を行う機能を提供します.
+ * {@link spec.scope.conversation.IllegalConversationStartpathException}の捕捉後の処理を行う機能を提供します.
  * <p>
  * 会話スコープが既に終わっている場合の実行時例外なので、会話のスタートに位置する{@code index.xhtml}へ遷移させます。
  * 同時に会話スコープも終了させてから、再開させます。
  *
  * @author Yamashita,Takahiro
  */
-public class ConversationExceptionHandler implements ThrowableHandler {
+public class IllegalConversationStartpathExceptionHandler implements ThrowableHandler {
 
     private final ConversationLifecycleManager conversationLifecycleManager;
     private final FacesContext facesContext;
 
-    public ConversationExceptionHandler(ConversationLifecycleManager conversationLifecycleManager, FacesContext facesContext) {
+    public IllegalConversationStartpathExceptionHandler(ConversationLifecycleManager conversationLifecycleManager, FacesContext facesContext) {
         this.conversationLifecycleManager = conversationLifecycleManager;
         this.facesContext = facesContext;
     }

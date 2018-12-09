@@ -20,26 +20,26 @@ package spec.scope.conversation;
  *
  * @author Yamashita,Takahiro
  */
-public class ConversationException extends RuntimeException {
+public class IllegalConversationStartpathException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
-    public ConversationException() {
+    public IllegalConversationStartpathException() {
     }
 
-    public ConversationException(String message) {
+    public IllegalConversationStartpathException(String message) {
         super(message);
     }
 
-    public ConversationException(String message, Throwable cause) {
+    public IllegalConversationStartpathException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public ConversationException(Throwable cause) {
+    public IllegalConversationStartpathException(Throwable cause) {
         super(cause);
     }
 
-    public ConversationException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    public IllegalConversationStartpathException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 

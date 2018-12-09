@@ -20,8 +20,8 @@ import ee.interceptor.scope.conversation.ConversationLifecycleManager;
 import ee.interceptor.scope.conversation.NonexistentConversationExceptionMessage;
 import ee.jsf.exceptionhandler.throwablehandler.BeanValidationExceptionHandler;
 import ee.jsf.exceptionhandler.throwablehandler.CanNotMappingHtmlMessagesExceptionHandler;
-import ee.jsf.exceptionhandler.throwablehandler.ConversationExceptionHandler;
 import ee.jsf.exceptionhandler.throwablehandler.DefaultThrowableHandler;
+import ee.jsf.exceptionhandler.throwablehandler.IllegalConversationStartpathExceptionHandler;
 import ee.jsf.exceptionhandler.throwablehandler.NonexistentConversationExceptionHandler;
 import ee.jsf.exceptionhandler.throwablehandler.UnexpectedApplicationExceptionHandler;
 import javax.enterprise.context.ApplicationScoped;
@@ -34,7 +34,7 @@ import spec.exception.UnexpectedApplicationException;
 import spec.message.CanNotMappingHtmlMessagesException;
 import spec.message.MessageConverter;
 import spec.message.MessageWriter;
-import spec.scope.conversation.ConversationException;
+import spec.scope.conversation.IllegalConversationStartpathException;
 import spec.validation.BeanValidationException;
 
 /**
@@ -84,8 +84,8 @@ public class ThrowableHandlerFactory {
             return new UnexpectedApplicationExceptionHandler(throwable, messageConverter, messageWriter, facesContext);
         }
 
-        if (throwable instanceof ConversationException) {
-            return new ConversationExceptionHandler(conversationLifecycleManager, facesContext);
+        if (throwable instanceof IllegalConversationStartpathException) {
+            return new IllegalConversationStartpathExceptionHandler(conversationLifecycleManager, facesContext);
         }
 
         if (throwable instanceof NonexistentConversationException) {

@@ -2,21 +2,17 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
       >
 
     <head>
         <title>JSF DDD Sample</title>
-        <f:metadata>
-            <f:event  type="preRenderView" listener="#{conversationLifecycleManager.startAndForwardIndexPage()}" />
-        </f:metadata>
     </head>
     <body>
         <h1>Top</h1>
 
         <h:form id="f">
-            <div><h:commandLink id="command1" action="/apps/taskbase/index.xhtml">JSF DDD</h:commandLink></div>
-            <div><h:commandLink id="command2" action="/apps/taskbase-target-message/index.xhtml">JSF DDD 入力項目の横にメッセージ</h:commandLink></div>
+            <div><h:commandLink id="command1" action="/apps/taskbase/index.xhtml?faces-redirect=true">JSF DDD</h:commandLink></div>
+            <div><h:commandLink id="command2" action="/apps/taskbase-target-message/index.xhtml?faces-redirect=true">JSF DDD 入力項目の横にメッセージ</h:commandLink></div>
         </h:form>
 
 

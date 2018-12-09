@@ -73,7 +73,7 @@ public class JsfMessageConverter implements MessageConverter {
         ResourceBundle resourceBundle = ResourceBundle.getBundle("Messages", context.clientLocate(), control);
 
         return message == null
-               ? "System.Error"
+               ? "System.Error::message does not set"
                : resourceBundle.containsKey(message)
                  ? resourceBundle.getString(message)
                  : message;

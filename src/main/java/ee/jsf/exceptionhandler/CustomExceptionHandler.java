@@ -53,7 +53,11 @@ public class CustomExceptionHandler extends ExceptionHandlerWrapper {
         while (it.hasNext()) {
 
             ExceptionQueuedEventContext eventContext = (ExceptionQueuedEventContext) it.next().getSource();
-            Throwable throwable = getRootCause(eventContext.getException()).getCause();
+
+            Throwable causeThrowable = getRootCause(eventContext.getException()).getCause();
+            Throwable throwable = causeThrowable != null
+                                  ? causeThrowable
+                                  : eventContext.getException().getCause();
 
             ThrowableHandler throwableHandler = this.throwableHandlerFactory.createThrowableHandler(throwable, eventContext);
 

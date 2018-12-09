@@ -22,8 +22,7 @@ import javax.enterprise.context.Conversation;
 import javax.inject.Inject;
 import javax.inject.Named;
 import spec.interfaces.infrastructure.CurrentViewContext;
-import spec.message.MessageConverter;
-import spec.message.MessageWriter;
+import spec.scope.conversation.ConversationException;
 
 /**
  * 会話スコープのライフサイクルを操作するクラスです.
@@ -36,56 +35,31 @@ public class ConversationLifecycleManager {
 
     private Conversation conversation;
     private CurrentViewContext context;
-    private NonexistentConversationExceptionMessage nonexistentConversationExceptionMessage;
-    private MessageWriter messageWriter;
-    private MessageConverter messageConverter;
 
     public ConversationLifecycleManager() {
     }
 
     @Inject
-    public ConversationLifecycleManager(Conversation conversation, CurrentViewContext context, MessageWriter messageWriter, MessageConverter messageConverter, NonexistentConversationExceptionMessage nonexistentConversationExceptionMessage) {
+    public ConversationLifecycleManager(Conversation conversation, CurrentViewContext context) {
         this.conversation = conversation;
         this.context = context;
-        this.nonexistentConversationExceptionMessage = nonexistentConversationExceptionMessage;
-        this.messageWriter = messageWriter;
-        this.messageConverter = messageConverter;
     }
 
     /**
      * 会話スコープを開始します
      */
     public void startConversation() {
+        if (this.conversation.isTransient() == false) {
+            return;
+        }
+
+        if (context.currentViewId().endsWith("/index.xhtml") == false) {
+            throw new ConversationException();
+        }
+
         this.conversation.begin();
         this.conversation.setTimeout(300000);
-    }
 
-    /**
-     * 会話スコープの開始します。
-     * <P>
-     * 会話スコープが未開始にもかかわらず、indexページ以外を遷移先として指定していた場合は、強制的にindexページへ遷移させます.
-     *
-     * @return 会話スコープ開始済みの場合は指定のページ、未開始の場合はindexページ
-     */
-    public String startAndForwardIndexPage() {
-
-        if (nonexistentConversationExceptionMessage.state()
-            == NonexistentConversationExceptionMessage.State.HAS_EXCEPTION) {
-            String message = this.messageConverter.toMessage(nonexistentConversationExceptionMessage.message());
-            this.messageWriter.appendErrorMessage(message);
-        }
-
-        String currentViewId = context.currentViewId();
-        if (this.conversation.isTransient() == false) {
-            return currentViewId;
-        }
-
-        this.startConversation();
-
-        if (currentViewId.equals("index.xhtml") == false) {
-            return (String) context.responseViewId("index.xhtml");
-        }
-        return (String) context.responseViewId(currentViewId);
     }
 
     /**

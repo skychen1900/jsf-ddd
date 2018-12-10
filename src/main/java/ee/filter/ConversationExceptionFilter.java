@@ -17,7 +17,6 @@
 package ee.filter;
 
 import java.io.IOException;
-import java.util.Arrays;
 import javax.enterprise.context.BusyConversationException;
 import javax.enterprise.context.NonexistentConversationException;
 import javax.servlet.Filter;
@@ -26,6 +25,8 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import spec.scope.conversation.ConversationExceptionKey;
 
 /**
  * Conversationに関する例外を扱うフィルターです.
@@ -49,7 +50,20 @@ public class ConversationExceptionFilter implements Filter {
         try {
             chain.doFilter(request, response);
         } catch (BusyConversationException | NonexistentConversationException ex) {
-            System.err.println(Arrays.toString(ex.getStackTrace()));
+
+            HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+            String servletPath = httpServletRequest.getServletPath();
+            String indexRootPath = servletPath.substring(0, servletPath.lastIndexOf("/") + 1);
+            String indexPage = indexRootPath + "index.xhtml";
+
+            String exception = ex instanceof BusyConversationException
+                               ? BusyConversationException.class.getCanonicalName()
+                               : NonexistentConversationException.class.getCanonicalName();
+
+            request.setAttribute(ConversationExceptionKey.START_PAGE, indexPage);
+            request.setAttribute(ConversationExceptionKey.EXCEPTION, exception);
+            httpServletRequest.getRequestDispatcher("/parts/conversation/forward-jsf.jsp").forward(request, response);
+
         }
     }
 

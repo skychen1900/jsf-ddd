@@ -17,15 +17,12 @@
 package ee.jsf.exceptionhandler;
 
 import ee.interceptor.scope.conversation.ConversationLifecycleManager;
-import ee.interceptor.scope.conversation.NonexistentConversationExceptionMessage;
 import ee.jsf.exceptionhandler.throwablehandler.BeanValidationExceptionHandler;
 import ee.jsf.exceptionhandler.throwablehandler.CanNotMappingHtmlMessagesExceptionHandler;
 import ee.jsf.exceptionhandler.throwablehandler.DefaultThrowableHandler;
 import ee.jsf.exceptionhandler.throwablehandler.IllegalConversationStartpathExceptionHandler;
-import ee.jsf.exceptionhandler.throwablehandler.NonexistentConversationExceptionHandler;
 import ee.jsf.exceptionhandler.throwablehandler.UnexpectedApplicationExceptionHandler;
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.NonexistentConversationException;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ExceptionQueuedEventContext;
 import javax.inject.Inject;
@@ -48,17 +45,15 @@ public class ThrowableHandlerFactory {
     private MessageConverter messageConverter;
     private MessageWriter messageWriter;
     private ConversationLifecycleManager conversationLifecycleManager;
-    private NonexistentConversationExceptionMessage nonexistentConversationExceptionMessage;
 
     public ThrowableHandlerFactory() {
     }
 
     @Inject
-    public ThrowableHandlerFactory(MessageConverter messageConverter, MessageWriter messageWriter, ConversationLifecycleManager conversationLifecycleManager, NonexistentConversationExceptionMessage nonexistentConversationExceptionMessage) {
+    public ThrowableHandlerFactory(MessageConverter messageConverter, MessageWriter messageWriter, ConversationLifecycleManager conversationLifecycleManager) {
         this.messageConverter = messageConverter;
         this.messageWriter = messageWriter;
         this.conversationLifecycleManager = conversationLifecycleManager;
-        this.nonexistentConversationExceptionMessage = nonexistentConversationExceptionMessage;
     }
 
     /**
@@ -86,10 +81,6 @@ public class ThrowableHandlerFactory {
 
         if (throwable instanceof IllegalConversationStartpathException) {
             return new IllegalConversationStartpathExceptionHandler(conversationLifecycleManager, facesContext);
-        }
-
-        if (throwable instanceof NonexistentConversationException) {
-            return new NonexistentConversationExceptionHandler(conversationLifecycleManager, nonexistentConversationExceptionMessage, facesContext);
         }
 
         return new DefaultThrowableHandler(throwable, messageConverter);

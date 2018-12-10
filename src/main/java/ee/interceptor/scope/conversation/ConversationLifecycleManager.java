@@ -17,8 +17,8 @@
 package ee.interceptor.scope.conversation;
 
 import java.util.Objects;
-import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Conversation;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import spec.interfaces.infrastructure.CurrentViewContext;
@@ -30,7 +30,7 @@ import spec.scope.conversation.IllegalConversationStartpathException;
  * @author Yamashita,Takahiro
  */
 @Named
-@ApplicationScoped
+@RequestScoped
 public class ConversationLifecycleManager {
 
     private Conversation conversation;
@@ -101,21 +101,13 @@ public class ConversationLifecycleManager {
         if (this.conversation.isTransient()) {
             return false;
         }
-        String startViewFolder = uriFolderPath(currentViewId);
-        String resultViewFolder = uriFolderPath(resultViewId);
+        String startViewFolder = currentViewId.substring(0, currentViewId.lastIndexOf("/") + 1);
+        String resultViewFolder = resultViewId.substring(0, resultViewId.lastIndexOf("/") + 1);
 
         if (Objects.equals(startViewFolder, resultViewFolder)) {
             return false;
         }
         return Objects.equals(resultViewFolder, "") == false;
-    }
-
-    //
-    String uriFolderPath(String viewId) {
-        String[] urlPaths = viewId.split("/");
-        String viewItem = urlPaths[urlPaths.length - 1];
-        int folderPathSize = viewId.length() - viewItem.length();
-        return viewId.substring(0, folderPathSize);
     }
 
 }

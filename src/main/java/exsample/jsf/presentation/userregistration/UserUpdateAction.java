@@ -74,6 +74,11 @@ public class UserUpdateAction {
 
     @EndConversation
     public String fwTop() {
+
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException ex) {
+        }
         return "index.xhtml";
     }
 }

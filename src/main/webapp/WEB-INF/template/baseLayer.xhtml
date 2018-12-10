@@ -14,7 +14,7 @@
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.css" />
 
         <f:event type="postAddToView" listener="#{conversationLifecycleManager.startConversation()}" />
-
+        <f:event type="preRenderView" listener="#{conversationExceptionHandler.writeMessage()}" />
     </h:head>
 
     <h:body>

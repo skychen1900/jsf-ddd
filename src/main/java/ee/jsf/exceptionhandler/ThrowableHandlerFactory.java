@@ -17,7 +17,6 @@
 package ee.jsf.exceptionhandler;
 
 import ee.interceptor.scope.conversation.ConversationLifecycleManager;
-import ee.interceptor.scope.conversation.NonexistentConversationExceptionMessage;
 import ee.jsf.exceptionhandler.throwablehandler.BeanValidationExceptionHandler;
 import ee.jsf.exceptionhandler.throwablehandler.CanNotMappingHtmlMessagesExceptionHandler;
 import ee.jsf.exceptionhandler.throwablehandler.DefaultThrowableHandler;
@@ -46,17 +45,15 @@ public class ThrowableHandlerFactory {
     private MessageConverter messageConverter;
     private MessageWriter messageWriter;
     private ConversationLifecycleManager conversationLifecycleManager;
-    private NonexistentConversationExceptionMessage nonexistentConversationExceptionMessage;
 
     public ThrowableHandlerFactory() {
     }
 
     @Inject
-    public ThrowableHandlerFactory(MessageConverter messageConverter, MessageWriter messageWriter, ConversationLifecycleManager conversationLifecycleManager, NonexistentConversationExceptionMessage nonexistentConversationExceptionMessage) {
+    public ThrowableHandlerFactory(MessageConverter messageConverter, MessageWriter messageWriter, ConversationLifecycleManager conversationLifecycleManager) {
         this.messageConverter = messageConverter;
         this.messageWriter = messageWriter;
         this.conversationLifecycleManager = conversationLifecycleManager;
-        this.nonexistentConversationExceptionMessage = nonexistentConversationExceptionMessage;
     }
 
     /**

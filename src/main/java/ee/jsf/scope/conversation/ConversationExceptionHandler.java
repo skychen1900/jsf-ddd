@@ -16,9 +16,10 @@
  */
 package ee.jsf.scope.conversation;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.faces.context.Flash;
 import javax.inject.Inject;
 import javax.inject.Named;
 import spec.message.MessageConverter;
@@ -35,9 +36,12 @@ import spec.scope.conversation.ConversationExceptionKey;
 public class ConversationExceptionHandler {
 
     private String exception;
-    private String startPage;
+    private String forwardPage;
+
     private MessageConverter messageConverter;
     private MessageWriter messageWriter;
+
+    private ExternalContext externalContext;
 
     public ConversationExceptionHandler() {
     }
@@ -48,15 +52,18 @@ public class ConversationExceptionHandler {
         this.messageWriter = messageWriter;
     }
 
+    @PostConstruct
+    public void init() {
+        externalContext = FacesContext.getCurrentInstance().getExternalContext();
+    }
+
     public String forward() {
-        FacesContext.getCurrentInstance().getExternalContext().getFlash()
-                .put(ConversationExceptionKey.EXCEPTION, this.exception);
-        return this.startPage + "?faces-redirect=true";
+        externalContext.getFlash().put(ConversationExceptionKey.EXCEPTION, this.exception);
+        return this.forwardPage;
     }
 
     public void writeMessage() {
-        Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
-        String value = (String) flash.get(ConversationExceptionKey.EXCEPTION);
+        String value = (String) externalContext.getFlash().get(ConversationExceptionKey.EXCEPTION);
         if (value == null || value.equals("")) {
             return;
         }
@@ -64,10 +71,7 @@ public class ConversationExceptionHandler {
         messageWriter.appendErrorMessage(message);
 
         // 一度だけメッセージ出力をするために 共通メソッドで trueにしている設定を falseで上書きします
-        flash.setKeepMessages(false);
-
-        flash.remove(ConversationExceptionKey.START_PAGE);
-        flash.remove(ConversationExceptionKey.EXCEPTION);
+        externalContext.getFlash().setKeepMessages(false);
     }
 
     public String getException() {
@@ -78,12 +82,12 @@ public class ConversationExceptionHandler {
         this.exception = exception;
     }
 
-    public String getStartPage() {
-        return startPage;
+    public String getForwardPage() {
+        return forwardPage;
     }
 
-    public void setStartPage(String startPage) {
-        this.startPage = startPage;
+    public void setForwardPage(String forwardPage) {
+        this.forwardPage = forwardPage;
     }
 
 }

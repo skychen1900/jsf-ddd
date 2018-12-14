@@ -5,8 +5,8 @@
       >
 
     <f:metadata>
-        <f:viewParam name="conversation-start-page" value="#{conversationExceptionHandler.startPage}"/>
-        <f:viewParam name="conversation-exception" value="#{conversationExceptionHandler.exception}"/>
+        <f:viewParam name="forward" value="#{conversationExceptionHandler.forwardPage}"/>
+        <f:viewParam name="exception" value="#{conversationExceptionHandler.exception}"/>
         <f:viewAction action="#{conversationExceptionHandler.forward()}"/>
     </f:metadata>
 

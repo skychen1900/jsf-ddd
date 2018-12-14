@@ -22,6 +22,7 @@ package spec.scope.conversation;
  */
 public class ConversationExceptionKey {
 
-    public static final String START_PAGE = "conversation-start-page";
-    public static final String EXCEPTION = "conversation-exception";
+    public static final String FORWARD_PAGE = "forward";
+    public static final String EXCEPTION = "exception";
+    public static final String CONVERSATION_ID = "cid";
 }

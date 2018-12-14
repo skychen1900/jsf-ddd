@@ -46,16 +46,13 @@ public class ExecuteOnceInterceptor {
     @AroundInvoke
     public Object invoke(InvocationContext ic) throws Exception {
 
-        try {
-            if (this.doubleSubmitLifecycle.isSubmitted()) {
-                ExecuteOnce annotation = ic.getMethod().getAnnotation(ExecuteOnce.class);
-                return this.toErrorPage(annotation);
-            }
-            Object result = ic.proceed();
-            return result;
-        } finally {
-            this.doubleSubmitLifecycle.nextState();
+        if (this.doubleSubmitLifecycle.isSubmitted()) {
+            ExecuteOnce annotation = ic.getMethod().getAnnotation(ExecuteOnce.class);
+            return this.toErrorPage(annotation);
         }
+        Object result = ic.proceed();
+        this.doubleSubmitLifecycle.nextState();
+        return result;
 
     }
 

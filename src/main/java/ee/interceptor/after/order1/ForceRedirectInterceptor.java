@@ -14,7 +14,7 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ee.interceptor.scope.conversation;
+package ee.interceptor.after.order1;
 
 import javax.annotation.Priority;
 import javax.enterprise.context.Dependent;
@@ -27,25 +27,22 @@ import spec.interfaces.infrastructure.CurrentViewContext;
 
 @Action
 @Interceptor
-@Priority(Interceptor.Priority.APPLICATION + 10)
+@Priority(Interceptor.Priority.APPLICATION + 100)
 @Dependent
-public class ConversationInterceptor {
-
-    private final ConversationLifecycleManager conversationLifecycleManager;
-
-    private final CurrentViewContext context;
+public class ForceRedirectInterceptor {
 
     @Inject
-    public ConversationInterceptor(ConversationLifecycleManager conversationLifecycleManager, CurrentViewContext context) {
-        this.conversationLifecycleManager = conversationLifecycleManager;
-        this.context = context;
-    }
+    CurrentViewContext context;
 
     @AroundInvoke
     public Object invoke(InvocationContext ic) throws Exception {
         String currentViewId = context.currentViewId();
+
         Object resultViewId = ic.proceed();
-        this.conversationLifecycleManager.endConversation(currentViewId, (String) resultViewId);
-        return resultViewId;
+
+        if (resultViewId == null) {
+            resultViewId = currentViewId;
+        }
+        return context.responseViewId(resultViewId);
     }
 }

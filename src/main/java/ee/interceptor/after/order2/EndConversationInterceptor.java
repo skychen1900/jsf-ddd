@@ -14,35 +14,32 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ee.interceptor.controller;
+package ee.interceptor.after.order2;
 
+import ee.jsf.scope.conversation.ConversationLifecycleManager;
 import javax.annotation.Priority;
-import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
-import spec.annotation.presentation.controller.Action;
-import spec.interfaces.infrastructure.CurrentViewContext;
+import spec.annotation.presentation.controller.EndConversation;
 
-@Action
+@EndConversation
 @Interceptor
-@Priority(Interceptor.Priority.APPLICATION + 100)
-@Dependent
-public class ForceRedirectInterceptor {
+@Priority(Interceptor.Priority.APPLICATION + 10)
+public class EndConversationInterceptor {
+
+    private final ConversationLifecycleManager conversationLifecycleManager;
 
     @Inject
-    CurrentViewContext context;
+    public EndConversationInterceptor(ConversationLifecycleManager conversationLifecycleManager) {
+        this.conversationLifecycleManager = conversationLifecycleManager;
+    }
 
     @AroundInvoke
     public Object invoke(InvocationContext ic) throws Exception {
-        String currentViewId = context.currentViewId();
-
-        Object resultViewId = ic.proceed();
-
-        if (resultViewId == null) {
-            resultViewId = currentViewId;
-        }
-        return context.responseViewId(resultViewId);
+        Object result = ic.proceed();
+        this.conversationLifecycleManager.endConversation();
+        return result;
     }
 }

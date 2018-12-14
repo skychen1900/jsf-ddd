@@ -16,7 +16,7 @@
  */
 package ee.jsf.exceptionhandler.throwablehandler;
 
-import ee.interceptor.scope.conversation.ConversationLifecycleManager;
+import ee.jsf.scope.conversation.ConversationLifecycleManager;
 import java.io.IOException;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;

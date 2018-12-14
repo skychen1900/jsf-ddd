@@ -14,7 +14,7 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ee.interceptor.scope.conversation;
+package ee.jsf.scope.conversation;
 
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;

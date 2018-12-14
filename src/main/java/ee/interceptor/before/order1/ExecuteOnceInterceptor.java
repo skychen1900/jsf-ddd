@@ -14,8 +14,9 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ee.interceptor.scope.conversation;
+package ee.interceptor.before.order1;
 
+import ee.jsf.scope.conversation.DoubleSubmitLifecycle;
 import java.util.Objects;
 import javax.annotation.Priority;
 import javax.inject.Inject;

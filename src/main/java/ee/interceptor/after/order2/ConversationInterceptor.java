@@ -14,8 +14,9 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ee.interceptor.validation;
+package ee.interceptor.after.order2;
 
+import ee.jsf.scope.conversation.ConversationLifecycleManager;
 import javax.annotation.Priority;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
@@ -24,44 +25,28 @@ import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
 import spec.annotation.presentation.controller.Action;
 import spec.interfaces.infrastructure.CurrentViewContext;
-import spec.message.MessageConverter;
-import spec.message.MessageWriter;
-import spec.message.validation.ClientidMessages;
-import spec.validation.BeanValidationException;
 
 @Action
 @Interceptor
-@Priority(Interceptor.Priority.APPLICATION)
+@Priority(Interceptor.Priority.APPLICATION + 10)
 @Dependent
-public class BeanValidationExceptionInterceptor {
+public class ConversationInterceptor {
+
+    private final ConversationLifecycleManager conversationLifecycleManager;
 
     private final CurrentViewContext context;
 
-    private final MessageConverter messageConverter;
-    private final MessageWriter messageWriter;
-
     @Inject
-    public BeanValidationExceptionInterceptor(CurrentViewContext context, MessageConverter messageConverter, MessageWriter messageWriter) {
+    public ConversationInterceptor(ConversationLifecycleManager conversationLifecycleManager, CurrentViewContext context) {
+        this.conversationLifecycleManager = conversationLifecycleManager;
         this.context = context;
-        this.messageConverter = messageConverter;
-        this.messageWriter = messageWriter;
     }
 
     @AroundInvoke
     public Object invoke(InvocationContext ic) throws Exception {
-
         String currentViewId = context.currentViewId();
-
-        try {
-            return ic.proceed();
-        } catch (BeanValidationException ex) {
-            ClientidMessages clientidMessages
-                             = messageConverter.toClientidMessages(ex.getValidatedResults(),
-                                                                   ic.getTarget().getClass().getSuperclass());
-
-            messageWriter.appendErrorMessages(clientidMessages);
-            return currentViewId;
-        }
-
+        Object resultViewId = ic.proceed();
+        this.conversationLifecycleManager.endConversation(currentViewId, (String) resultViewId);
+        return resultViewId;
     }
 }

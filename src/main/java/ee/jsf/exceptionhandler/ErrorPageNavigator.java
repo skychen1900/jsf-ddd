@@ -16,7 +16,7 @@
  */
 package ee.jsf.exceptionhandler;
 
-import ee.interceptor.scope.conversation.ConversationLifecycleManager;
+import ee.jsf.scope.conversation.ConversationLifecycleManager;
 import java.util.Arrays;
 import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.NavigationHandler;

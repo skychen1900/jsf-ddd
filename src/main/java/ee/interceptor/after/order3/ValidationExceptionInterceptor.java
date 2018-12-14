@@ -14,33 +14,54 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ee.interceptor.controller;
+package ee.interceptor.after.order3;
 
 import javax.annotation.Priority;
 import javax.enterprise.context.Dependent;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
+import javax.validation.ValidationException;
 import spec.annotation.presentation.controller.Action;
+import spec.validation.BeanValidationException;
 
+/**
+ * BeanValidationを階層的に呼び出した際にValidationExceptionによりBeanValidationExceptionが包含されてしまう場合に、
+ * 原因となったBeanValidationExceptionを取得して、再スローします
+ *
+ * @author Yamashita,Takahiro
+ */
 @Action
 @Interceptor
-@Priority(Interceptor.Priority.APPLICATION + 5)
+@Priority(Interceptor.Priority.APPLICATION)
 @Dependent
-public class ActionInterceptor {
+public class ValidationExceptionInterceptor {
 
     @AroundInvoke
     public Object invoke(InvocationContext ic) throws Exception {
-        Action action = ic.getMethod().getAnnotation(Action.class);
-        if (action == null) {
+
+        try {
             return ic.proceed();
+        } catch (ValidationException ex) {
+            BeanValidationException cause = recursiveCause(ex);
+            if (cause == null) {
+                throw ex;
+            }
+            throw cause;
         }
-
-        if (action.value().equals(Action.Ignore.OFF)) {
-            return ic.proceed();
-
-        }
-
-        return null;
     }
+
+    private BeanValidationException recursiveCause(Throwable th) {
+        if (th == null) {
+            return null;
+        }
+
+        if (th instanceof BeanValidationException) {
+            return (BeanValidationException) th;
+        }
+
+        return this.recursiveCause(th.getCause());
+
+    }
+
 }

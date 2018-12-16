@@ -58,8 +58,8 @@ public class ConversationExceptionHandler {
     }
 
     public String forwardCauseNonexistentConversationException() {
-        externalContext.getFlash().put(ConversationExceptionKey.EXCEPTION, this.exception);
-        externalContext.getFlash().put(ConversationExceptionKey.FROM_PATH, this.fromPath);
+        externalContext.getFlash().putNow(ConversationExceptionKey.EXCEPTION, this.exception);
+        externalContext.getFlash().putNow(ConversationExceptionKey.FROM_PATH, this.fromPath);
         return this.getForwardPage();
     }
 

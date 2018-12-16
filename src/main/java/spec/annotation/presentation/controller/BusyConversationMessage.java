@@ -14,16 +14,21 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package spec.scope.conversation;
+package spec.annotation.presentation.controller;
 
-/**
- *
- * @author Yamashita,Takahiro
- */
-public class ConversationExceptionKey {
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+import javax.enterprise.util.Nonbinding;
+import javax.interceptor.InterceptorBinding;
 
-    public static final String FORWARD_PAGE = "forward";
-    public static final String EXCEPTION = "ex";
-    public static final String CONVERSATION_ID = "cid";
-    public static final String FROM_PATH = "from";
+@Target(value = {ElementType.TYPE, ElementType.METHOD})
+@Retention(RetentionPolicy.RUNTIME)
+@InterceptorBinding
+public @interface BusyConversationMessage {
+
+    @Nonbinding
+    public String value() default "";
+
 }

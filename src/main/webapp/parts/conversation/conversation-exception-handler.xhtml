@@ -6,8 +6,9 @@
 
     <f:metadata>
         <f:viewParam name="forward" value="#{conversationExceptionHandler.forwardPage}"/>
-        <f:viewParam name="exception" value="#{conversationExceptionHandler.exception}"/>
-        <f:viewAction action="#{conversationExceptionHandler.forward()}"/>
+        <f:viewParam name="ex" value="#{conversationExceptionHandler.exception}"/>
+        <f:viewParam name="from" value="#{conversationExceptionHandler.fromPath}"/>
+        <f:viewAction action="#{conversationExceptionHandler.forwardCauseNonexistentConversationException()}"/>
     </f:metadata>
 
 </html>

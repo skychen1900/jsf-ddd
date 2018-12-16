@@ -5,12 +5,11 @@
 
 <%
     String forwardPage = (String) request.getAttribute(ConversationExceptionKey.FORWARD_PAGE);
-    String ex = (String) request.getAttribute(ConversationExceptionKey.EXCEPTION);
     String cid = (String) request.getAttribute(ConversationExceptionKey.CONVERSATION_ID);
+    String ex = (String) request.getAttribute(ConversationExceptionKey.EXCEPTION);
 %>
-<c:redirect url="/parts/conversation/conversation-exception-handler.xhtml">
-    <c:param name="<%=ConversationExceptionKey.FORWARD_PAGE%>" value="<%=forwardPage%>"/>
-    <c:param name="<%=ConversationExceptionKey.EXCEPTION%>" value="<%=ex%>"/>
+<c:redirect url="<%=forwardPage%>">
     <c:param name="cid" value="<%=cid%>"/>
+    <c:param name="<%=ConversationExceptionKey.EXCEPTION%>" value="<%=ex%>"/>
 </c:redirect>
 

@@ -22,8 +22,6 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import spec.message.MessageConverter;
-import spec.message.MessageWriter;
 import spec.scope.conversation.ConversationExceptionKey;
 
 /**
@@ -35,21 +33,23 @@ import spec.scope.conversation.ConversationExceptionKey;
 @RequestScoped
 public class ConversationExceptionHandler {
 
-    private String exception;
     private String forwardPage;
-
-    private MessageConverter messageConverter;
-    private MessageWriter messageWriter;
+    private String exception;
+    private String fromPath;
 
     private ExternalContext externalContext;
+
+    private BusyConversationMessageHandler busyConversationMessageHandler;
+    private NonExistentConversationMessageHandler nonExistentConversationMessageHandler;
 
     public ConversationExceptionHandler() {
     }
 
     @Inject
-    public ConversationExceptionHandler(MessageConverter messageConverter, MessageWriter messageWriter) {
-        this.messageConverter = messageConverter;
-        this.messageWriter = messageWriter;
+    public ConversationExceptionHandler(BusyConversationMessageHandler busyConversationMessageHandler,
+                                        NonExistentConversationMessageHandler nonExistentConversationMessageHandler) {
+        this.busyConversationMessageHandler = busyConversationMessageHandler;
+        this.nonExistentConversationMessageHandler = nonExistentConversationMessageHandler;
     }
 
     @PostConstruct
@@ -57,21 +57,37 @@ public class ConversationExceptionHandler {
         externalContext = FacesContext.getCurrentInstance().getExternalContext();
     }
 
-    public String forward() {
+    public String forwardCauseNonexistentConversationException() {
         externalContext.getFlash().put(ConversationExceptionKey.EXCEPTION, this.exception);
-        return this.forwardPage;
+        externalContext.getFlash().put(ConversationExceptionKey.FROM_PATH, this.fromPath);
+        return this.getForwardPage();
     }
 
     public void writeMessage() {
-        String value = (String) externalContext.getFlash().get(ConversationExceptionKey.EXCEPTION);
-        if (value == null || value.equals("")) {
+        String flashException = (String) externalContext.getFlash().get(ConversationExceptionKey.EXCEPTION);
+        String requestParameterException = externalContext.getRequestParameterMap().get(ConversationExceptionKey.EXCEPTION);
+
+        if (busyConversationMessageHandler.isBusyConversationException(flashException, requestParameterException) == false
+            && nonExistentConversationMessageHandler.isNonExistentConversation(flashException) == false) {
             return;
         }
-        String message = messageConverter.toMessage(value);
-        messageWriter.appendErrorMessage(message);
+
+        if (busyConversationMessageHandler.isBusyConversationException(flashException, requestParameterException)) {
+            this.busyConversationMessageHandler.write();
+        }
+
+        if (nonExistentConversationMessageHandler.isNonExistentConversation(flashException)) {
+            this.nonExistentConversationMessageHandler
+                    .write((String) externalContext.getFlash().get(ConversationExceptionKey.FROM_PATH));
+        }
 
         // 一度だけメッセージ出力をするために 共通メソッドで trueにしている設定を falseで上書きします
         externalContext.getFlash().setKeepMessages(false);
+    }
+
+    private boolean isNotTarget(String flashException, String requestParameterException) {
+        return nonExistentConversationMessageHandler.isNonExistentConversation(flashException) == false
+               && busyConversationMessageHandler.isBusyConversationException(flashException, requestParameterException) == false;
     }
 
     public String getException() {
@@ -88,6 +104,14 @@ public class ConversationExceptionHandler {
 
     public void setForwardPage(String forwardPage) {
         this.forwardPage = forwardPage;
+    }
+
+    public String getFromPath() {
+        return fromPath;
+    }
+
+    public void setFromPath(String fromPath) {
+        this.fromPath = fromPath;
     }
 
 }

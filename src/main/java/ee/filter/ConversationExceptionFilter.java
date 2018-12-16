@@ -27,6 +27,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import spec.scope.conversation.ConversationExceptionKey;
+import spec.scope.conversation.ConversationExceptionValue;
 
 /**
  * Conversationに関する例外を扱うフィルターです.
@@ -55,25 +56,26 @@ public class ConversationExceptionFilter implements Filter {
             String servletPath = httpServletRequest.getServletPath();
             String indexRootPath = servletPath.substring(0, servletPath.lastIndexOf("/") + 1);
             String indexPage = indexRootPath + "index.xhtml";
-
-            String exception = NonexistentConversationException.class.getCanonicalName();
-
             request.setAttribute(ConversationExceptionKey.FORWARD_PAGE, indexPage);
-            request.setAttribute(ConversationExceptionKey.EXCEPTION, exception);
-            httpServletRequest.getRequestDispatcher("/parts/conversation/non-conversation.jsp").forward(request, response);
+
+            request.setAttribute(ConversationExceptionKey.EXCEPTION, ConversationExceptionValue.NON_EXISTENT);
+
+            request.setAttribute(ConversationExceptionKey.FROM_PATH, indexRootPath);
+
+            httpServletRequest.getRequestDispatcher("/parts/conversation/nonexist-conversation.jsp").forward(request, response);
 
         } catch (BusyConversationException ex) {
-
             HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+
             String servletPath = httpServletRequest.getServletPath();
-
-            String exception = BusyConversationException.class.getCanonicalName();
-            String cid = httpServletRequest.getParameter("cid");
-
             request.setAttribute(ConversationExceptionKey.FORWARD_PAGE, servletPath);
-            request.setAttribute(ConversationExceptionKey.EXCEPTION, exception);
-            request.setAttribute(ConversationExceptionKey.CONVERSATION_ID, cid == null ? "0" : cid);
-            httpServletRequest.getRequestDispatcher("/parts/conversation/conversation.jsp").forward(request, response);
+
+            String cid = httpServletRequest.getParameter("cid");
+            request.setAttribute(ConversationExceptionKey.CONVERSATION_ID, cid);
+
+            request.setAttribute(ConversationExceptionKey.EXCEPTION, ConversationExceptionValue.BUSY);
+
+            httpServletRequest.getRequestDispatcher("/parts/conversation/busy-conversation.jsp").forward(request, response);
 
         }
     }

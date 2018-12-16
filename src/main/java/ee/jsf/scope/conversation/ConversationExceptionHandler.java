@@ -85,11 +85,6 @@ public class ConversationExceptionHandler {
         externalContext.getFlash().setKeepMessages(false);
     }
 
-    private boolean isNotTarget(String flashException, String requestParameterException) {
-        return nonExistentConversationMessageHandler.isNonExistentConversation(flashException) == false
-               && busyConversationMessageHandler.isBusyConversationException(flashException, requestParameterException) == false;
-    }
-
     public String getException() {
         return exception;
     }

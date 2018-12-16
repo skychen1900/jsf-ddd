@@ -14,7 +14,7 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ee.interceptor.scope.conversation;
+package ee.jsf.scope.conversation;
 
 import spec.scope.conversation.DoubleSubmitState;
 import java.io.Serializable;

@@ -20,10 +20,8 @@ package spec.scope.conversation;
  *
  * @author Yamashita,Takahiro
  */
-public class ConversationExceptionKey {
+public class ConversationExceptionValue {
 
-    public static final String FORWARD_PAGE = "forward";
-    public static final String EXCEPTION = "ex";
-    public static final String CONVERSATION_ID = "cid";
-    public static final String FROM_PATH = "from";
+    public static final String NON_EXISTENT = "nonexistent";
+    public static final String BUSY = "busy";
 }

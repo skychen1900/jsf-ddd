@@ -14,31 +14,33 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ee.interceptor.scope.conversation;
+package ee.interceptor.before.order1;
 
 import javax.annotation.Priority;
-import javax.inject.Inject;
+import javax.enterprise.context.Dependent;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
-import spec.annotation.presentation.controller.EndConversation;
+import spec.annotation.presentation.controller.Action;
 
-@EndConversation
+@Action
 @Interceptor
-@Priority(Interceptor.Priority.APPLICATION + 10)
-public class EndConversationInterceptor {
-
-    private final ConversationLifecycleManager conversationLifecycleManager;
-
-    @Inject
-    public EndConversationInterceptor(ConversationLifecycleManager conversationLifecycleManager) {
-        this.conversationLifecycleManager = conversationLifecycleManager;
-    }
+@Priority(Interceptor.Priority.APPLICATION + 5)
+@Dependent
+public class ActionInterceptor {
 
     @AroundInvoke
     public Object invoke(InvocationContext ic) throws Exception {
-        Object result = ic.proceed();
-        this.conversationLifecycleManager.endConversation();
-        return result;
+        Action action = ic.getMethod().getAnnotation(Action.class);
+        if (action == null) {
+            return ic.proceed();
+        }
+
+        if (action.value().equals(Action.Ignore.OFF)) {
+            return ic.proceed();
+
+        }
+
+        return null;
     }
 }

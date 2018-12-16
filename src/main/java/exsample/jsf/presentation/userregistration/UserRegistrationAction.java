@@ -60,6 +60,12 @@ public class UserRegistrationAction {
     }
 
     public String register() {
+
+        try {
+            Thread.sleep(4000);
+        } catch (InterruptedException ex2) {
+        }
+
         User requestUser = this.registrationPage.toUser();
         registerUser.with(requestUser);
         User responseUser = userService.persistedUser(requestUser);

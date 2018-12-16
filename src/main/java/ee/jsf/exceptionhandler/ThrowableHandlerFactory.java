@@ -16,7 +16,7 @@
  */
 package ee.jsf.exceptionhandler;
 
-import ee.interceptor.scope.conversation.ConversationLifecycleManager;
+import ee.jsf.scope.conversation.ConversationLifecycleManager;
 import ee.jsf.exceptionhandler.throwablehandler.BeanValidationExceptionHandler;
 import ee.jsf.exceptionhandler.throwablehandler.CanNotMappingHtmlMessagesExceptionHandler;
 import ee.jsf.exceptionhandler.throwablehandler.DefaultThrowableHandler;

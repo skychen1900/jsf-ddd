@@ -58,8 +58,8 @@ public class ConversationExceptionHandler {
     }
 
     public String forwardCauseNonexistentConversationException() {
-        externalContext.getFlash().put(ConversationExceptionKey.EXCEPTION, this.exception);
-        externalContext.getFlash().put(ConversationExceptionKey.FROM_PATH, this.fromPath);
+        externalContext.getFlash().putNow(ConversationExceptionKey.EXCEPTION, this.exception);
+        externalContext.getFlash().putNow(ConversationExceptionKey.FROM_PATH, this.fromPath);
         return this.getForwardPage();
     }
 
@@ -83,11 +83,6 @@ public class ConversationExceptionHandler {
 
         // 一度だけメッセージ出力をするために 共通メソッドで trueにしている設定を falseで上書きします
         externalContext.getFlash().setKeepMessages(false);
-    }
-
-    private boolean isNotTarget(String flashException, String requestParameterException) {
-        return nonExistentConversationMessageHandler.isNonExistentConversation(flashException) == false
-               && busyConversationMessageHandler.isBusyConversationException(flashException, requestParameterException) == false;
     }
 
     public String getException() {

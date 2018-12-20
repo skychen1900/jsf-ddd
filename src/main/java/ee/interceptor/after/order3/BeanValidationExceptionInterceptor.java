@@ -18,6 +18,7 @@ package ee.interceptor.after.order3;
 
 import javax.annotation.Priority;
 import javax.enterprise.context.Dependent;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
@@ -60,6 +61,7 @@ public class BeanValidationExceptionInterceptor {
                                                                    ic.getTarget().getClass().getSuperclass());
 
             messageWriter.appendErrorMessages(clientidMessages);
+            FacesContext.getCurrentInstance().validationFailed();
             return currentViewId;
         }
 

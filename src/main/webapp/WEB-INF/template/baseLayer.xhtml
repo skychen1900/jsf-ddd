@@ -15,6 +15,7 @@
 
         <f:event type="postAddToView" listener="#{conversationLifecycleManager.startConversation()}" />
         <f:event type="preRenderView" listener="#{conversationExceptionHandler.writeMessage()}" />
+        <f:phaseListener type="ee.phaselistener.InputFieldColorHandlerPhaseListner" />
     </h:head>
 
     <h:body>

@@ -22,7 +22,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import spec.message.MessageWriter;
-import spec.message.validation.ClientidMessages_;
+import spec.message.validation.ClientIdMessages;
 
 /**
  * メッセージを出力する機能を提供します.
@@ -67,7 +67,7 @@ public class JsfMessageWriter implements MessageWriter {
      * @throws spec.message.CanNotMappingHtmlMessagesException クライアントにメッセージリストを出力する記述({@code h:messages})が無い場合
      */
     @Override
-    public void appendErrorMessageToComponent(ClientidMessages_ clientidMessages) {
+    public void appendErrorMessageToComponent(ClientIdMessages clientidMessages) {
         this.templateMethod(facesMessageWriter -> {
             clientidMessages.getList().stream()
                     .forEachOrdered(clientidMessage -> {

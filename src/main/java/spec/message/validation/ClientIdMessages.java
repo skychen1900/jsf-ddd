@@ -21,29 +21,29 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * {@link ClientidMessage_}の集約を扱う機能を提供します.
+ * {@link ClientIdMessage}の集約を扱う機能を提供します.
  *
  * @author Yamashita,Takahiro
  */
-public class ClientidMessages_ {
+public class ClientIdMessages {
 
-    private final List<ClientidMessage_> clientIdMessages;
+    private final List<ClientIdMessage> clientIdMessages;
 
-    public ClientidMessages_(List<ClientidMessage_> clientidMessage) {
+    public ClientIdMessages(List<ClientIdMessage> clientidMessage) {
         this.clientIdMessages = clientidMessage;
     }
 
-    public List<ClientidMessage_> getList() {
+    public List<ClientIdMessage> getList() {
         return Collections.unmodifiableList(clientIdMessages);
     }
 
-    public ClientidMessages_ toClientIdMessagesForWriting(ClientIdsWithComponents clientIdsWithMessages) {
-        List<ClientidMessage_> _clientidMessage = this.clientIdMessages.stream()
+    public ClientIdMessages toClientIdMessagesForWriting(ClientIdsWithComponents clientIdsWithMessages) {
+        List<ClientIdMessage> _clientidMessage = this.clientIdMessages.stream()
                 .map(c -> {
                     String _clientId = clientIdsWithMessages.contains(c.getClientId()) ? c.getClientId() : null;
-                    return new ClientidMessage_(_clientId, c.getMessage());
+                    return new ClientIdMessage(_clientId, c.getMessage());
                 }).collect(Collectors.toList());
-        return new ClientidMessages_(_clientidMessage);
+        return new ClientIdMessages(_clientidMessage);
     }
 
 }

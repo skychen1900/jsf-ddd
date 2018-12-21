@@ -30,8 +30,8 @@ import org.vermeerlab.beanvalidation.messageinterpolator.MessageInterpolatorFact
 import org.vermeerlab.resourcebundle.CustomControl;
 import spec.interfaces.infrastructure.CurrentViewContext;
 import spec.message.MessageConverter;
-import spec.message.validation.ClientidMessage_;
-import spec.message.validation.ClientidMessages_;
+import spec.message.validation.ClientIdMessage;
+import spec.message.validation.ClientIdMessages;
 import spec.message.validation.ClientIdsWithComponents;
 import spec.message.validation.ConstraintViolationForMessage;
 import spec.message.validation.ConstraintViolationForMessages;
@@ -91,7 +91,7 @@ public class JsfMessageConverter implements MessageConverter {
      * {@inheritDoc }
      */
     @Override
-    public ClientidMessages_ toClientIdMessages(Set<ConstraintViolation<?>> constraintViolationSet, Class<?> actionClass, ClientIdsWithComponents clientIdsWithComponents) {
+    public ClientIdMessages toClientIdMessages(Set<ConstraintViolation<?>> constraintViolationSet, Class<?> actionClass, ClientIdsWithComponents clientIdsWithComponents) {
 
         MessageMappingInfos messageMappingInfosNotYetReplaceClientId
                             = ViewContextScanner.of(actionClass).messageMappingInfosNotYetReplaceClientId();
@@ -108,11 +108,11 @@ public class JsfMessageConverter implements MessageConverter {
                 .toClientidMessages(c -> this.toClientidMessage(c));
     }
 
-    private ClientidMessage_ toClientidMessage(ConstraintViolationForMessage constraintViolationForMessage) {
+    private ClientIdMessage toClientidMessage(ConstraintViolationForMessage constraintViolationForMessage) {
         MessageInterpolator interpolator = interpolatorFactory.create(context.clientLocate());
         String message = interpolator.toMessage(constraintViolationForMessage.getConstraintViolation());
         String targetClientId = constraintViolationForMessage.getId();
-        return new ClientidMessage_(targetClientId, message);
+        return new ClientIdMessage(targetClientId, message);
     }
 
 }

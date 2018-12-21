@@ -46,6 +46,9 @@ public class InputFieldColorHandler {
         }
 
         context.getClientIdsWithMessages().forEachRemaining(clientId -> {
+            if (clientId == null) {
+                return;
+            }
             UIComponent component = context.getViewRoot().findComponent(clientId);
             String styleClass = String.valueOf(component.getAttributes().get("styleClass"));
             if (styleClass != null) {

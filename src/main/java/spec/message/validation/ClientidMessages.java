@@ -18,6 +18,7 @@ package spec.message.validation;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * {@link ClientidMessage}の集約を扱う機能を提供します.
@@ -26,14 +27,23 @@ import java.util.List;
  */
 public class ClientidMessages {
 
-    private final List<ClientidMessage> clientidMessages;
+    private final List<ClientidMessage> clientIdMessages;
 
     public ClientidMessages(List<ClientidMessage> clientidMessage) {
-        this.clientidMessages = clientidMessage;
+        this.clientIdMessages = clientidMessage;
     }
 
     public List<ClientidMessage> getList() {
-        return Collections.unmodifiableList(clientidMessages);
+        return Collections.unmodifiableList(clientIdMessages);
+    }
+
+    public ClientidMessages toClientIdMessagesForWriting(ClientIdsWithComponents clientIdsWithMessages) {
+        List<ClientidMessage> _clientidMessage = this.clientIdMessages.stream()
+                .map(c -> {
+                    String _clientId = clientIdsWithMessages.contains(c.getClientId()) ? c.getClientId() : null;
+                    return new ClientidMessage(_clientId, c.getMessage());
+                }).collect(Collectors.toList());
+        return new ClientidMessages(_clientidMessage);
     }
 
 }

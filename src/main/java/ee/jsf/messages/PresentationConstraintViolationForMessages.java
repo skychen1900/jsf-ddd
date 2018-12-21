@@ -25,9 +25,9 @@ import javax.validation.ConstraintViolation;
 import spec.annotation.FieldOrder;
 import spec.annotation.presentation.view.View;
 import spec.exception.UnexpectedApplicationException;
+import spec.message.validation.ClientIdsWithComponents;
 import spec.message.validation.ConstraintViolationForMessage;
 import spec.message.validation.ConstraintViolationForMessages;
-import spec.message.validation.TargetClientIds;
 
 /**
  * クライアントメッセージの出力に必要な情報をPresentation層から取得して
@@ -43,15 +43,15 @@ import spec.message.validation.TargetClientIds;
 class PresentationConstraintViolationForMessages {
 
     private final Set<ConstraintViolation<?>> constraintViolationSet;
-    private final TargetClientIds targetClientIds;
+    private final ClientIdsWithComponents clientIdsWithComponents;
 
-    private PresentationConstraintViolationForMessages(Set<ConstraintViolation<?>> constraintViolationSet, TargetClientIds targetClientIds) {
+    private PresentationConstraintViolationForMessages(Set<ConstraintViolation<?>> constraintViolationSet, ClientIdsWithComponents clientIdsWithComponents) {
         this.constraintViolationSet = constraintViolationSet;
-        this.targetClientIds = targetClientIds;
+        this.clientIdsWithComponents = clientIdsWithComponents;
     }
 
-    static PresentationConstraintViolationForMessages of(Set<ConstraintViolation<?>> constraintViolationSet, TargetClientIds targetClientIds) {
-        return new PresentationConstraintViolationForMessages(constraintViolationSet, targetClientIds);
+    static PresentationConstraintViolationForMessages of(Set<ConstraintViolation<?>> constraintViolationSet, ClientIdsWithComponents clientIdsWithComponents) {
+        return new PresentationConstraintViolationForMessages(constraintViolationSet, clientIdsWithComponents);
     }
 
     ConstraintViolationForMessages toConstraintViolationForMessages() {
@@ -110,16 +110,15 @@ class PresentationConstraintViolationForMessages {
     /**
      * View情報から取得される情報から判断できる情報で message出力先を編集します.
      * <p>
-     * xhtmlのforで指定したIdが存在しない場合は、messageの宛先が無いと言えるため nullを返却します.
      * ここではPresentation層から判断できる判断できる情報だけで編集して、他レイヤーによる更新は別に行います.
      *
      * @param clazz 検証不正のルートとなるクラス
      * @param path 検証不正のルートとなるフィールド名
-     * @return xhtmlのforで指定したIdが存在しない場合は {@code null}、存在したら フィールド名を返却
+     * @return 指定したIdが存在しない場合は {@code null}、存在したら フィールド名を返却
      */
     private String toId(Class<?> clazz, String path) {
         return clazz.getAnnotation(View.class) != null
-               ? this.targetClientIds.getOrNull(path)
+               ? this.clientIdsWithComponents.getOrNull(path)
                : null;
     }
 

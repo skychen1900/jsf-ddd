@@ -67,7 +67,7 @@ public class JsfMessageWriter implements MessageWriter {
      * @throws spec.message.CanNotMappingHtmlMessagesException クライアントにメッセージリストを出力する記述({@code h:messages})が無い場合
      */
     @Override
-    public void appendErrorMessages(ClientidMessages clientidMessages) {
+    public void appendErrorMessageToComponent(ClientidMessages clientidMessages) {
         this.templateMethod(facesMessageWriter -> {
             clientidMessages.getList().stream()
                     .forEachOrdered(clientidMessage -> {

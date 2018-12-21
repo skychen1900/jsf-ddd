@@ -16,7 +16,6 @@
  */
 package spec.message.validation;
 
-import spec.message.validation.ConstraintViolationForMessage;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,7 +47,7 @@ public class MessageMappingInfos {
                           ? sortKey
                           : _messageMappingInfo.getSortKey();
 
-        TargetClientIds _ids = _messageMappingInfo.getTargetClientIds();
+        ClientIdsWithComponents _ids = _messageMappingInfo.getClientIdsWithComponents();
         _ids.put(targetClientId);
 
         MessageMappingInfo messageMappingInfo = new MessageMappingInfo(message, _sortKey, _ids);
@@ -75,8 +74,8 @@ public class MessageMappingInfos {
                           ? _paramSortKey
                           : _messageMappingInfo.getSortKey();
 
-        TargetClientIds _ids = _messageMappingInfo.getTargetClientIds();
-        _ids.putAll(messageMappingInfo.getTargetClientIds());
+        ClientIdsWithComponents _ids = _messageMappingInfo.getClientIdsWithComponents();
+        _ids.putAll(messageMappingInfo.getClientIdsWithComponents());
 
         this.messageMappingInfos.put(message, new MessageMappingInfo(message, _sortKey, _ids));
     }
@@ -85,20 +84,20 @@ public class MessageMappingInfos {
      * 項目名であるＩＤからクライアントＩＤ（フルパス）に置き換えた、新たなインスタンスを返却します.
      * <p>
      * TODO：まだクライアントＩＤを複数保持した機能は実装していません。（繰り返し処理を扱っていないため）
-     * {@link TargetClientIds} はクライアントＩＤを複数保持していますが、デフォルトとして先頭のクライアントＩＤで置き換えます.<br>
+     * {@link ClientIdsWithComponents} はクライアントＩＤを複数保持していますが、デフォルトとして先頭のクライアントＩＤで置き換えます.<br>
      *
-     * @param targetClientIds 項目名とクライアントＩＤを置き換えるための情報
+     * @param clientIdsWithComponents 項目名とクライアントＩＤを置き換えるための情報
      * @return 項目名であるＩＤからクライアントＩＤ（フルパス）に置き換えた 新たなインスタンス
      */
-    public MessageMappingInfos replacedClientIds(TargetClientIds targetClientIds) {
+    public MessageMappingInfos replacedClientIds(ClientIdsWithComponents clientIdsWithComponents) {
 
         List<MessageMappingInfo> replaceItems = messageMappingInfos.entrySet().stream()
                 .map(entry -> {
                     String message = entry.getKey();
 
                     MessageMappingInfo messageMappingInfo = entry.getValue();
-                    TargetClientIds clientIds = messageMappingInfo.getTargetClientIds();
-                    String replaceClientId = targetClientIds.getClientIdOrNull(clientIds);
+                    ClientIdsWithComponents _clientIdsWithComponents = messageMappingInfo.getClientIdsWithComponents();
+                    String replaceClientId = clientIdsWithComponents.getClientIdOrNull(_clientIdsWithComponents);
                     MessageMappingInfo replacedMessageMappingInfo = new MessageMappingInfo(message,
                                                                                            messageMappingInfo.getSortKey(),
                                                                                            replaceClientId);

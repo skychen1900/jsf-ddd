@@ -22,24 +22,24 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * クライアントＩＤ（項目名とフルパス）を扱う機能を提供します.
+ * 入力要素に付与されているクライアントＩＤ（項目名とフルパス）を扱う機能を提供します.
  * <p>
  * フルパスは、繰り返し領域の場合もあるため 複数保持する構造になっています.<br>
  * TODO:まだ、繰り返し領域を考慮していません。<br>
  *
- * クライアントＩＤについて、{@code null}を返却するのは、メッセージ出力先として対象となる項目が無い場合に、クライアントＩＤとして {@code null}を指定させたいためです.
- *
  * @author Yamashita,Takahiro
  */
-public class TargetClientIds {
+public class ClientIdsWithComponents {
 
     /**
-     * key:Id, value clientIdのlist
+     * key:Id, value:clientIdのlist
      */
     private final Map<String, Set<String>> map;
+    private final Set<String> clientIds;
 
-    public TargetClientIds() {
+    public ClientIdsWithComponents() {
         this.map = new HashMap<>();
+        this.clientIds = new HashSet<>();
     }
 
     public void put(String id) {
@@ -47,13 +47,15 @@ public class TargetClientIds {
     }
 
     public void put(String id, String clientId) {
-        Set<String> clientIds = map.getOrDefault(id, new HashSet<>());
-        clientIds.add(clientId);
-        this.map.put(id, clientIds);
+        Set<String> _clientIds = map.getOrDefault(id, new HashSet<>());
+        _clientIds.add(clientId);
+        this.map.put(id, _clientIds);
+        this.clientIds.addAll(_clientIds);
     }
 
-    public void putAll(TargetClientIds targetClientIds) {
-        this.map.putAll(targetClientIds.map);
+    public void putAll(ClientIdsWithComponents clientIdWithInputComponent) {
+        this.map.putAll(clientIdWithInputComponent.map);
+        this.clientIds.addAll(clientIdWithInputComponent.clientIds);
     }
 
     /**
@@ -64,10 +66,10 @@ public class TargetClientIds {
      * @return 指定のIDがxhtmlに指定されている場合はフルパスのクライアントＩＤ、存在しない場合は null を返却します.
      */
     public String getOrNull(String id) {
-        Set<String> clientIds = this.map.getOrDefault(id, new HashSet<>());
-        return clientIds.isEmpty()
+        Set<String> _clientIds = this.map.getOrDefault(id, new HashSet<>());
+        return _clientIds.isEmpty()
                ? null
-               : clientIds.iterator().next();
+               : _clientIds.iterator().next();
     }
 
     /**
@@ -76,11 +78,22 @@ public class TargetClientIds {
      * クライアントＩＤは繰り返し領域を扱う場合を考慮し、複数保持していますが 本メソッドでは 先頭のクライアントＩＤを返却します.<br>
      * また、項目ＩＤが一致する要素が無い場合は {@code null}を返却します
      *
-     * @param targetClientIds
+     * @param clientIdWithInputComponent
      * @return 一致する項目ＩＤがあった場合は クライアントＩＤ（先頭）、無かった場合は {@code null}
      */
-    public String getClientIdOrNull(TargetClientIds targetClientIds) {
-        String key = targetClientIds.map.entrySet().iterator().next().getKey();
+    public String getClientIdOrNull(ClientIdsWithComponents clientIdWithInputComponent) {
+        String key = clientIdWithInputComponent.map.entrySet().iterator().next().getKey();
         return this.getOrNull(key);
     }
+
+    /**
+     * クライアントＩＤが存在するか判定します.
+     *
+     * @param clientId
+     * @return {@code h:message} のクライアントＩＤが存在する場合 {@code true}
+     */
+    public boolean contains(String clientId) {
+        return this.clientIds.contains(clientId);
+    }
+
 }

@@ -20,7 +20,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import javax.validation.ConstraintViolation;
-import spec.message.validation.ClientidMessages;
+import spec.message.validation.ClientidMessages_;
 import spec.message.validation.ClientIdsWithComponents;
 
 /**
@@ -53,6 +53,6 @@ public interface MessageConverter {
      * @param clientIdsWithComponents 入力要素に付与されているクライアントＩＤの管理クラス
      * @return メッセージ出力先ＩＤとメッセージの組み合わせ情報
      */
-    public ClientidMessages toClientIdMessages(Set<ConstraintViolation<?>> constraintViolationSet, Class<?> actionClass, ClientIdsWithComponents clientIdsWithComponents);
+    public ClientidMessages_ toClientIdMessages(Set<ConstraintViolation<?>> constraintViolationSet, Class<?> actionClass, ClientIdsWithComponents clientIdsWithComponents);
 
 }

@@ -21,7 +21,7 @@ package spec.message.validation;
  *
  * @author Yamashita,Takahiro
  */
-public class ClientidMessage {
+public class ClientidMessage_ {
 
     private final String clientId;
     private final String message;
@@ -32,7 +32,7 @@ public class ClientidMessage {
      * @param clientId メッセージ出力対象とするクライアントＩＤ. 集約したメッセージリストに出力する場合は{@code null}
      * @param message 出力するメッセージ
      */
-    public ClientidMessage(String clientId, String message) {
+    public ClientidMessage_(String clientId, String message) {
         this.clientId = clientId;
         this.message = message;
     }

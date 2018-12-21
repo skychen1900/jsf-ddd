@@ -17,7 +17,7 @@
 package spec.message;
 
 import java.util.List;
-import spec.message.validation.ClientidMessages;
+import spec.message.validation.ClientidMessages_;
 
 /**
  * クライアントにメッセージを出力する機能を提供します
@@ -48,6 +48,6 @@ public interface MessageWriter {
      *
      * @param clientIdMessages 出力するクライアントＩＤとメッセージのペア
      */
-    public void appendErrorMessageToComponent(ClientidMessages clientIdMessages);
+    public void appendErrorMessageToComponent(ClientidMessages_ clientIdMessages);
 
 }

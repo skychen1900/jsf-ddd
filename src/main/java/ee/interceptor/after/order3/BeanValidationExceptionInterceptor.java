@@ -29,7 +29,7 @@ import spec.annotation.presentation.controller.Action;
 import spec.interfaces.infrastructure.CurrentViewContext;
 import spec.message.MessageConverter;
 import spec.message.MessageWriter;
-import spec.message.validation.ClientidMessages;
+import spec.message.validation.ClientidMessages_;
 import spec.message.validation.ClientIdsWithComponents;
 import spec.validation.BeanValidationException;
 
@@ -61,7 +61,7 @@ public class BeanValidationExceptionInterceptor {
 
             ClientIdsWithComponents clientIdsWithInputComponents = new InputComponentScanner().scan();
 
-            ClientidMessages clientidMessages
+            ClientidMessages_ clientidMessages
                              = messageConverter.toClientIdMessages(ex.getValidatedResults(),
                                                                    ic.getTarget().getClass().getSuperclass(),
                                                                    clientIdsWithInputComponents);

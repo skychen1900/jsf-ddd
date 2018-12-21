@@ -59,13 +59,13 @@ public class ConstraintViolationForMessages {
      * @param function メッセージの出力変換を行う関数
      * @return 変換したクライアントＩＤとメッセージの組み合わせた情報
      */
-    public ClientidMessages toClientidMessages(Function<ConstraintViolationForMessage, ClientidMessage> function) {
-        List<ClientidMessage> clientidMessages = this.items.stream()
+    public ClientidMessages_ toClientidMessages(Function<ConstraintViolationForMessage, ClientidMessage_> function) {
+        List<ClientidMessage_> clientidMessages = this.items.stream()
                 .sorted(comparing(ConstraintViolationForMessage::getSortKey)
                         .thenComparing(s -> s.getConstraintViolation().getMessageTemplate()))
                 .map(c -> function.apply(c))
                 .collect(Collectors.toList());
-        return new ClientidMessages(clientidMessages);
+        return new ClientidMessages_(clientidMessages);
     }
 
 }

@@ -38,24 +38,18 @@ public class InputFieldColorHandler {
         this.errorClass = "error-field";
     }
 
-    public void updateErrorFieldColor(FacesContext context) {
+    public void updateErrorFieldColor(FacesContext context, ClientComplementManager clientComplementManager) {
         this.clearErrorColor(context);
 
         if (context.isValidationFailed() == false) {
             return;
         }
 
-        context.getClientIdsWithMessages().forEachRemaining(clientId -> {
-            UIComponent component = context.getViewRoot().findComponent(clientId);
-            String styleClass = String.valueOf(component.getAttributes().get("styleClass"));
-            if (styleClass != null) {
-                component.getAttributes().put("styleClass", styleClass.trim() + " " + errorClass);
-            }
-        });
-
+        this.updateColorHtmlMessage(context);
+        this.updateColorInputComponent(context, clientComplementManager);
     }
 
-    void clearErrorColor(FacesContext context) {
+    private void clearErrorColor(FacesContext context) {
 
         recursiveScan(context.getViewRoot().getChildren())
                 .forEach(c -> {
@@ -78,6 +72,30 @@ public class InputFieldColorHandler {
             set.addAll(recursiveScan(component.getChildren()));
         });
         return set;
+    }
+
+    private void updateColorHtmlMessage(FacesContext context) {
+        context.getClientIdsWithMessages().forEachRemaining(clientId -> {
+            if (clientId == null) {
+                return;
+            }
+            UIComponent component = context.getViewRoot().findComponent(clientId);
+            String styleClass = String.valueOf(component.getAttributes().get("styleClass"));
+            if (styleClass != null) {
+                component.getAttributes().put("styleClass", styleClass.trim() + " " + errorClass);
+            }
+        });
+    }
+
+    private void updateColorInputComponent(FacesContext context, ClientComplementManager clientComplementManager) {
+        clientComplementManager.clientIds().stream()
+                .forEach(clientId -> {
+                    UIComponent component = context.getViewRoot().findComponent(clientId);
+                    String styleClass = String.valueOf(component.getAttributes().get("styleClass"));
+                    if (styleClass != null && styleClass.contains(errorClass) == false) {
+                        component.getAttributes().put("styleClass", styleClass.trim() + " " + errorClass);
+                    }
+                });
     }
 
 }

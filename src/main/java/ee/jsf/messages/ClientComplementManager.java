@@ -14,26 +14,31 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package spec.message.validation;
+package ee.jsf.messages;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import javax.enterprise.context.RequestScoped;
+import spec.message.validation.ClientIdMessage;
+import spec.message.validation.ClientIdMessages;
 
 /**
- * {@link ClientidMessage}の集約を扱う機能を提供します.
  *
  * @author Yamashita,Takahiro
  */
-public class ClientidMessages {
+@RequestScoped
+public class ClientComplementManager {
 
-    private final List<ClientidMessage> clientidMessages;
+    private ClientIdMessages clientidMessages;
 
-    public ClientidMessages(List<ClientidMessage> clientidMessage) {
-        this.clientidMessages = clientidMessage;
+    public void setClientidMessages(ClientIdMessages clientidMessages) {
+        this.clientidMessages = clientidMessages;
     }
 
-    public List<ClientidMessage> getList() {
-        return Collections.unmodifiableList(clientidMessages);
+    public Set<String> clientIds() {
+        return this.clientidMessages.getList().stream()
+                .map(ClientIdMessage::getClientId)
+                .collect(Collectors.toSet());
     }
 
 }

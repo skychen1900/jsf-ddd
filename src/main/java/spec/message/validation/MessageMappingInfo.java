@@ -28,21 +28,21 @@ public class MessageMappingInfo {
 
     private final String message;
     private final String sortKey;
-    private final TargetClientIds targetClientIds;
+    private final ClientIdsWithComponents clientIdsWithComponents;
 
     public MessageMappingInfo(String message, String sortKey, String targetClientId) {
         this.message = message;
         this.sortKey = sortKey;
 
-        TargetClientIds _targetClientIds = new TargetClientIds();
-        _targetClientIds.put(targetClientId);
-        this.targetClientIds = _targetClientIds;
+        ClientIdsWithComponents _clientIdsWithComponents = new ClientIdsWithComponents();
+        _clientIdsWithComponents.put(targetClientId);
+        this.clientIdsWithComponents = _clientIdsWithComponents;
     }
 
-    public MessageMappingInfo(String message, String sortKey, TargetClientIds targetClientIds) {
+    public MessageMappingInfo(String message, String sortKey, ClientIdsWithComponents clientIdsWithComponents) {
         this.message = message;
         this.sortKey = sortKey;
-        this.targetClientIds = targetClientIds;
+        this.clientIdsWithComponents = clientIdsWithComponents;
     }
 
     public boolean isUpdate(String sortKey) {
@@ -57,12 +57,12 @@ public class MessageMappingInfo {
         return sortKey;
     }
 
-    public TargetClientIds getTargetClientIds() {
-        return targetClientIds;
+    public ClientIdsWithComponents getClientIdsWithComponents() {
+        return clientIdsWithComponents;
     }
 
     public String firstClientId() {
-        return targetClientIds.getClientIdOrNull(targetClientIds);
+        return clientIdsWithComponents.getClientIdOrNull(clientIdsWithComponents);
     }
 
 }

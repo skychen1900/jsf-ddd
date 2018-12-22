@@ -16,6 +16,9 @@
  */
 package ee.interceptor.after.order3;
 
+import ee.jsf.messages.ClientComplementManager;
+import ee.jsf.messages.HtmlMessageScanner;
+import ee.jsf.messages.InputComponentScanner;
 import javax.annotation.Priority;
 import javax.enterprise.context.Dependent;
 import javax.faces.context.FacesContext;
@@ -27,7 +30,8 @@ import spec.annotation.presentation.controller.Action;
 import spec.interfaces.infrastructure.CurrentViewContext;
 import spec.message.MessageConverter;
 import spec.message.MessageWriter;
-import spec.message.validation.ClientidMessages;
+import spec.message.validation.ClientIdMessages;
+import spec.message.validation.ClientIdsWithComponents;
 import spec.validation.BeanValidationException;
 
 @Action
@@ -37,15 +41,17 @@ import spec.validation.BeanValidationException;
 public class BeanValidationExceptionInterceptor {
 
     private final CurrentViewContext context;
-
     private final MessageConverter messageConverter;
     private final MessageWriter messageWriter;
+    private final ClientComplementManager clientComplementManager;
 
     @Inject
-    public BeanValidationExceptionInterceptor(CurrentViewContext context, MessageConverter messageConverter, MessageWriter messageWriter) {
+    public BeanValidationExceptionInterceptor(CurrentViewContext context, MessageConverter messageConverter, MessageWriter messageWriter,
+                                              ClientComplementManager clientComplementManager) {
         this.context = context;
         this.messageConverter = messageConverter;
         this.messageWriter = messageWriter;
+        this.clientComplementManager = clientComplementManager;
     }
 
     @AroundInvoke
@@ -56,12 +62,20 @@ public class BeanValidationExceptionInterceptor {
         try {
             return ic.proceed();
         } catch (BeanValidationException ex) {
-            ClientidMessages clientidMessages
-                             = messageConverter.toClientidMessages(ex.getValidatedResults(),
-                                                                   ic.getTarget().getClass().getSuperclass());
 
-            messageWriter.appendErrorMessages(clientidMessages);
+            ClientIdsWithComponents clientIdsWithInputComponents = new InputComponentScanner().scan();
+
+            ClientIdMessages clientidMessages
+                             = messageConverter.toClientIdMessages(ex.getValidatedResults(),
+                                                                   ic.getTarget().getClass().getSuperclass(),
+                                                                   clientIdsWithInputComponents);
+
+            ClientIdsWithComponents clientIdsWithHtmlMessages = new HtmlMessageScanner().scan();
+            messageWriter.appendErrorMessageToComponent(clientidMessages.toClientIdMessagesForWriting(clientIdsWithHtmlMessages));
+
             FacesContext.getCurrentInstance().validationFailed();
+            clientComplementManager.setClientidMessages(clientidMessages);
+
             return currentViewId;
         }
 

@@ -16,6 +16,7 @@
  */
 package ee.interceptor.after.order3;
 
+import ee.jsf.messages.ClientComplementManager;
 import ee.jsf.messages.HtmlMessageScanner;
 import ee.jsf.messages.InputComponentScanner;
 import javax.annotation.Priority;
@@ -42,12 +43,15 @@ public class BeanValidationExceptionInterceptor {
     private final CurrentViewContext context;
     private final MessageConverter messageConverter;
     private final MessageWriter messageWriter;
+    private final ClientComplementManager clientComplementManager;
 
     @Inject
-    public BeanValidationExceptionInterceptor(CurrentViewContext context, MessageConverter messageConverter, MessageWriter messageWriter) {
+    public BeanValidationExceptionInterceptor(CurrentViewContext context, MessageConverter messageConverter, MessageWriter messageWriter,
+                                              ClientComplementManager clientComplementManager) {
         this.context = context;
         this.messageConverter = messageConverter;
         this.messageWriter = messageWriter;
+        this.clientComplementManager = clientComplementManager;
     }
 
     @AroundInvoke
@@ -70,6 +74,8 @@ public class BeanValidationExceptionInterceptor {
             messageWriter.appendErrorMessageToComponent(clientidMessages.toClientIdMessagesForWriting(clientIdsWithHtmlMessages));
 
             FacesContext.getCurrentInstance().validationFailed();
+            clientComplementManager.setClientidMessages(clientidMessages);
+
             return currentViewId;
         }
 

@@ -16,6 +16,7 @@
  */
 package ee.phaselistener;
 
+import ee.jsf.messages.ClientComplementManager;
 import ee.jsf.messages.InputFieldColorHandler;
 import javax.enterprise.inject.spi.CDI;
 import javax.faces.context.FacesContext;
@@ -41,7 +42,8 @@ public class InputFieldColorHandlerPhaseListner implements PhaseListener {
         FacesContext context = phaseEvent.getFacesContext();
 
         InputFieldColorHandler fieldColorHandler = CDI.current().select(InputFieldColorHandler.class).get();
-        fieldColorHandler.updateErrorFieldColor(context);
+        ClientComplementManager clientComplementManager = CDI.current().select(ClientComplementManager.class).get();
+        fieldColorHandler.updateErrorFieldColor(context, clientComplementManager);
     }
 
     @Override

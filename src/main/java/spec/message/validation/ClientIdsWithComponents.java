@@ -16,6 +16,7 @@
  */
 package spec.message.validation;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -87,13 +88,22 @@ public class ClientIdsWithComponents {
     }
 
     /**
-     * クライアントＩＤが存在するか判定します.
+     * フルパスのクライアントＩＤが存在するか判定します.
      *
      * @param clientId
      * @return {@code h:message} のクライアントＩＤが存在する場合 {@code true}
      */
     public boolean contains(String clientId) {
         return this.clientIds.contains(clientId);
+    }
+
+    /**
+     * フルパスのクライアントＩＤリストを返却します
+     *
+     * @return フルパスのクライアントＩＤ
+     */
+    public Set<String> getClientIds() {
+        return Collections.unmodifiableSet(clientIds);
     }
 
 }

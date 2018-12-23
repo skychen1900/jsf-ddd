@@ -22,6 +22,7 @@ import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 
 /**
@@ -75,27 +76,23 @@ public class InputFieldColorHandler {
     }
 
     private void updateColorHtmlMessage(FacesContext context) {
-        context.getClientIdsWithMessages().forEachRemaining(clientId -> {
-            if (clientId == null) {
-                return;
-            }
-            UIComponent component = context.getViewRoot().findComponent(clientId);
-            String styleClass = String.valueOf(component.getAttributes().get("styleClass"));
-            if (styleClass != null) {
-                component.getAttributes().put("styleClass", styleClass.trim() + " " + errorClass);
-            }
-        });
+        context.getClientIdsWithMessages()
+                .forEachRemaining(clientId -> this.updateBackgroundColor(context, clientId));
     }
 
     private void updateColorInputComponent(FacesContext context, ClientComplementManager clientComplementManager) {
         clientComplementManager.clientIds().stream()
-                .forEach(clientId -> {
-                    UIComponent component = context.getViewRoot().findComponent(clientId);
-                    String styleClass = String.valueOf(component.getAttributes().get("styleClass"));
-                    if (styleClass != null && styleClass.contains(errorClass) == false) {
-                        component.getAttributes().put("styleClass", styleClass.trim() + " " + errorClass);
-                    }
-                });
+                .forEach(clientId -> this.updateBackgroundColor(context, clientId));
+    }
+
+    private void updateBackgroundColor(FacesContext context, String clientId) {
+        if (clientId == null) {
+            return;
+        }
+        UIInput uiInput = (UIInput) context.getViewRoot().findComponent(clientId);
+        uiInput.setValid(false);
+        String styleClass = String.valueOf(uiInput.getAttributes().get("styleClass"));
+        uiInput.getAttributes().put("styleClass", styleClass.trim() + " " + errorClass);
     }
 
 }

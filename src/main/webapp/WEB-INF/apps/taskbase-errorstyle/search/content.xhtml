@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      >
+    <head jsfc="h:head">
+        <title>JSF</title>
+
+        <ui:remove>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.css"/>
+        </ui:remove>
+
+
+    </head>
+
+    <body jsfc="h:body">
+
+        <form jsfc="h:form" id="f">
+            <f:metadata>
+                <f:event type="preRenderView" listener="#{userSearchAction.search()}"/>
+            </f:metadata>
+
+
+            <div class="ui container">
+
+                <div class="ui basic segment">
+                    <h1 class="ui header">利用者一覧</h1>
+                </div>
+
+                <button class="ui positive basic button" jsf:id="persistButton" jsf:action="#{userRegistrationAction.fwPersist()}">
+                    利用者の新規登録
+                </button>
+
+                <div class="ui basic segment">
+
+                    <table class="ui celled table">
+                        <thead>
+                            <tr>
+                                <th>利用者ID</th>
+                                <th>利用者名</th>
+                                <th>年齢</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr jsfc="ui:repeat" value="#{userSearchPage.items}" var="items" id="items">
+                                <td jsf:id="email">#{items.email}</td>
+                                <td jsf:id="name">#{items.name}</td>
+                                <td jsf:id="age">#{items.age}</td>
+                                <td>
+                                    <button class="ui secondary basic button" jsf:id="updateButton" jsf:action="#{userUpdateAction.fwUpdate(items.userId)}">
+                                        変更
+                                    </button>
+                                </td>
+                                <td>
+                                    <button class="ui negative basic button" jsf:id="removeButton" jsf:action="#{userRemovalAction.fwRemove(items.userId)}">
+                                        削除
+                                    </button>
+                                </td>
+                            </tr>
+
+
+                            <tr jsfc="ui:remove">
+                                <td>aaaaaa@example.com</td>
+                                <td>ああ ああ</td>
+                                <td>10</td>
+                                <td>
+                                    <button class="ui secondary basic button" onclick="location.href = '../update/content.xhtml';">
+                                        変更
+                                    </button>
+                                </td>
+                                <td>
+                                    <button class="ui negative basic button" onclick="location.href = '../delete/content.xhtml';">
+                                        削除
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <tr jsfc="ui:remove">
+                                <td>bbbbbb@example.com</td>
+                                <td>いい いい</td>
+                                <td>20</td>
+                                <td>
+                                    <button class="ui secondary basic button" onclick="location.href = '../update/content.xhtml';">
+                                        変更
+                                    </button>
+                                </td>
+                                <td>
+                                    <button class="ui negative basic button" onclick="location.href = '../delete/content.xhtml';">
+                                        削除
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <tr jsfc="ui:remove">
+                                <td>cccccc@example.com</td>
+                                <td>うう うう</td>
+                                <td>30</td>
+                                <td>
+                                    <button class="ui secondary basic button" onclick="location.href = '../update/content.xhtml';">
+                                        変更
+                                    </button>
+                                </td>
+                                <td>
+                                    <button class="ui negative basic button" onclick="location.href = '../delete/content.xhtml';">
+                                        削除
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <tr jsfc="ui:remove">
+                                <td>dddddd@example.com</td>
+                                <td>ええ ええ</td>
+                                <td>20</td>
+                                <td>
+                                    <button class="ui secondary basic button" onclick="location.href = '../update/content.xhtml';">
+                                        変更
+                                    </button>
+                                </td>
+                                <td>
+                                    <button class="ui negative basic button" onclick="location.href = '../delete/content.xhtml';">
+                                        削除
+                                    </button>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+        </form>
+
+    </body>
+</html>

@@ -54,6 +54,13 @@ public class ClientIdsWithComponents {
         this.clientIds.addAll(_clientIds);
     }
 
+    public void put(String id, Set<String> clientIds) {
+        Set<String> _clientIds = this.map.getOrDefault(id, new HashSet<>());
+        _clientIds.addAll(clientIds);
+        this.map.put(id, _clientIds);
+        this.clientIds.addAll(clientIds);
+    }
+
     public void putAll(ClientIdsWithComponents clientIdWithInputComponent) {
         this.map.putAll(clientIdWithInputComponent.map);
         this.clientIds.addAll(clientIdWithInputComponent.clientIds);
@@ -61,7 +68,6 @@ public class ClientIdsWithComponents {
 
     /**
      * xhtmlに指定されているＩＤに合致する、フルパスのクライアントＩＤを返却します.
-     * <p>
      *
      * @param id クライアントＩＤ（フルパスではない）
      * @return 指定のIDがxhtmlに指定されている場合はフルパスのクライアントＩＤ、存在しない場合は null を返却します.
@@ -104,6 +110,30 @@ public class ClientIdsWithComponents {
      */
     public Set<String> getClientIds() {
         return Collections.unmodifiableSet(clientIds);
+    }
+
+    /**
+     * 指定のフルパスのクライアントＩＤリストだけの新たなインスタンスを返却します.
+     *
+     * @param clientIds 取得対象となるクライアントＩＤリスト
+     * @return 新たなインスタンス
+     */
+    public ClientIdsWithComponents filter(Set<String> clientIds) {
+        ClientIdsWithComponents _clientIdsWithComponents = new ClientIdsWithComponents();
+
+        this.map.forEach((_id, _clientIds) -> {
+
+            clientIds.forEach(_clientId -> {
+
+                if (_clientIds.contains(_clientId)) {
+                    _clientIdsWithComponents.put(_id, _clientIds);
+                }
+
+            });
+
+        });
+
+        return _clientIdsWithComponents;
     }
 
 }

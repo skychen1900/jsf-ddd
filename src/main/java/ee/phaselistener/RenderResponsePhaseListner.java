@@ -29,7 +29,7 @@ import javax.faces.event.PhaseListener;
  *
  * @author Yamashita,Takahiro
  */
-public class InputFieldColorHandlerPhaseListner implements PhaseListener {
+public class RenderResponsePhaseListner implements PhaseListener {
 
     private static final long serialVersionUID = 1L;
 

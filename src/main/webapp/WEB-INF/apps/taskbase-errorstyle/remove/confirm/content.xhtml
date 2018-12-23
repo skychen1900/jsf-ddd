@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+    <head jsfc="h:head">
+        <title>JSF</title>
+
+        <ui:remove>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.css"/>
+            <link rel="stylesheet" href="../../../../../resources/css/userregistration.css"/>
+        </ui:remove>
+
+        <h:outputStylesheet library="css" name="userregistration.css" />
+
+    </head>
+    <body jsfc="h:body">
+        <div class="ui container">
+            <div class="ui vertical segment">
+                <h1 class="ui header">利用者削除の確認</h1>
+            </div>
+
+            <div class="ui form vertical segment">
+
+                <div class="field" id="email">
+                    <label>利用者ID</label>
+                    <p>#{userRegistrationPage.email}</p>
+                </div>
+
+                <div class="field" id="name">
+                    <label>名前</label>
+                    <p>#{userRegistrationPage.name}</p>
+                </div>
+
+                <div class="field" id="dateOfBirth">
+                    <label>生年月日</label>
+                    <p>#{userRegistrationPage.dateOfBirth}</p>
+                </div>
+
+                <div class="field" id="phoneNumber">
+                    <label>電話番号</label>
+                    <p>#{userRegistrationPage.phoneNumber}</p>
+                </div>
+
+                <div class="field" id="gender">
+                    <label>性別</label>
+                    <p>#{userRegistrationPage.gender}</p>
+                </div>
+
+            </div>
+
+            <h:form id="f">
+                <div class="ui basic segment">
+                    <button id="registerButton" class="ui secondary basic button" jsf:action="#{userRemovalAction.remove()}">
+                        削除する
+                    </button>
+                    <a href="#" jsf:id="fwTopPage" jsf:action="#{userRemovalAction.fwTop()}">一覧に戻る</a>
+                </div>
+            </h:form>
+        </div>
+    </body>
+</html>

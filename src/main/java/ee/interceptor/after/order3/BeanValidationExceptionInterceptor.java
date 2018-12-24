@@ -16,9 +16,10 @@
  */
 package ee.interceptor.after.order3;
 
+import base.annotation.presentation.controller.Action;
+import base.xhtml.error.ErrorStyle;
+import base.xhtml.error.ErrorTooltip;
 import ee.jsf.message.ClientComplementManager;
-import ee.jsf.message.ErrorStyle;
-import ee.jsf.message.ErrorTooltip;
 import ee.jsf.message.HtmlMessageScanner;
 import ee.jsf.message.InputComponentScanner;
 import javax.annotation.Priority;
@@ -28,7 +29,6 @@ import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
-import base.annotation.presentation.controller.Action;
 import spec.interfaces.infrastructure.CurrentViewContext;
 import spec.message.MessageConverter;
 import spec.message.MessageWriter;

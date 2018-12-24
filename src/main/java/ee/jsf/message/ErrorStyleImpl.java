@@ -16,6 +16,7 @@
  */
 package ee.jsf.message;
 
+import base.xhtml.error.ErrorStyle;
 import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
@@ -27,9 +28,9 @@ import spec.message.validation.ClientIdsWithComponents;
  *
  * @author Yamashita,Takahiro
  */
-@Named
+@Named("errorStyle")
 @RequestScoped
-public class ErrorStyle {
+public class ErrorStyleImpl implements ErrorStyle {
 
     private ClientIdsWithComponents clientIdsWithComponents;
 
@@ -41,6 +42,7 @@ public class ErrorStyle {
         this.clientIdsWithComponents = new ClientIdsWithComponents();
     }
 
+    @Override
     public void set(ClientIdsWithComponents clientIdsWithInputComponents, ClientIdMessages clientidMessages) {
         Set<String> clientIds = clientidMessages.getClientIds();
         this.clientIdsWithComponents = clientIdsWithInputComponents.filter(clientIds);
@@ -54,6 +56,7 @@ public class ErrorStyle {
      * @param id 対象となるコンポーネントのID（JSFのクライアントＩＤではありません）
      * @return 当該項目IDにエラーがない場合は 空文字を返却します.
      */
+    @Override
     public String byId(String id) {
         return this.clientIdsWithComponents.getOrNull(id) == null ? "" : errorStyle;
 

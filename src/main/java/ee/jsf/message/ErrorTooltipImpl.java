@@ -16,6 +16,7 @@
  */
 package ee.jsf.message;
 
+import base.xhtml.error.ErrorTooltip;
 import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
@@ -27,9 +28,9 @@ import spec.message.validation.ClientIdsWithComponents;
  *
  * @author Yamashita,Takahiro
  */
-@Named
+@Named("errorTooltip")
 @RequestScoped
-public class ErrorTooltip {
+public class ErrorTooltipImpl implements ErrorTooltip {
 
     private ClientIdsWithComponents clientIdsWithComponents;
     private ClientIdMessages clientIdMessages;
@@ -40,6 +41,7 @@ public class ErrorTooltip {
         this.clientIdMessages = new ClientIdMessages();
     }
 
+    @Override
     public void set(ClientIdsWithComponents clientIdsWithInputComponents, ClientIdMessages clientIdMessages) {
 
         Set<String> clientIds = clientIdMessages.getClientIds();
@@ -55,6 +57,7 @@ public class ErrorTooltip {
      * @param id 対象となるコンポーネントのID（JSFのクライアントＩＤではありません）
      * @return 当該項目IDにエラーがない場合は 空文字を返却します.
      */
+    @Override
     public String byId(String id) {
         String clientId = this.clientIdsWithComponents.getOrNull(id);
         if (clientId == null) {
@@ -69,6 +72,7 @@ public class ErrorTooltip {
      * @param clientId 対象となるコンポーネントのID（JSFのクライアントＩＤではありません）
      * @return 当該項目IDにエラーがない場合は 空文字を返却します.
      */
+    @Override
     public String byClientId(String clientId) {
         return clientIdMessages.getMessage(clientId);
     }

@@ -16,8 +16,8 @@
  */
 package ee.phaselistener;
 
-import ee.jsf.messages.ClientComplementManager;
-import ee.jsf.messages.InputFieldColorHandler;
+import ee.jsf.message.ClientComplementManager;
+import ee.jsf.message.InputFieldColorHandler;
 import javax.enterprise.inject.spi.CDI;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseEvent;

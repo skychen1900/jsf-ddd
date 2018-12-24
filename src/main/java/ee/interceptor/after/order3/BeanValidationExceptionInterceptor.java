@@ -16,11 +16,11 @@
  */
 package ee.interceptor.after.order3;
 
-import ee.jsf.messages.ClientComplementManager;
-import ee.jsf.messages.ErrorStyle;
-import ee.jsf.messages.ErrorTooltip;
-import ee.jsf.messages.HtmlMessageScanner;
-import ee.jsf.messages.InputComponentScanner;
+import ee.jsf.message.ClientComplementManager;
+import ee.jsf.message.ErrorStyle;
+import ee.jsf.message.ErrorTooltip;
+import ee.jsf.message.HtmlMessageScanner;
+import ee.jsf.message.InputComponentScanner;
 import javax.annotation.Priority;
 import javax.enterprise.context.Dependent;
 import javax.faces.context.FacesContext;

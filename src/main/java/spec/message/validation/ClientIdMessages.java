@@ -17,10 +17,11 @@
 package spec.message.validation;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 /**
@@ -54,8 +55,15 @@ public class ClientIdMessages {
         this.clientIdMessageMap = _clientIdMessageMap;
     }
 
-    public List<ClientIdMessage> getList() {
-        return Collections.unmodifiableList(clientIdMessages);
+    public Set<String> getClientIds() {
+        return this.clientIdMessages.stream()
+                .map(ClientIdMessage::getClientId)
+                .collect(Collectors.toSet());
+    }
+
+    public void forEachOrdered(Consumer<? super ClientIdMessage> action) {
+        this.clientIdMessages.stream().forEachOrdered(clientIdMessage -> action.accept(clientIdMessage));
+
     }
 
     public ClientIdMessages toClientIdMessagesForWriting(ClientIdsWithComponents clientIdsWithMessages) {

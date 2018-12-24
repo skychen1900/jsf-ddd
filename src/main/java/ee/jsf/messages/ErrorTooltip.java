@@ -17,11 +17,9 @@
 package ee.jsf.messages;
 
 import java.util.Set;
-import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
-import spec.message.validation.ClientIdMessage;
 import spec.message.validation.ClientIdMessages;
 import spec.message.validation.ClientIdsWithComponents;
 
@@ -44,10 +42,7 @@ public class ErrorTooltip {
 
     public void set(ClientIdsWithComponents clientIdsWithInputComponents, ClientIdMessages clientIdMessages) {
 
-        Set<String> clientIds = clientIdMessages.getList().stream()
-                .map(ClientIdMessage::getClientId)
-                .collect(Collectors.toSet());
-
+        Set<String> clientIds = clientIdMessages.getClientIds();
         this.clientIdsWithComponents = clientIdsWithInputComponents.filter(clientIds);
         this.clientIdMessages = clientIdMessages;
     }

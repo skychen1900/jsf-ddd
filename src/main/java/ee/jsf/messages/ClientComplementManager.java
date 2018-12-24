@@ -17,9 +17,7 @@
 package ee.jsf.messages;
 
 import java.util.Set;
-import java.util.stream.Collectors;
 import javax.enterprise.context.RequestScoped;
-import spec.message.validation.ClientIdMessage;
 import spec.message.validation.ClientIdMessages;
 
 /**
@@ -36,9 +34,7 @@ public class ClientComplementManager {
     }
 
     public Set<String> clientIds() {
-        return this.clientidMessages.getList().stream()
-                .map(ClientIdMessage::getClientId)
-                .collect(Collectors.toSet());
+        return this.clientidMessages.getClientIds();
     }
 
 }

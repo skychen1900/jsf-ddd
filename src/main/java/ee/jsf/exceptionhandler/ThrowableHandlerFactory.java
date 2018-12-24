@@ -22,7 +22,7 @@ import ee.jsf.exceptionhandler.throwablehandler.CanNotMappingHtmlMessagesExcepti
 import ee.jsf.exceptionhandler.throwablehandler.DefaultThrowableHandler;
 import ee.jsf.exceptionhandler.throwablehandler.IllegalConversationStartpathExceptionHandler;
 import ee.jsf.exceptionhandler.throwablehandler.UnexpectedApplicationExceptionHandler;
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ExceptionQueuedEventContext;
 import javax.inject.Inject;
@@ -39,7 +39,7 @@ import spec.validation.BeanValidationException;
  *
  * @author Yamashita,Takahiro
  */
-@ApplicationScoped
+@RequestScoped
 public class ThrowableHandlerFactory {
 
     private MessageConverter messageConverter;

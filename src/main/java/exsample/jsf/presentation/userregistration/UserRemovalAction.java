@@ -21,8 +21,8 @@ import exsample.jsf.application.service.UserService;
 import exsample.jsf.domain.model.user.User;
 import exsample.jsf.domain.model.user.UserId;
 import javax.inject.Inject;
-import spec.annotation.presentation.controller.Controller;
-import spec.annotation.presentation.controller.EndConversation;
+import base.annotation.presentation.controller.Controller;
+import base.annotation.presentation.controller.EndConversation;
 
 @Controller
 public class UserRemovalAction {

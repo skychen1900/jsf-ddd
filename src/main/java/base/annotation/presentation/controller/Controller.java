@@ -14,32 +14,29 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package spec.annotation.presentation.controller;
+package base.annotation.presentation.controller;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import javax.enterprise.util.Nonbinding;
-import javax.interceptor.InterceptorBinding;
+import javax.enterprise.context.RequestScoped;
+import javax.enterprise.inject.Stereotype;
+import javax.inject.Named;
 
 /**
- * このアノテーションは Controllerの Actionを表すために使用します.
+ * このアノテーションは Viewの コンポーネントを表すために使用します.
  *
  * @author Yamashita,Takahiro
  */
 @Documented
-@Target(value = {ElementType.TYPE, ElementType.METHOD})
+@Stereotype
+@Named
+@RequestScoped
+@Action
+@Target(value = {ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@InterceptorBinding
-public @interface Action {
-
-    public static enum Ignore {
-        ON, OFF
-    }
-
-    @Nonbinding
-    public Ignore value() default Ignore.OFF;
+public @interface Controller {
 
 }

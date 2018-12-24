@@ -22,7 +22,7 @@ import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
-import spec.annotation.presentation.controller.EndConversation;
+import base.annotation.presentation.controller.EndConversation;
 
 @EndConversation
 @Interceptor

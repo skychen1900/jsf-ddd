@@ -14,28 +14,28 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package spec.annotation.presentation.view;
+package base.annotation.application;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import javax.enterprise.context.ConversationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Stereotype;
 import javax.inject.Named;
 
 /**
- * このアノテーションは Viewの コンポーネントを表すために使用します.
+ * このアノテーションは Serviceの コンポーネントを表すために使用します.
  *
  * @author Yamashita,Takahiro
  */
 @Documented
 @Stereotype
 @Named
-@ConversationScoped
+@RequestScoped
 @Target(value = {ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface View {
+public @interface Service {
 
 }

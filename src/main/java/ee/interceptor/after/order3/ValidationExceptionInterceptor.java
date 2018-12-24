@@ -22,7 +22,7 @@ import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
 import javax.validation.ValidationException;
-import spec.annotation.presentation.controller.Action;
+import base.annotation.presentation.controller.Action;
 import spec.validation.BeanValidationException;
 
 /**

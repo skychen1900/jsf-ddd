@@ -16,7 +16,7 @@
  */
 package exsample.jsf.presentation.userregistration;
 
-import spec.annotation.presentation.view.View;
+import base.annotation.presentation.view.View;
 import exsample.jsf.domain.model.user.User;
 import java.io.Serializable;
 import java.util.Collections;

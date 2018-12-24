@@ -20,7 +20,7 @@ import base.application.commnand.CommandPreCondition;
 import base.validation.groups.PreConditionValidationGroups.PreCondition;
 import base.validation.ValidateCondition;
 import base.validation.Validator;
-import spec.annotation.application.Service;
+import base.annotation.application.Service;
 import exsample.jsf.domain.model.user.User;
 import exsample.jsf.domain.model.user.UserRepository;
 import javax.inject.Inject;

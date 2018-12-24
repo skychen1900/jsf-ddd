@@ -23,7 +23,7 @@ import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
-import spec.annotation.presentation.controller.ExecuteOnce;
+import base.annotation.presentation.controller.ExecuteOnce;
 import spec.interfaces.infrastructure.CurrentViewContext;
 import spec.message.MessageWriter;
 

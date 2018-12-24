@@ -17,16 +17,16 @@
 package ee.jsf.message;
 
 import java.lang.reflect.Field;
-import spec.annotation.FieldOrder;
-import spec.annotation.presentation.controller.ViewContext;
-import spec.annotation.presentation.view.InvalidMessageMapping;
+import base.annotation.FieldOrder;
+import base.annotation.presentation.controller.ViewContext;
+import base.annotation.presentation.view.InvalidMessageMapping;
 import spec.message.validation.MessageMappingInfos;
 
 /**
- * Controllerと関連付くViewクラス（{@link spec.annotation.presentation.controller.ViewContext}で特定したクラス）から
- * {@link spec.annotation.presentation.view.InvalidMessageMapping}が付与されたフィールド情報を取得する機能を提供します.
+ * Controllerと関連付くViewクラス（{@link base.annotation.presentation.controller.ViewContext}で特定したクラス）から
+ * {@link base.annotation.presentation.view.InvalidMessageMapping}が付与されたフィールド情報を取得する機能を提供します.
  * <p>
- * {@link spec.annotation.FieldOrder} により 出力するメッセージの順序を指定します。
+ * {@link base.annotation.FieldOrder} により 出力するメッセージの順序を指定します。
  *
  * @author Yamashita,Takahiro
  */

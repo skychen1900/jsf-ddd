@@ -20,7 +20,7 @@ import exsample.jsf.application.service.UserService;
 import exsample.jsf.domain.model.user.User;
 import java.util.List;
 import javax.inject.Inject;
-import spec.annotation.presentation.controller.Controller;
+import base.annotation.presentation.controller.Controller;
 
 @Controller
 public class UserSearchAction {

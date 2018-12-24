@@ -16,7 +16,7 @@
  */
 package exsample.jsf.application.service;
 
-import spec.annotation.application.Service;
+import base.annotation.application.Service;
 import exsample.jsf.domain.model.user.User;
 import exsample.jsf.domain.model.user.UserRepository;
 import java.util.List;

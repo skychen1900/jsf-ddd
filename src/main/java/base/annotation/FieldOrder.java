@@ -14,23 +14,23 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package spec.annotation.presentation.controller;
+package base.annotation;
 
-import java.lang.annotation.ElementType;
+import static java.lang.annotation.ElementType.FIELD;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import javax.enterprise.util.Nonbinding;
-import javax.interceptor.InterceptorBinding;
 
-@Target(value = {ElementType.TYPE, ElementType.METHOD})
+/**
+ * ClassのFieldの順序を指定します.
+ * <p>
+ * Javaの仕様としてFieldの順序は保証されないため、ClassのFiled順序を指定するためのAnnotationです.
+ *
+ * @author Yamashita,Takahiro
+ */
+@Target({FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-@InterceptorBinding
-public @interface ExecuteOnce {
+public @interface FieldOrder {
 
-    @Nonbinding
-    public String message() default "";
-
-    @Nonbinding
-    public String forwardPage() default "";
+    short value() default Short.MAX_VALUE;
 }

@@ -14,21 +14,23 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package spec.annotation.presentation.view;
+package base.annotation.presentation.controller;
 
-import static java.lang.annotation.ElementType.FIELD;
+import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import javax.enterprise.util.Nonbinding;
+import javax.interceptor.InterceptorBinding;
 
-/**
- * Serviceの検証不正をViewフィールドにマッピングします.
- *
- * @author Yamashita,Takahiro
- */
-@Target({FIELD})
+@Target(value = {ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface InvalidMessageMapping {
+@InterceptorBinding
+public @interface ExecuteOnce {
 
-    String[] value() default "";
+    @Nonbinding
+    public String message() default "";
+
+    @Nonbinding
+    public String forwardPage() default "";
 }

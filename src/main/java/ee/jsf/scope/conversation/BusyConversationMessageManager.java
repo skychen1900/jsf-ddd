@@ -20,7 +20,7 @@ import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.BusyConversationException;
 import javax.enterprise.context.ConversationScoped;
-import spec.annotation.presentation.controller.BusyConversationMessage;
+import base.annotation.presentation.controller.BusyConversationMessage;
 
 /**
  *

@@ -16,7 +16,7 @@
  */
 package exsample.jsf.application.service;
 
-import spec.interfaces.application.commnand.Command;
+import base.application.commnand.Command;
 import spec.validation.PostConditionValidationGroups.PostCondition;
 import spec.validation.PreConditionValidationGroups.PreCondition;
 import spec.validation.Validator;

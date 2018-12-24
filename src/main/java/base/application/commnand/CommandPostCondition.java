@@ -14,7 +14,7 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package spec.interfaces.application.commnand;
+package base.application.commnand;
 
 import spec.validation.BeanValidationException;
 import spec.validation.ValidateCondition;

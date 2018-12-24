@@ -17,8 +17,8 @@
 package exsample.jsf.application.service;
 
 import base.application.commnand.Command;
-import spec.validation.PostConditionValidationGroups.PostCondition;
-import spec.validation.PreConditionValidationGroups.PreCondition;
+import base.validation.groups.PostConditionValidationGroups.PostCondition;
+import base.validation.groups.PreConditionValidationGroups.PreCondition;
 import spec.validation.Validator;
 import spec.annotation.application.Service;
 import exsample.jsf.domain.model.user.User;

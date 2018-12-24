@@ -17,7 +17,7 @@
 package ee.validation.priority;
 
 import javax.validation.GroupSequence;
-import spec.validation.PostConditionValidationGroups;
+import base.validation.groups.PostConditionValidationGroups;
 
 /**
  *

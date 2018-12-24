@@ -28,26 +28,30 @@
                 <div class="ui vertical segment">
                     <div class="field">
                         <label>利用者ID</label>
-                        <input jsf:styleClass="short-input" type="text" placeholder="someone@example.com" jsf:id="email" jsf:value="#{userRegistrationPage.email}"/>
+                        <input jsf:styleClass="short-input" type="text" placeholder="someone@example.com"
+                               jsf:id="email" jsf:value="#{userRegistrationPage.email}" title="#{errorTooltip.byClientId(component.clientId)}"/>
 
                     </div>
 
 
                     <div class="field">
                         <label>名前</label>
-                        <input jsf:styleClass="short-input" type="text" placeholder="名前" pt:placeholder="名前" jsf:id="name" jsf:value="#{userRegistrationPage.name}"/>
+                        <input jsf:styleClass="short-input" type="text" placeholder="名前"
+                               jsf:id="name" jsf:value="#{userRegistrationPage.name}" title="#{errorTooltip.byClientId(component.clientId)}"/>
 
                     </div>
 
                     <div class="field">
                         <label>生年月日</label>
-                        <input jsf:styleClass="short-input" type="text" placeholder="2000-01-01" jsf:id="dateOfBirth" jsf:value="#{userRegistrationPage.dateOfBirth}"/>
+                        <input jsf:styleClass="short-input" type="text" placeholder="2000-01-01"
+                               jsf:id="dateOfBirth" jsf:value="#{userRegistrationPage.dateOfBirth}" title="#{errorTooltip.byClientId(component.clientId)}"/>
 
                     </div>
 
                     <div class="field">
                         <label>電話番号</label>
-                        <input jsf:styleClass="short-input" type="text" placeholder="03-1234-5678" jsf:id="phoneNumber" jsf:value="#{userRegistrationPage.phoneNumber}"/>
+                        <input jsf:styleClass="short-input" type="text" placeholder="03-1234-5678"
+                               jsf:id="phoneNumber" jsf:value="#{userRegistrationPage.phoneNumber}" title="#{errorTooltip.byClientId(component.clientId)}"/>
                     </div>
 
                     <div class="inline fields">

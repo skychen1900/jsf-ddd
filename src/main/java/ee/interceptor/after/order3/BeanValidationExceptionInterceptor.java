@@ -18,6 +18,7 @@ package ee.interceptor.after.order3;
 
 import ee.jsf.messages.ClientComplementManager;
 import ee.jsf.messages.ErrorStyle;
+import ee.jsf.messages.ErrorTooltip;
 import ee.jsf.messages.HtmlMessageScanner;
 import ee.jsf.messages.InputComponentScanner;
 import javax.annotation.Priority;
@@ -46,16 +47,19 @@ public class BeanValidationExceptionInterceptor {
     private final MessageWriter messageWriter;
     private final ClientComplementManager clientComplementManager;
     private final ErrorStyle errorStyle;
+    private final ErrorTooltip errorTooltip;
 
     @Inject
     public BeanValidationExceptionInterceptor(CurrentViewContext context,
                                               MessageConverter messageConverter, MessageWriter messageWriter,
-                                              ClientComplementManager clientComplementManager, ErrorStyle errorStyle) {
+                                              ClientComplementManager clientComplementManager,
+                                              ErrorStyle errorStyle, ErrorTooltip errorTooltip) {
         this.context = context;
         this.messageConverter = messageConverter;
         this.messageWriter = messageWriter;
         this.clientComplementManager = clientComplementManager;
         this.errorStyle = errorStyle;
+        this.errorTooltip = errorTooltip;
     }
 
     @AroundInvoke
@@ -81,6 +85,7 @@ public class BeanValidationExceptionInterceptor {
             clientComplementManager.setClientidMessages(clientidMessages);
 
             this.errorStyle.set(clientIdsWithInputComponents, clientidMessages);
+            this.errorTooltip.set(clientIdsWithInputComponents, clientidMessages);
             return currentViewId;
         }
 

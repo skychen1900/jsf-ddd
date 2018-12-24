@@ -16,8 +16,11 @@
  */
 package spec.message.validation;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -29,8 +32,26 @@ public class ClientIdMessages {
 
     private final List<ClientIdMessage> clientIdMessages;
 
-    public ClientIdMessages(List<ClientIdMessage> clientidMessage) {
-        this.clientIdMessages = clientidMessage;
+    /**
+     * key:clientId
+     */
+    private final Map<String, List<ClientIdMessage>> clientIdMessageMap;
+
+    public ClientIdMessages() {
+        this.clientIdMessages = new ArrayList<>();
+        this.clientIdMessageMap = new HashMap<>();
+    }
+
+    public ClientIdMessages(List<ClientIdMessage> clientidMessages) {
+        this.clientIdMessages = clientidMessages;
+
+        Map<String, List<ClientIdMessage>> _clientIdMessageMap = new HashMap<>();
+        for (ClientIdMessage _clientidMessage : clientidMessages) {
+            List<ClientIdMessage> _clientIdMessageList = _clientIdMessageMap.getOrDefault(_clientidMessage.getClientId(), new ArrayList<>());
+            _clientIdMessageList.add(_clientidMessage);
+            _clientIdMessageMap.put(_clientidMessage.getClientId(), _clientIdMessageList);
+        }
+        this.clientIdMessageMap = _clientIdMessageMap;
     }
 
     public List<ClientIdMessage> getList() {
@@ -44,6 +65,19 @@ public class ClientIdMessages {
                     return new ClientIdMessage(_clientId, c.getMessage());
                 }).collect(Collectors.toList());
         return new ClientIdMessages(_clientidMessage);
+    }
+
+    public String getMessage(String clientId) {
+        List<ClientIdMessage> _clientIdMessages = this.clientIdMessageMap.getOrDefault(clientId, new ArrayList<>());
+
+        List<String> messages = new ArrayList<>();
+        for (ClientIdMessage _clientIdMessage : _clientIdMessages) {
+            messages.add(_clientIdMessage.getMessage());
+        }
+
+        return messages.isEmpty()
+               ? ""
+               : String.join("\n", messages);
     }
 
 }

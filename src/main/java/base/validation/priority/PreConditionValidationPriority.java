@@ -14,7 +14,7 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ee.validation.priority;
+package base.validation.priority;
 
 import javax.validation.GroupSequence;
 import base.validation.groups.PreConditionValidationGroups;

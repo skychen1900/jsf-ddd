@@ -14,7 +14,7 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ee.phaselistener;
+package ee.jsf.phaselistener;
 
 import ee.jsf.message.ClientComplementManager;
 import ee.jsf.message.InputFieldColorHandler;

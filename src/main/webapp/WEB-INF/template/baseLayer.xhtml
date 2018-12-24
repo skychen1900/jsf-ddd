@@ -15,7 +15,7 @@
 
         <f:event type="postAddToView" listener="#{conversationLifecycleManager.startConversation()}" />
         <f:event type="preRenderView" listener="#{conversationExceptionHandler.writeMessage()}" />
-        <f:phaseListener type="ee.phaselistener.RenderResponsePhaseListner" />
+        <f:phaseListener type="ee.jsf.phaselistener.RenderResponsePhaseListner" />
     </h:head>
 
     <h:body>

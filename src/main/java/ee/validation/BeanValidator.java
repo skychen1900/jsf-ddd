@@ -25,7 +25,7 @@ import javax.enterprise.context.Dependent;
 import javax.validation.ConstraintViolation;
 import org.vermeerlab.beanvalidation.validator.GroupSequenceValidator;
 import spec.validation.BeanValidationException;
-import spec.validation.Validator;
+import base.validation.Validator;
 
 /**
  * BeanValidationを実行する機能を提供します

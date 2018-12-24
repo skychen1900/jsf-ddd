@@ -17,7 +17,7 @@
 package base.application.commnand;
 
 import spec.validation.BeanValidationException;
-import spec.validation.ValidateCondition;
+import base.validation.ValidateCondition;
 
 /**
  *

@@ -14,7 +14,7 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package spec.validation;
+package base.validation;
 
 import java.lang.annotation.Documented;
 import static java.lang.annotation.ElementType.METHOD;
@@ -25,6 +25,7 @@ import javax.validation.Constraint;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import javax.validation.Payload;
+import spec.validation.BeanValidationException;
 
 /**
  * 自Service以外の事前条件、事後条件により検証を行いたい場合に指定するアノテーション.
@@ -40,7 +41,7 @@ import javax.validation.Payload;
  * @author Yamashita,Takahiro
  */
 @Documented
-@Constraint(validatedBy = {spec.validation.ValidateCondition.Validator.class})
+@Constraint(validatedBy = {base.validation.ValidateCondition.Validator.class})
 @Target({METHOD})
 @Retention(RUNTIME)
 public @interface ValidateCondition {
@@ -73,7 +74,7 @@ public @interface ValidateCondition {
     }
 
     /**
-     * {@link spec.validation.ValidateCondition} を付与するメソッドの戻り値の型
+     * {@link base.validation.ValidateCondition} を付与するメソッドの戻り値の型
      */
     public static class Void {
 

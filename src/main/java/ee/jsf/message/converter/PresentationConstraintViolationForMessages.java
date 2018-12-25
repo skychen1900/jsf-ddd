@@ -14,7 +14,7 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ee.jsf.message.internal;
+package ee.jsf.message.converter;
 
 import base.annotation.FieldOrder;
 import base.annotation.presentation.view.View;
@@ -40,7 +40,7 @@ import spec.message.validation.ConstraintViolationForMessages;
  *
  * @author Yamashita,Takahiro
  */
-public class PresentationConstraintViolationForMessages {
+class PresentationConstraintViolationForMessages {
 
     private final Set<ConstraintViolation<?>> constraintViolationSet;
     private final ClientIdsWithComponents clientIdsWithComponents;
@@ -50,11 +50,11 @@ public class PresentationConstraintViolationForMessages {
         this.clientIdsWithComponents = clientIdsWithComponents;
     }
 
-    public static PresentationConstraintViolationForMessages of(Set<ConstraintViolation<?>> constraintViolationSet, ClientIdsWithComponents clientIdsWithComponents) {
+    static PresentationConstraintViolationForMessages of(Set<ConstraintViolation<?>> constraintViolationSet, ClientIdsWithComponents clientIdsWithComponents) {
         return new PresentationConstraintViolationForMessages(constraintViolationSet, clientIdsWithComponents);
     }
 
-    public ConstraintViolationForMessages toConstraintViolationForMessages() {
+    ConstraintViolationForMessages toConstraintViolationForMessages() {
         return new ConstraintViolationForMessages(
                 constraintViolationSet
                         .stream()

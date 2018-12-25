@@ -14,10 +14,10 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ee.jsf.message;
+package ee.jsf.message.converter;
 
-import ee.jsf.message.internal.PresentationConstraintViolationForMessages;
-import ee.jsf.message.internal.ViewContextScanner;
+import ee.jsf.message.converter.PresentationConstraintViolationForMessages;
+import ee.jsf.message.converter.ViewContextScanner;
 import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;

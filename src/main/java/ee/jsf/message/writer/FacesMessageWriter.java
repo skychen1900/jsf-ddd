@@ -14,7 +14,7 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ee.jsf.message.internal;
+package ee.jsf.message.writer;
 
 import java.util.List;
 import javax.faces.application.FacesMessage;
@@ -28,7 +28,7 @@ import spec.message.CanNotMappingHtmlMessagesException;
  *
  * @author Yamashita,Takahiro
  */
-public class FacesMessageWriter {
+class FacesMessageWriter {
 
     private final boolean hasHtmlMessages;
     private final FacesContext facesContext;
@@ -38,7 +38,7 @@ public class FacesMessageWriter {
         this.facesContext = facesContext;
     }
 
-    public static FacesMessageWriter of(FacesContext facesContext) {
+    static FacesMessageWriter of(FacesContext facesContext) {
         boolean _hasHtmlMessages = hasHtmlMessages(facesContext.getViewRoot().getChildren(), false);
         return new FacesMessageWriter(_hasHtmlMessages, facesContext);
     }
@@ -50,7 +50,7 @@ public class FacesMessageWriter {
      * @param facesMessage
      * @throws spec.message.CanNotMappingHtmlMessagesException クライアントにメッセージリストを出力する記述({@code h:messages})が無い場合
      */
-    public void write(String clientId, FacesMessage facesMessage) {
+    void write(String clientId, FacesMessage facesMessage) {
         if (clientId == null && this.hasHtmlMessages == false) {
             throw new CanNotMappingHtmlMessagesException(facesMessage.getSummary());
         }
@@ -63,7 +63,7 @@ public class FacesMessageWriter {
      * @param facesMessage
      * @throws spec.message.CanNotMappingHtmlMessagesException クライアントにメッセージリストを出力する記述({@code h:messages})が無い場合
      */
-    public void writeHtmlMessages(FacesMessage facesMessage) {
+    void writeHtmlMessages(FacesMessage facesMessage) {
         this.write(null, facesMessage);
     }
 

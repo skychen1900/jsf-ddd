@@ -14,7 +14,7 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ee.jsf.message.internal;
+package ee.jsf.message.converter;
 
 import base.annotation.FieldOrder;
 import base.annotation.presentation.controller.ViewContext;

@@ -14,9 +14,8 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ee.jsf.message;
+package ee.jsf.message.writer;
 
-import ee.jsf.message.internal.FacesMessageWriter;
 import java.util.List;
 import java.util.function.Consumer;
 import javax.enterprise.context.ApplicationScoped;

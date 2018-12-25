@@ -35,6 +35,6 @@ public interface ErrorStyle {
      */
     String byId(String id);
 
-    void set(ClientIds clientIdsWithInputComponents, ClientIdMessages clientidMessages);
+    void set(ClientIds clientIds, ClientIdMessages clientidMessages);
 
 }

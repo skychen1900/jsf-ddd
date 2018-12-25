@@ -43,6 +43,6 @@ public interface ErrorTooltip {
      */
     String byId(String id);
 
-    void set(ClientIds clientIdsWithInputComponents, ClientIdMessages clientIdMessages);
+    void set(ClientIds clientIds, ClientIdMessages clientIdMessages);
 
 }

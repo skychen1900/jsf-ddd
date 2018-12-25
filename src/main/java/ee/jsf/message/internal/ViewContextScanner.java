@@ -14,12 +14,12 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ee.jsf.message;
+package ee.jsf.message.internal;
 
-import java.lang.reflect.Field;
 import base.annotation.FieldOrder;
 import base.annotation.presentation.controller.ViewContext;
 import base.annotation.presentation.view.InvalidMessageMapping;
+import java.lang.reflect.Field;
 import spec.message.validation.MessageMappingInfos;
 
 /**
@@ -30,7 +30,7 @@ import spec.message.validation.MessageMappingInfos;
  *
  * @author Yamashita,Takahiro
  */
-class ViewContextScanner {
+public class ViewContextScanner {
 
     Class<?> actionClass;
     MessageMappingInfos messageMappingInfos;
@@ -40,7 +40,7 @@ class ViewContextScanner {
         this.messageMappingInfos = new MessageMappingInfos();
     }
 
-    static ViewContextScanner of(Class<?> actionClass) {
+    public static ViewContextScanner of(Class<?> actionClass) {
         return new ViewContextScanner(actionClass);
     }
 
@@ -51,7 +51,7 @@ class ViewContextScanner {
      *
      * @return メッセージとプロパティを関連付けた情報
      */
-    MessageMappingInfos messageMappingInfosNotYetReplaceClientId() {
+    public MessageMappingInfos messageMappingInfosNotYetReplaceClientId() {
         Field[] fields = actionClass.getDeclaredFields();
         for (Field field : fields) {
             ViewContext viewContext = field.getAnnotation(ViewContext.class);

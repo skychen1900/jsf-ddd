@@ -16,6 +16,7 @@
  */
 package ee.jsf.message;
 
+import ee.jsf.message.internal.ViewContextScanner;
 import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -42,17 +43,17 @@ import spec.message.validation.MessageMappingInfos;
  * @author Yamashita,Takahiro
  */
 @ApplicationScoped
-public class JsfMessageConverter implements MessageConverter {
+public class MessageConverterImpl implements MessageConverter {
 
     private MessageInterpolatorFactory interpolatorFactory;
 
     private CurrentViewContext context;
 
-    public JsfMessageConverter() {
+    public MessageConverterImpl() {
     }
 
     @Inject
-    public JsfMessageConverter(CurrentViewContext context) {
+    public MessageConverterImpl(CurrentViewContext context) {
         this.context = context;
     }
 

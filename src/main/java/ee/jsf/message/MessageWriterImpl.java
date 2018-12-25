@@ -16,6 +16,7 @@
  */
 package ee.jsf.message;
 
+import ee.jsf.message.internal.FacesMessageWriter;
 import java.util.List;
 import java.util.function.Consumer;
 import javax.enterprise.context.ApplicationScoped;
@@ -30,7 +31,7 @@ import spec.message.validation.ClientIdMessages;
  * @author Yamashita,Takahiro
  */
 @ApplicationScoped
-public class JsfMessageWriter implements MessageWriter {
+public class MessageWriterImpl implements MessageWriter {
 
     /**
      * {@inheritDoc }

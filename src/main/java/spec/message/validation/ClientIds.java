@@ -72,7 +72,7 @@ public class ClientIds {
      * @param id クライアントＩＤ（フルパスではない）
      * @return 指定のIDがxhtmlに指定されている場合はフルパスのクライアントＩＤ、存在しない場合は null を返却します.
      */
-    public String getOrNull(String id) {
+    public String findFirstByIdOrNull(String id) {
         Set<String> _clientIds = this.map.getOrDefault(id, new HashSet<>());
         return _clientIds.isEmpty()
                ? null
@@ -90,7 +90,7 @@ public class ClientIds {
      */
     public String getClientIdOrNull(ClientIds clientIds) {
         String key = clientIds.map.entrySet().iterator().next().getKey();
-        return this.getOrNull(key);
+        return this.findFirstByIdOrNull(key);
     }
 
     /**

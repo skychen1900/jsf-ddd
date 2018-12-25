@@ -60,7 +60,7 @@ public class ErrorTooltipImpl implements ErrorTooltip {
      */
     @Override
     public String byId(String id) {
-        String clientId = this.clientIdsWithComponents.getOrNull(id);
+        String clientId = this.clientIdsWithComponents.findFirstByIdOrNull(id);
         if (clientId == null) {
             return "";
         }

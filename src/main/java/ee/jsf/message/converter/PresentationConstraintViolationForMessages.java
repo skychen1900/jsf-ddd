@@ -116,7 +116,7 @@ class PresentationConstraintViolationForMessages {
      */
     private String toId(Class<?> clazz, String path) {
         return clazz.getAnnotation(View.class) != null
-               ? this.clientIds.getOrNull(path)
+               ? this.clientIds.findFirstByIdOrNull(path)
                : null;
     }
 

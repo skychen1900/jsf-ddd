@@ -14,7 +14,7 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ee.jsf.message.xhtml;
+package ee.jsf.message;
 
 import base.xhtml.error.ErrorStyle;
 import java.util.Set;

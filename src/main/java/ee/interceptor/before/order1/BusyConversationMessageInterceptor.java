@@ -41,7 +41,7 @@ public class BusyConversationMessageInterceptor {
         BusyConversationMessage classMessage = ic.getTarget().getClass().getSuperclass().getAnnotation(BusyConversationMessage.class);
         BusyConversationMessage methodMessage = ic.getMethod().getAnnotation(BusyConversationMessage.class);
 
-        this.busyConversationManager.message(classMessage, methodMessage);
+        this.busyConversationManager.setMessage(classMessage, methodMessage);
         return ic.proceed();
     }
 }

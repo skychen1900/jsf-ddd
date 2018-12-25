@@ -44,7 +44,7 @@ public class BusyConversationMessageManager implements Serializable {
         return message;
     }
 
-    public void message(BusyConversationMessage classMessage, BusyConversationMessage methodMessage) {
+    public void setMessage(BusyConversationMessage classMessage, BusyConversationMessage methodMessage) {
         String _message = methodMessage != null
                           ? methodMessage.value()
                           : classMessage != null

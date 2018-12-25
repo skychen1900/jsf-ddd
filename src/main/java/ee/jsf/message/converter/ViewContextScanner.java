@@ -20,7 +20,6 @@ import base.annotation.FieldOrder;
 import base.annotation.presentation.controller.ViewContext;
 import base.annotation.presentation.view.InvalidMessageMapping;
 import java.lang.reflect.Field;
-import spec.message.validation.MessageMappingInfos;
 
 /**
  * Controllerと関連付くViewクラス（{@link base.annotation.presentation.controller.ViewContext}で特定したクラス）から
@@ -30,7 +29,7 @@ import spec.message.validation.MessageMappingInfos;
  *
  * @author Yamashita,Takahiro
  */
-public class ViewContextScanner {
+class ViewContextScanner {
 
     Class<?> actionClass;
     MessageMappingInfos messageMappingInfos;
@@ -40,7 +39,7 @@ public class ViewContextScanner {
         this.messageMappingInfos = new MessageMappingInfos();
     }
 
-    public static ViewContextScanner of(Class<?> actionClass) {
+    static ViewContextScanner of(Class<?> actionClass) {
         return new ViewContextScanner(actionClass);
     }
 
@@ -51,7 +50,7 @@ public class ViewContextScanner {
      *
      * @return メッセージとプロパティを関連付けた情報
      */
-    public MessageMappingInfos messageMappingInfosNotYetReplaceClientId() {
+    MessageMappingInfos messageMappingInfosNotYetReplaceClientId() {
         Field[] fields = actionClass.getDeclaredFields();
         for (Field field : fields) {
             ViewContext viewContext = field.getAnnotation(ViewContext.class);

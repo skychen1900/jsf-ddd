@@ -14,28 +14,30 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package spec.message.validation;
+package ee.jsf.message.converter;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import spec.message.validation.ClientIdsWithComponents;
+import spec.message.validation.ConstraintViolationForMessage;
 
 /**
  * {@link MessageMappingInfo} の集約を扱う機能を提供します.
  *
  * @author Yamashita,Takahiro
  */
-public class MessageMappingInfos {
+class MessageMappingInfos {
 
     // keyは message
     private final Map<String, MessageMappingInfo> messageMappingInfos;
 
-    public MessageMappingInfos() {
+    MessageMappingInfos() {
         messageMappingInfos = new HashMap<>();
     }
 
-    public void put(String message, String sortKey, String targetClientId) {
+    void put(String message, String sortKey, String targetClientId) {
         if (messageMappingInfos.containsKey(message) == false) {
             MessageMappingInfo messageMappingInfo = new MessageMappingInfo(message, sortKey, targetClientId);
             messageMappingInfos.put(message, messageMappingInfo);
@@ -54,7 +56,7 @@ public class MessageMappingInfos {
         this.messageMappingInfos.put(message, messageMappingInfo);
     }
 
-    public void putAll(MessageMappingInfos messageMappingInfos) {
+    void putAll(MessageMappingInfos messageMappingInfos) {
         messageMappingInfos.messageMappingInfos.entrySet().stream()
                 .forEach(entry -> {
                     this.put(entry.getValue());
@@ -89,7 +91,7 @@ public class MessageMappingInfos {
      * @param clientIdsWithComponents 項目名とクライアントＩＤを置き換えるための情報
      * @return 項目名であるＩＤからクライアントＩＤ（フルパス）に置き換えた 新たなインスタンス
      */
-    public MessageMappingInfos replacedClientIds(ClientIdsWithComponents clientIdsWithComponents) {
+    MessageMappingInfos replacedClientIds(ClientIdsWithComponents clientIdsWithComponents) {
 
         List<MessageMappingInfo> replaceItems = messageMappingInfos.entrySet().stream()
                 .map(entry -> {
@@ -99,8 +101,8 @@ public class MessageMappingInfos {
                     ClientIdsWithComponents _clientIdsWithComponents = messageMappingInfo.getClientIdsWithComponents();
                     String replaceClientId = clientIdsWithComponents.getClientIdOrNull(_clientIdsWithComponents);
                     MessageMappingInfo replacedMessageMappingInfo = new MessageMappingInfo(message,
-                                                                                           messageMappingInfo.getSortKey(),
-                                                                                           replaceClientId);
+                                                                                                   messageMappingInfo.getSortKey(),
+                                                                                                   replaceClientId);
                     return replacedMessageMappingInfo;
                 })
                 .collect(Collectors.toList());
@@ -113,7 +115,7 @@ public class MessageMappingInfos {
         return replacedMessageMappingInfos;
     }
 
-    public ConstraintViolationForMessage updateConstraintViolationForMessage(ConstraintViolationForMessage constraintViolationForMessage) {
+    ConstraintViolationForMessage updateConstraintViolationForMessage(ConstraintViolationForMessage constraintViolationForMessage) {
 
         MessageMappingInfo messageMappingInfo = messageMappingInfos.get(
                 constraintViolationForMessage.getConstraintViolation().getMessageTemplate());

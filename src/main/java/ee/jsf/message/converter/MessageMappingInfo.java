@@ -14,7 +14,9 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package spec.message.validation;
+package ee.jsf.message.converter;
+
+import spec.message.validation.ClientIdsWithComponents;
 
 /**
  * {@link spec.annotation.presentation.view.InvalidMessageMapping} でマークしたフィールドの情報を扱う機能を提供します.
@@ -24,13 +26,13 @@ package spec.message.validation;
  *
  * @author Yamashita,Takahiro
  */
-public class MessageMappingInfo {
+class MessageMappingInfo {
 
     private final String message;
     private final String sortKey;
     private final ClientIdsWithComponents clientIdsWithComponents;
 
-    public MessageMappingInfo(String message, String sortKey, String targetClientId) {
+    MessageMappingInfo(String message, String sortKey, String targetClientId) {
         this.message = message;
         this.sortKey = sortKey;
 
@@ -39,29 +41,29 @@ public class MessageMappingInfo {
         this.clientIdsWithComponents = _clientIdsWithComponents;
     }
 
-    public MessageMappingInfo(String message, String sortKey, ClientIdsWithComponents clientIdsWithComponents) {
+    MessageMappingInfo(String message, String sortKey, ClientIdsWithComponents clientIdsWithComponents) {
         this.message = message;
         this.sortKey = sortKey;
         this.clientIdsWithComponents = clientIdsWithComponents;
     }
 
-    public boolean isUpdate(String sortKey) {
+    boolean isUpdate(String sortKey) {
         return this.sortKey.compareTo(sortKey) == 1;
     }
 
-    public String getMessage() {
+    String getMessage() {
         return message;
     }
 
-    public String getSortKey() {
+    String getSortKey() {
         return sortKey;
     }
 
-    public ClientIdsWithComponents getClientIdsWithComponents() {
+    ClientIdsWithComponents getClientIdsWithComponents() {
         return clientIdsWithComponents;
     }
 
-    public String firstClientId() {
+    String firstClientId() {
         return clientIdsWithComponents.getClientIdOrNull(clientIdsWithComponents);
     }
 

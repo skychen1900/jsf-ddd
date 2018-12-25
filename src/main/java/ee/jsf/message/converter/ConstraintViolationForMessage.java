@@ -14,7 +14,7 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package spec.message.validation;
+package ee.jsf.message.converter;
 
 import javax.validation.ConstraintViolation;
 
@@ -23,27 +23,27 @@ import javax.validation.ConstraintViolation;
  *
  * @author Yamashita,Takahiro
  */
-public class ConstraintViolationForMessage {
+class ConstraintViolationForMessage {
 
     private final String sortKey;
     private final String id;
     private final ConstraintViolation<?> constraintViolation;
 
-    public ConstraintViolationForMessage(String sortKey, String id, ConstraintViolation<?> constraintViolation) {
+    ConstraintViolationForMessage(String sortKey, String id, ConstraintViolation<?> constraintViolation) {
         this.sortKey = sortKey;
         this.id = id;
         this.constraintViolation = constraintViolation;
     }
 
-    public String getSortKey() {
+    String getSortKey() {
         return sortKey;
     }
 
-    public String getId() {
+    String getId() {
         return id;
     }
 
-    public ConstraintViolation<?> getConstraintViolation() {
+    ConstraintViolation<?> getConstraintViolation() {
         return constraintViolation;
     }
 }

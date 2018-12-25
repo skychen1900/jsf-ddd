@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import spec.message.validation.ClientIdsWithComponents;
-import spec.message.validation.ConstraintViolationForMessage;
 
 /**
  * {@link MessageMappingInfo} の集約を扱う機能を提供します.

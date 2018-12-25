@@ -14,24 +14,26 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package spec.message.validation;
+package ee.jsf.message.converter;
 
 import static java.util.Comparator.comparing;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
+import spec.message.validation.ClientIdMessage;
+import spec.message.validation.ClientIdMessages;
 
 /**
  * {@link ConstraintViolationForMessage} の集約を扱う機能を提供します.
  *
  * @author Yamashita,Takahiro
  */
-public class ConstraintViolationForMessages {
+class ConstraintViolationForMessages {
 
     private final List<ConstraintViolationForMessage> items;
 
-    public ConstraintViolationForMessages(List<ConstraintViolationForMessage> constraintViolationForMessages) {
+    ConstraintViolationForMessages(List<ConstraintViolationForMessage> constraintViolationForMessages) {
         this.items = constraintViolationForMessages;
     }
 
@@ -43,7 +45,7 @@ public class ConstraintViolationForMessages {
      * @param unaryOperator 更新する関数
      * @return 更新した新たなインスタンス
      */
-    public ConstraintViolationForMessages update(UnaryOperator<ConstraintViolationForMessage> unaryOperator) {
+    ConstraintViolationForMessages update(UnaryOperator<ConstraintViolationForMessage> unaryOperator) {
         return new ConstraintViolationForMessages(
                 items.stream()
                         .map(c -> unaryOperator.apply(c))
@@ -59,7 +61,7 @@ public class ConstraintViolationForMessages {
      * @param function メッセージの出力変換を行う関数
      * @return 変換したクライアントＩＤとメッセージの組み合わせた情報
      */
-    public ClientIdMessages toClientidMessages(Function<ConstraintViolationForMessage, ClientIdMessage> function) {
+    ClientIdMessages toClientidMessages(Function<ConstraintViolationForMessage, ClientIdMessage> function) {
         List<ClientIdMessage> clientidMessages = this.items.stream()
                 .sorted(comparing(ConstraintViolationForMessage::getSortKey)
                         .thenComparing(s -> s.getConstraintViolation().getMessageTemplate()))

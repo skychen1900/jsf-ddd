@@ -35,8 +35,6 @@ import spec.message.MessageConverter;
 import spec.message.validation.ClientIdMessage;
 import spec.message.validation.ClientIdMessages;
 import spec.message.validation.ClientIdsWithComponents;
-import spec.message.validation.ConstraintViolationForMessage;
-import spec.message.validation.ConstraintViolationForMessages;
 
 /**
  *

@@ -16,11 +16,11 @@
  */
 package ee.jsf.scope.conversation;
 
+import base.annotation.presentation.controller.BusyConversationMessage;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.BusyConversationException;
 import javax.enterprise.context.ConversationScoped;
-import base.annotation.presentation.controller.BusyConversationMessage;
 
 /**
  *
@@ -32,12 +32,10 @@ public class BusyConversationMessageManager implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String message;
-    private String defaultMessage;
 
     @PostConstruct
     void init() {
-        defaultMessage = BusyConversationException.class.getName();
-        this.message = defaultMessage;
+        this.message = BusyConversationException.class.getName();
     }
 
     public String getMessage() {

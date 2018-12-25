@@ -23,7 +23,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import spec.message.validation.ClientIdMessages;
 import spec.message.validation.ClientIdMessagesImpl;
-import spec.message.validation.ClientIdsWithComponents;
+import spec.message.validation.ClientIds;
 
 /**
  *
@@ -33,20 +33,20 @@ import spec.message.validation.ClientIdsWithComponents;
 @RequestScoped
 public class ErrorTooltipImpl implements ErrorTooltip {
 
-    private ClientIdsWithComponents clientIdsWithComponents;
+    private ClientIds clientIdsWithComponents;
     private ClientIdMessages clientIdMessages;
 
     @PostConstruct
     private void init() {
-        this.clientIdsWithComponents = new ClientIdsWithComponents();
+        this.clientIdsWithComponents = new ClientIds();
         this.clientIdMessages = new ClientIdMessagesImpl();
     }
 
     @Override
-    public void set(ClientIdsWithComponents clientIdsWithInputComponents, ClientIdMessages clientIdMessages) {
+    public void set(ClientIds clientIds, ClientIdMessages clientIdMessages) {
 
-        Set<String> clientIds = clientIdMessages.getClientIds();
-        this.clientIdsWithComponents = clientIdsWithInputComponents.filter(clientIds);
+        Set<String> _clientIds = clientIdMessages.getClientIds();
+        this.clientIdsWithComponents = clientIds.filter(_clientIds);
         this.clientIdMessages = clientIdMessages;
     }
 

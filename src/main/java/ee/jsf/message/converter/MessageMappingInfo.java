@@ -16,7 +16,7 @@
  */
 package ee.jsf.message.converter;
 
-import spec.message.validation.ClientIdsWithComponents;
+import spec.message.validation.ClientIds;
 
 /**
  * {@link spec.annotation.presentation.view.InvalidMessageMapping} でマークしたフィールドの情報を扱う機能を提供します.
@@ -30,21 +30,21 @@ class MessageMappingInfo {
 
     private final String message;
     private final String sortKey;
-    private final ClientIdsWithComponents clientIdsWithComponents;
+    private final ClientIds clientIdsWithComponents;
 
     MessageMappingInfo(String message, String sortKey, String targetClientId) {
         this.message = message;
         this.sortKey = sortKey;
 
-        ClientIdsWithComponents _clientIdsWithComponents = new ClientIdsWithComponents();
+        ClientIds _clientIdsWithComponents = new ClientIds();
         _clientIdsWithComponents.put(targetClientId);
         this.clientIdsWithComponents = _clientIdsWithComponents;
     }
 
-    MessageMappingInfo(String message, String sortKey, ClientIdsWithComponents clientIdsWithComponents) {
+    MessageMappingInfo(String message, String sortKey, ClientIds clientIds) {
         this.message = message;
         this.sortKey = sortKey;
-        this.clientIdsWithComponents = clientIdsWithComponents;
+        this.clientIdsWithComponents = clientIds;
     }
 
     boolean isUpdate(String sortKey) {
@@ -59,7 +59,7 @@ class MessageMappingInfo {
         return sortKey;
     }
 
-    ClientIdsWithComponents getClientIdsWithComponents() {
+    ClientIds getClientIdsWithComponents() {
         return clientIdsWithComponents;
     }
 

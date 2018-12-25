@@ -20,7 +20,7 @@ import java.util.List;
 import javax.faces.component.UIComponent;
 import javax.faces.component.html.HtmlMessage;
 import javax.faces.context.FacesContext;
-import spec.message.validation.ClientIdsWithComponents;
+import spec.message.validation.ClientIds;
 
 /**
  *
@@ -28,11 +28,11 @@ import spec.message.validation.ClientIdsWithComponents;
  */
 public class HtmlMessageScanner {
 
-    public ClientIdsWithComponents scan() {
-        return recursiveScan(FacesContext.getCurrentInstance().getViewRoot().getChildren(), new ClientIdsWithComponents());
+    public ClientIds scan() {
+        return recursiveScan(FacesContext.getCurrentInstance().getViewRoot().getChildren(), new ClientIds());
     }
 
-    private ClientIdsWithComponents recursiveScan(List<UIComponent> uiComponents, ClientIdsWithComponents clientIdWithComponent) {
+    private ClientIds recursiveScan(List<UIComponent> uiComponents, ClientIds clientIds) {
         for (UIComponent uiComponent : uiComponents) {
 
             /**
@@ -45,16 +45,16 @@ public class HtmlMessageScanner {
                     String clientId = uiComponent.getClientId();
                     String id = uiComponent.getId();
                     String targetId = clientId.substring(0, clientId.length() - id.length()) + obj.toString();
-                    clientIdWithComponent.put(obj.toString(), targetId);
+                    clientIds.put(obj.toString(), targetId);
                 }
             }
 
             if (uiComponent.getChildren().isEmpty() == false) {
-                this.recursiveScan(uiComponent.getChildren(), clientIdWithComponent);
+                this.recursiveScan(uiComponent.getChildren(), clientIds);
             }
 
         }
-        return clientIdWithComponent;
+        return clientIds;
     }
 
 }

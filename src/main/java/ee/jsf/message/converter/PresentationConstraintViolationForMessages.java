@@ -25,7 +25,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import javax.validation.ConstraintViolation;
 import spec.exception.UnexpectedApplicationException;
-import spec.message.validation.ClientIdsWithComponents;
+import spec.message.validation.ClientIds;
 
 /**
  * クライアントメッセージの出力に必要な情報をPresentation層から取得して
@@ -41,15 +41,15 @@ import spec.message.validation.ClientIdsWithComponents;
 class PresentationConstraintViolationForMessages {
 
     private final Set<ConstraintViolation<?>> constraintViolationSet;
-    private final ClientIdsWithComponents clientIdsWithComponents;
+    private final ClientIds clientIds;
 
-    private PresentationConstraintViolationForMessages(Set<ConstraintViolation<?>> constraintViolationSet, ClientIdsWithComponents clientIdsWithComponents) {
+    private PresentationConstraintViolationForMessages(Set<ConstraintViolation<?>> constraintViolationSet, ClientIds clientIds) {
         this.constraintViolationSet = constraintViolationSet;
-        this.clientIdsWithComponents = clientIdsWithComponents;
+        this.clientIds = clientIds;
     }
 
-    static PresentationConstraintViolationForMessages of(Set<ConstraintViolation<?>> constraintViolationSet, ClientIdsWithComponents clientIdsWithComponents) {
-        return new PresentationConstraintViolationForMessages(constraintViolationSet, clientIdsWithComponents);
+    static PresentationConstraintViolationForMessages of(Set<ConstraintViolation<?>> constraintViolationSet, ClientIds clientIds) {
+        return new PresentationConstraintViolationForMessages(constraintViolationSet, clientIds);
     }
 
     ConstraintViolationForMessages toConstraintViolationForMessages() {
@@ -116,7 +116,7 @@ class PresentationConstraintViolationForMessages {
      */
     private String toId(Class<?> clazz, String path) {
         return clazz.getAnnotation(View.class) != null
-               ? this.clientIdsWithComponents.getOrNull(path)
+               ? this.clientIds.getOrNull(path)
                : null;
     }
 

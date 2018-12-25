@@ -69,10 +69,10 @@ public class ClientIdMessagesImpl implements ClientIdMessages {
     }
 
     @Override
-    public ClientIdMessages toClientIdMessagesForWriting(ClientIdsWithComponents clientIdsWithMessages) {
+    public ClientIdMessages toClientIdMessagesForWriting(ClientIds clientIds) {
         List<ClientIdMessage> _clientidMessage = this.clientIdMessages.stream()
                 .map(c -> {
-                    String _clientId = clientIdsWithMessages.contains(c.getClientId()) ? c.getClientId() : null;
+                    String _clientId = clientIds.contains(c.getClientId()) ? c.getClientId() : null;
                     return new ClientIdMessageImpl(_clientId, c.getMessage());
                 }).collect(Collectors.toList());
         return new ClientIdMessagesImpl(_clientidMessage);

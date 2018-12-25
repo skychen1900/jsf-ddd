@@ -17,7 +17,7 @@
 package base.xhtml.error;
 
 import spec.message.validation.ClientIdMessages;
-import spec.message.validation.ClientIdsWithComponents;
+import spec.message.validation.ClientIds;
 
 /**
  *
@@ -43,6 +43,6 @@ public interface ErrorTooltip {
      */
     String byId(String id);
 
-    void set(ClientIdsWithComponents clientIdsWithInputComponents, ClientIdMessages clientIdMessages);
+    void set(ClientIds clientIdsWithInputComponents, ClientIdMessages clientIdMessages);
 
 }

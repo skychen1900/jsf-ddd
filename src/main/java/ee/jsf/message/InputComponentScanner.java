@@ -20,7 +20,7 @@ import java.util.List;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
-import spec.message.validation.ClientIdsWithComponents;
+import spec.message.validation.ClientIds;
 
 /**
  *
@@ -28,23 +28,23 @@ import spec.message.validation.ClientIdsWithComponents;
  */
 public class InputComponentScanner {
 
-    public ClientIdsWithComponents scan() {
-        return recursiveScan(FacesContext.getCurrentInstance().getViewRoot().getChildren(), new ClientIdsWithComponents());
+    public ClientIds scan() {
+        return recursiveScan(FacesContext.getCurrentInstance().getViewRoot().getChildren(), new ClientIds());
     }
 
-    private ClientIdsWithComponents recursiveScan(List<UIComponent> uiComponents, ClientIdsWithComponents clientIdWithComponent) {
+    private ClientIds recursiveScan(List<UIComponent> uiComponents, ClientIds clientIds) {
         for (UIComponent uiComponent : uiComponents) {
 
             if (uiComponent instanceof UIInput) {
-                clientIdWithComponent.put(uiComponent.getId(), uiComponent.getClientId());
+                clientIds.put(uiComponent.getId(), uiComponent.getClientId());
             }
 
             if (uiComponent.getChildren().isEmpty() == false) {
-                this.recursiveScan(uiComponent.getChildren(), clientIdWithComponent);
+                this.recursiveScan(uiComponent.getChildren(), clientIds);
             }
 
         }
-        return clientIdWithComponent;
+        return clientIds;
     }
 
 }

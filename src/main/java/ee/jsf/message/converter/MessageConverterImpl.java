@@ -33,7 +33,7 @@ import spec.message.MessageConverter;
 import spec.message.validation.ClientIdMessage;
 import spec.message.validation.ClientIdMessageImpl;
 import spec.message.validation.ClientIdMessages;
-import spec.message.validation.ClientIdsWithComponents;
+import spec.message.validation.ClientIds;
 
 /**
  *
@@ -89,16 +89,16 @@ public class MessageConverterImpl implements MessageConverter {
      * {@inheritDoc }
      */
     @Override
-    public ClientIdMessages toClientIdMessages(Set<ConstraintViolation<?>> constraintViolationSet, Class<?> actionClass, ClientIdsWithComponents clientIdsWithComponents) {
+    public ClientIdMessages toClientIdMessages(Set<ConstraintViolation<?>> constraintViolationSet, Class<?> actionClass, ClientIds clientIds) {
 
         MessageMappingInfos messageMappingInfosNotYetReplaceClientId
                             = ViewContextScanner.of(actionClass).messageMappingInfosNotYetReplaceClientId();
 
         MessageMappingInfos messageMappingInfos
-                            = messageMappingInfosNotYetReplaceClientId.replacedClientIds(clientIdsWithComponents);
+                            = messageMappingInfosNotYetReplaceClientId.replacedClientIds(clientIds);
 
         ConstraintViolationForMessages constraintViolationForMessages = PresentationConstraintViolationForMessages
-                .of(constraintViolationSet, clientIdsWithComponents)
+                .of(constraintViolationSet, clientIds)
                 .toConstraintViolationForMessages();
 
         return constraintViolationForMessages

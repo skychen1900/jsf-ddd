@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import spec.message.validation.ClientIdsWithComponents;
+import spec.message.validation.ClientIds;
 
 /**
  * {@link MessageMappingInfo} の集約を扱う機能を提供します.
@@ -48,10 +48,10 @@ class MessageMappingInfos {
                           ? sortKey
                           : _messageMappingInfo.getSortKey();
 
-        ClientIdsWithComponents _ids = _messageMappingInfo.getClientIdsWithComponents();
-        _ids.put(targetClientId);
+        ClientIds _clientIds = _messageMappingInfo.getClientIdsWithComponents();
+        _clientIds.put(targetClientId);
 
-        MessageMappingInfo messageMappingInfo = new MessageMappingInfo(message, _sortKey, _ids);
+        MessageMappingInfo messageMappingInfo = new MessageMappingInfo(message, _sortKey, _clientIds);
         this.messageMappingInfos.put(message, messageMappingInfo);
     }
 
@@ -75,33 +75,33 @@ class MessageMappingInfos {
                           ? _paramSortKey
                           : _messageMappingInfo.getSortKey();
 
-        ClientIdsWithComponents _ids = _messageMappingInfo.getClientIdsWithComponents();
-        _ids.putAll(messageMappingInfo.getClientIdsWithComponents());
+        ClientIds _clientIds = _messageMappingInfo.getClientIdsWithComponents();
+        _clientIds.putAll(messageMappingInfo.getClientIdsWithComponents());
 
-        this.messageMappingInfos.put(message, new MessageMappingInfo(message, _sortKey, _ids));
+        this.messageMappingInfos.put(message, new MessageMappingInfo(message, _sortKey, _clientIds));
     }
 
     /**
      * 項目名であるＩＤからクライアントＩＤ（フルパス）に置き換えた、新たなインスタンスを返却します.
      * <p>
      * TODO：まだクライアントＩＤを複数保持した機能は実装していません。（繰り返し処理を扱っていないため）
-     * {@link ClientIdsWithComponents} はクライアントＩＤを複数保持していますが、デフォルトとして先頭のクライアントＩＤで置き換えます.<br>
+     * {@link ClientIds} はクライアントＩＤを複数保持していますが、デフォルトとして先頭のクライアントＩＤで置き換えます.<br>
      *
-     * @param clientIdsWithComponents 項目名とクライアントＩＤを置き換えるための情報
+     * @param clientIds 項目名とクライアントＩＤを置き換えるための情報
      * @return 項目名であるＩＤからクライアントＩＤ（フルパス）に置き換えた 新たなインスタンス
      */
-    MessageMappingInfos replacedClientIds(ClientIdsWithComponents clientIdsWithComponents) {
+    MessageMappingInfos replacedClientIds(ClientIds clientIds) {
 
         List<MessageMappingInfo> replaceItems = messageMappingInfos.entrySet().stream()
                 .map(entry -> {
                     String message = entry.getKey();
 
                     MessageMappingInfo messageMappingInfo = entry.getValue();
-                    ClientIdsWithComponents _clientIdsWithComponents = messageMappingInfo.getClientIdsWithComponents();
-                    String replaceClientId = clientIdsWithComponents.getClientIdOrNull(_clientIdsWithComponents);
+                    ClientIds _clientIdsWithComponents = messageMappingInfo.getClientIdsWithComponents();
+                    String replaceClientId = clientIds.getClientIdOrNull(_clientIdsWithComponents);
                     MessageMappingInfo replacedMessageMappingInfo = new MessageMappingInfo(message,
-                                                                                                   messageMappingInfo.getSortKey(),
-                                                                                                   replaceClientId);
+                                                                                           messageMappingInfo.getSortKey(),
+                                                                                           replaceClientId);
                     return replacedMessageMappingInfo;
                 })
                 .collect(Collectors.toList());

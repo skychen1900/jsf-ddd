@@ -33,7 +33,7 @@ import spec.interfaces.infrastructure.CurrentViewContext;
 import spec.message.MessageConverter;
 import spec.message.MessageWriter;
 import spec.message.validation.ClientIdMessages;
-import spec.message.validation.ClientIdsWithComponents;
+import spec.message.validation.ClientIds;
 import spec.validation.BeanValidationException;
 
 @Action
@@ -71,14 +71,14 @@ public class BeanValidationExceptionInterceptor {
             return ic.proceed();
         } catch (BeanValidationException ex) {
 
-            ClientIdsWithComponents clientIdsWithInputComponents = new InputComponentScanner().scan();
+            ClientIds clientIdsWithInputComponents = new InputComponentScanner().scan();
 
             ClientIdMessages clientidMessages
                              = messageConverter.toClientIdMessages(ex.getValidatedResults(),
                                                                    ic.getTarget().getClass().getSuperclass(),
                                                                    clientIdsWithInputComponents);
 
-            ClientIdsWithComponents clientIdsWithHtmlMessages = new HtmlMessageScanner().scan();
+            ClientIds clientIdsWithHtmlMessages = new HtmlMessageScanner().scan();
             messageWriter.appendErrorMessageToComponent(clientidMessages.toClientIdMessagesForWriting(clientIdsWithHtmlMessages));
 
             FacesContext.getCurrentInstance().validationFailed();

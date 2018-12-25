@@ -22,7 +22,7 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import spec.message.validation.ClientIdMessages;
-import spec.message.validation.ClientIdsWithComponents;
+import spec.message.validation.ClientIds;
 
 /**
  *
@@ -32,20 +32,20 @@ import spec.message.validation.ClientIdsWithComponents;
 @RequestScoped
 public class ErrorStyleImpl implements ErrorStyle {
 
-    private ClientIdsWithComponents clientIdsWithComponents;
+    private ClientIds clientIdsWithComponents;
 
     private String errorStyle;
 
     @PostConstruct
     private void init() {
         this.errorStyle = "error";
-        this.clientIdsWithComponents = new ClientIdsWithComponents();
+        this.clientIdsWithComponents = new ClientIds();
     }
 
     @Override
-    public void set(ClientIdsWithComponents clientIdsWithInputComponents, ClientIdMessages clientidMessages) {
-        Set<String> clientIds = clientidMessages.getClientIds();
-        this.clientIdsWithComponents = clientIdsWithInputComponents.filter(clientIds);
+    public void set(ClientIds clientIds, ClientIdMessages clientidMessages) {
+        Set<String> _clientIds = clientidMessages.getClientIds();
+        this.clientIdsWithComponents = clientIds.filter(_clientIds);
     }
 
     /**

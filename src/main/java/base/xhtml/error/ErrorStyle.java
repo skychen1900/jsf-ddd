@@ -17,7 +17,7 @@
 package base.xhtml.error;
 
 import spec.message.validation.ClientIdMessages;
-import spec.message.validation.ClientIdsWithComponents;
+import spec.message.validation.ClientIds;
 
 /**
  *
@@ -35,6 +35,6 @@ public interface ErrorStyle {
      */
     String byId(String id);
 
-    void set(ClientIdsWithComponents clientIdsWithInputComponents, ClientIdMessages clientidMessages);
+    void set(ClientIds clientIdsWithInputComponents, ClientIdMessages clientidMessages);
 
 }

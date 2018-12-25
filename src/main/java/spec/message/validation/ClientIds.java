@@ -30,7 +30,7 @@ import java.util.Set;
  *
  * @author Yamashita,Takahiro
  */
-public class ClientIdsWithComponents {
+public class ClientIds {
 
     /**
      * key:Id, value:clientIdのlist
@@ -38,7 +38,7 @@ public class ClientIdsWithComponents {
     private final Map<String, Set<String>> map;
     private final Set<String> clientIds;
 
-    public ClientIdsWithComponents() {
+    public ClientIds() {
         this.map = new HashMap<>();
         this.clientIds = new HashSet<>();
     }
@@ -61,7 +61,7 @@ public class ClientIdsWithComponents {
         this.clientIds.addAll(clientIds);
     }
 
-    public void putAll(ClientIdsWithComponents clientIdWithInputComponent) {
+    public void putAll(ClientIds clientIdWithInputComponent) {
         this.map.putAll(clientIdWithInputComponent.map);
         this.clientIds.addAll(clientIdWithInputComponent.clientIds);
     }
@@ -88,7 +88,7 @@ public class ClientIdsWithComponents {
      * @param clientIdWithInputComponent
      * @return 一致する項目ＩＤがあった場合は クライアントＩＤ（先頭）、無かった場合は {@code null}
      */
-    public String getClientIdOrNull(ClientIdsWithComponents clientIdWithInputComponent) {
+    public String getClientIdOrNull(ClientIds clientIdWithInputComponent) {
         String key = clientIdWithInputComponent.map.entrySet().iterator().next().getKey();
         return this.getOrNull(key);
     }
@@ -118,8 +118,8 @@ public class ClientIdsWithComponents {
      * @param clientIds 取得対象となるクライアントＩＤリスト
      * @return 新たなインスタンス
      */
-    public ClientIdsWithComponents filter(Set<String> clientIds) {
-        ClientIdsWithComponents _clientIdsWithComponents = new ClientIdsWithComponents();
+    public ClientIds filter(Set<String> clientIds) {
+        ClientIds _clientIdsWithComponents = new ClientIds();
 
         this.map.forEach((_id, _clientIds) -> {
 

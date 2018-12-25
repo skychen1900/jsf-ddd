@@ -31,6 +31,6 @@ public interface ClientIdMessages {
 
     String getMessage(String clientId);
 
-    ClientIdMessages toClientIdMessagesForWriting(ClientIdsWithComponents clientIdsWithMessages);
+    ClientIdMessages toClientIdMessagesForWriting(ClientIds clientIds);
 
 }

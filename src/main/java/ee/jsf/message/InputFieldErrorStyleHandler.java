@@ -30,7 +30,7 @@ import javax.faces.context.FacesContext;
  * @author Yamashita,Takahiro
  */
 @ApplicationScoped
-public class InputFieldColorHandler {
+public class InputFieldErrorStyleHandler {
 
     private String errorClass;
 

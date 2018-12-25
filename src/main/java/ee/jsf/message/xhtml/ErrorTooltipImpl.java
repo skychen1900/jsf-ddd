@@ -22,6 +22,7 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import spec.message.validation.ClientIdMessages;
+import spec.message.validation.ClientIdMessagesImpl;
 import spec.message.validation.ClientIdsWithComponents;
 
 /**
@@ -38,7 +39,7 @@ public class ErrorTooltipImpl implements ErrorTooltip {
     @PostConstruct
     private void init() {
         this.clientIdsWithComponents = new ClientIdsWithComponents();
-        this.clientIdMessages = new ClientIdMessages();
+        this.clientIdMessages = new ClientIdMessagesImpl();
     }
 
     @Override

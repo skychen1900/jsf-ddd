@@ -23,6 +23,7 @@ import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 import spec.message.validation.ClientIdMessage;
 import spec.message.validation.ClientIdMessages;
+import spec.message.validation.ClientIdMessagesImpl;
 
 /**
  * {@link ConstraintViolationForMessage} の集約を扱う機能を提供します.
@@ -67,7 +68,7 @@ class ConstraintViolationForMessages {
                         .thenComparing(s -> s.getConstraintViolation().getMessageTemplate()))
                 .map(c -> function.apply(c))
                 .collect(Collectors.toList());
-        return new ClientIdMessages(clientidMessages);
+        return new ClientIdMessagesImpl(clientidMessages);
     }
 
 }

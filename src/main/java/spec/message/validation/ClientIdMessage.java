@@ -12,37 +12,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- *  Copyright © 2018 Yamashita,Takahiro
+ *  Copyright ? 2018 Yamashita,Takahiro
  */
 package spec.message.validation;
 
 /**
- * クライアントＩＤと 出力するメッセージのペアを扱う機能を提供します.
  *
  * @author Yamashita,Takahiro
  */
-public class ClientIdMessage {
+public interface ClientIdMessage {
 
-    private final String clientId;
-    private final String message;
+    String getClientId();
 
-    /**
-     * インスタンスを構築します.
-     *
-     * @param clientId メッセージ出力対象とするクライアントＩＤ. 集約したメッセージリストに出力する場合は{@code null}
-     * @param message 出力するメッセージ
-     */
-    public ClientIdMessage(String clientId, String message) {
-        this.clientId = clientId;
-        this.message = message;
-    }
-
-    public String getClientId() {
-        return clientId;
-    }
-
-    public String getMessage() {
-        return message;
-    }
+    String getMessage();
 
 }

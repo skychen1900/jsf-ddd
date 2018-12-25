@@ -16,8 +16,6 @@
  */
 package ee.jsf.message.converter;
 
-import ee.jsf.message.converter.PresentationConstraintViolationForMessages;
-import ee.jsf.message.converter.ViewContextScanner;
 import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -33,6 +31,7 @@ import org.vermeerlab.resourcebundle.CustomControl;
 import spec.interfaces.infrastructure.CurrentViewContext;
 import spec.message.MessageConverter;
 import spec.message.validation.ClientIdMessage;
+import spec.message.validation.ClientIdMessageImpl;
 import spec.message.validation.ClientIdMessages;
 import spec.message.validation.ClientIdsWithComponents;
 
@@ -111,7 +110,7 @@ public class MessageConverterImpl implements MessageConverter {
         MessageInterpolator interpolator = interpolatorFactory.create(context.clientLocate());
         String message = interpolator.toMessage(constraintViolationForMessage.getConstraintViolation());
         String targetClientId = constraintViolationForMessage.getId();
-        return new ClientIdMessage(targetClientId, message);
+        return new ClientIdMessageImpl(targetClientId, message);
     }
 
 }

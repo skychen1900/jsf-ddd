@@ -22,7 +22,7 @@ import spec.message.validation.ClientIds;
  * {@link spec.annotation.presentation.view.InvalidMessageMapping} でマークしたフィールドの情報を扱う機能を提供します.
  * <p>
  * {@code sortKey} が１つだけとしている理由は、同一メッセージに対して上位順位のもののみを保持するようにしているためです.<br>
- * {@code targetClientId} を複数保持している理由は、同一メッセージに対して複数のクライアントＩＤが割り当てられることを想定しているためです。
+ * ClientIdを複数保持している理由は、同一メッセージに対して複数のクライアントＩＤが割り当てられることを想定しているためです。
  *
  * @author Yamashita,Takahiro
  */
@@ -30,21 +30,21 @@ class MessageMappingInfo {
 
     private final String message;
     private final String sortKey;
-    private final ClientIds clientIdsWithComponents;
+    private final ClientIds clientIds;
 
-    MessageMappingInfo(String message, String sortKey, String targetClientId) {
+    MessageMappingInfo(String message, String sortKey, String clientId) {
         this.message = message;
         this.sortKey = sortKey;
 
-        ClientIds _clientIdsWithComponents = new ClientIds();
-        _clientIdsWithComponents.put(targetClientId);
-        this.clientIdsWithComponents = _clientIdsWithComponents;
+        ClientIds _clientIds = new ClientIds();
+        _clientIds.put(clientId);
+        this.clientIds = _clientIds;
     }
 
     MessageMappingInfo(String message, String sortKey, ClientIds clientIds) {
         this.message = message;
         this.sortKey = sortKey;
-        this.clientIdsWithComponents = clientIds;
+        this.clientIds = clientIds;
     }
 
     boolean isUpdate(String sortKey) {
@@ -60,11 +60,11 @@ class MessageMappingInfo {
     }
 
     ClientIds getClientIds() {
-        return clientIdsWithComponents;
+        return clientIds;
     }
 
     String firstClientId() {
-        return clientIdsWithComponents.getClientIdOrNull(clientIdsWithComponents);
+        return clientIds.findFirstByClientIdOrNull(clientIds);
     }
 
 }

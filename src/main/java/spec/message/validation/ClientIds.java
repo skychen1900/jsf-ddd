@@ -88,7 +88,7 @@ public class ClientIds {
      * @param clientIds
      * @return 一致する項目ＩＤがあった場合は クライアントＩＤ（先頭）、無かった場合は {@code null}
      */
-    public String getClientIdOrNull(ClientIds clientIds) {
+    public String findFirstByClientIdOrNull(ClientIds clientIds) {
         String key = clientIds.map.entrySet().iterator().next().getKey();
         return this.findFirstByIdOrNull(key);
     }

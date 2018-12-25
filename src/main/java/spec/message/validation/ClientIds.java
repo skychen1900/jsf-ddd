@@ -36,11 +36,11 @@ public class ClientIds {
      * key:Id, value:clientIdのlist
      */
     private final Map<String, Set<String>> map;
-    private final Set<String> clientIds;
+    private final Set<String> clientIdSet;
 
     public ClientIds() {
         this.map = new HashMap<>();
-        this.clientIds = new HashSet<>();
+        this.clientIdSet = new HashSet<>();
     }
 
     public void put(String id) {
@@ -51,19 +51,19 @@ public class ClientIds {
         Set<String> _clientIds = map.getOrDefault(id, new HashSet<>());
         _clientIds.add(clientId);
         this.map.put(id, _clientIds);
-        this.clientIds.addAll(_clientIds);
+        this.clientIdSet.addAll(_clientIds);
     }
 
-    public void put(String id, Set<String> clientIds) {
+    public void put(String id, Set<String> clientIdSet) {
         Set<String> _clientIds = this.map.getOrDefault(id, new HashSet<>());
-        _clientIds.addAll(clientIds);
+        _clientIds.addAll(clientIdSet);
         this.map.put(id, _clientIds);
-        this.clientIds.addAll(clientIds);
+        this.clientIdSet.addAll(clientIdSet);
     }
 
-    public void putAll(ClientIds clientIdWithInputComponent) {
-        this.map.putAll(clientIdWithInputComponent.map);
-        this.clientIds.addAll(clientIdWithInputComponent.clientIds);
+    public void putAll(ClientIds clientIds) {
+        this.map.putAll(clientIds.map);
+        this.clientIdSet.addAll(clientIds.clientIdSet);
     }
 
     /**
@@ -85,11 +85,11 @@ public class ClientIds {
      * クライアントＩＤは繰り返し領域を扱う場合を考慮し、複数保持していますが 本メソッドでは 先頭のクライアントＩＤを返却します.<br>
      * また、項目ＩＤが一致する要素が無い場合は {@code null}を返却します
      *
-     * @param clientIdWithInputComponent
+     * @param clientIds
      * @return 一致する項目ＩＤがあった場合は クライアントＩＤ（先頭）、無かった場合は {@code null}
      */
-    public String getClientIdOrNull(ClientIds clientIdWithInputComponent) {
-        String key = clientIdWithInputComponent.map.entrySet().iterator().next().getKey();
+    public String getClientIdOrNull(ClientIds clientIds) {
+        String key = clientIds.map.entrySet().iterator().next().getKey();
         return this.getOrNull(key);
     }
 
@@ -100,7 +100,7 @@ public class ClientIds {
      * @return {@code h:message} のクライアントＩＤが存在する場合 {@code true}
      */
     public boolean contains(String clientId) {
-        return this.clientIds.contains(clientId);
+        return this.clientIdSet.contains(clientId);
     }
 
     /**
@@ -109,21 +109,21 @@ public class ClientIds {
      * @return フルパスのクライアントＩＤ
      */
     public Set<String> getClientIds() {
-        return Collections.unmodifiableSet(clientIds);
+        return Collections.unmodifiableSet(clientIdSet);
     }
 
     /**
      * 指定のフルパスのクライアントＩＤリストだけの新たなインスタンスを返却します.
      *
-     * @param clientIds 取得対象となるクライアントＩＤリスト
+     * @param clientIdSet 取得対象となるクライアントＩＤリスト
      * @return 新たなインスタンス
      */
-    public ClientIds filter(Set<String> clientIds) {
+    public ClientIds filter(Set<String> clientIdSet) {
         ClientIds _clientIdsWithComponents = new ClientIds();
 
         this.map.forEach((_id, _clientIds) -> {
 
-            clientIds.forEach(_clientId -> {
+            clientIdSet.forEach(_clientId -> {
 
                 if (_clientIds.contains(_clientId)) {
                     _clientIdsWithComponents.put(_id, _clientIds);

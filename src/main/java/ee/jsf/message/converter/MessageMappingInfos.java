@@ -48,7 +48,7 @@ class MessageMappingInfos {
                           ? sortKey
                           : _messageMappingInfo.getSortKey();
 
-        ClientIds _clientIds = _messageMappingInfo.getClientIdsWithComponents();
+        ClientIds _clientIds = _messageMappingInfo.getClientIds();
         _clientIds.put(targetClientId);
 
         MessageMappingInfo messageMappingInfo = new MessageMappingInfo(message, _sortKey, _clientIds);
@@ -75,8 +75,8 @@ class MessageMappingInfos {
                           ? _paramSortKey
                           : _messageMappingInfo.getSortKey();
 
-        ClientIds _clientIds = _messageMappingInfo.getClientIdsWithComponents();
-        _clientIds.putAll(messageMappingInfo.getClientIdsWithComponents());
+        ClientIds _clientIds = _messageMappingInfo.getClientIds();
+        _clientIds.putAll(messageMappingInfo.getClientIds());
 
         this.messageMappingInfos.put(message, new MessageMappingInfo(message, _sortKey, _clientIds));
     }
@@ -97,7 +97,7 @@ class MessageMappingInfos {
                     String message = entry.getKey();
 
                     MessageMappingInfo messageMappingInfo = entry.getValue();
-                    ClientIds _clientIdsWithComponents = messageMappingInfo.getClientIdsWithComponents();
+                    ClientIds _clientIdsWithComponents = messageMappingInfo.getClientIds();
                     String replaceClientId = clientIds.getClientIdOrNull(_clientIdsWithComponents);
                     MessageMappingInfo replacedMessageMappingInfo = new MessageMappingInfo(message,
                                                                                            messageMappingInfo.getSortKey(),

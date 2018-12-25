@@ -59,7 +59,7 @@ class MessageMappingInfo {
         return sortKey;
     }
 
-    ClientIds getClientIdsWithComponents() {
+    ClientIds getClientIds() {
         return clientIdsWithComponents;
     }
 

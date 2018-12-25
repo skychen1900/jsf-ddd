@@ -16,6 +16,7 @@
  */
 package ee.jsf.message;
 
+import ee.jsf.message.internal.PresentationConstraintViolationForMessages;
 import ee.jsf.message.internal.ViewContextScanner;
 import java.util.Collection;
 import java.util.List;

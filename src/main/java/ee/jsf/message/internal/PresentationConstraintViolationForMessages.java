@@ -14,16 +14,16 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ee.jsf.message;
+package ee.jsf.message.internal;
 
+import base.annotation.FieldOrder;
+import base.annotation.presentation.view.View;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.validation.ConstraintViolation;
-import base.annotation.FieldOrder;
-import base.annotation.presentation.view.View;
 import spec.exception.UnexpectedApplicationException;
 import spec.message.validation.ClientIdsWithComponents;
 import spec.message.validation.ConstraintViolationForMessage;
@@ -40,7 +40,7 @@ import spec.message.validation.ConstraintViolationForMessages;
  *
  * @author Yamashita,Takahiro
  */
-class PresentationConstraintViolationForMessages {
+public class PresentationConstraintViolationForMessages {
 
     private final Set<ConstraintViolation<?>> constraintViolationSet;
     private final ClientIdsWithComponents clientIdsWithComponents;
@@ -50,11 +50,11 @@ class PresentationConstraintViolationForMessages {
         this.clientIdsWithComponents = clientIdsWithComponents;
     }
 
-    static PresentationConstraintViolationForMessages of(Set<ConstraintViolation<?>> constraintViolationSet, ClientIdsWithComponents clientIdsWithComponents) {
+    public static PresentationConstraintViolationForMessages of(Set<ConstraintViolation<?>> constraintViolationSet, ClientIdsWithComponents clientIdsWithComponents) {
         return new PresentationConstraintViolationForMessages(constraintViolationSet, clientIdsWithComponents);
     }
 
-    ConstraintViolationForMessages toConstraintViolationForMessages() {
+    public ConstraintViolationForMessages toConstraintViolationForMessages() {
         return new ConstraintViolationForMessages(
                 constraintViolationSet
                         .stream()

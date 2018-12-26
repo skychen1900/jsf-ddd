@@ -40,7 +40,7 @@ public class InputFieldErrorStyleHandler {
     }
 
     public void updateErrorStyle(FacesContext context, ClientComplementManager clientComplementManager) {
-        this.clearErrorColor(context);
+        this.clearErrorStyle(context);
 
         if (context.isValidationFailed() == false) {
             return;
@@ -50,7 +50,7 @@ public class InputFieldErrorStyleHandler {
         this.updateColorInputComponent(context, clientComplementManager);
     }
 
-    private void clearErrorColor(FacesContext context) {
+    private void clearErrorStyle(FacesContext context) {
 
         recursiveScan(context.getViewRoot().getChildren())
                 .forEach(c -> {

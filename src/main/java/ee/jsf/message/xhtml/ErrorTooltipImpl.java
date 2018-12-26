@@ -33,12 +33,12 @@ import spec.message.validation.ClientIds;
 @RequestScoped
 public class ErrorTooltipImpl implements ErrorTooltip {
 
-    private ClientIds clientIdsWithComponents;
+    private ClientIds clientIds;
     private ClientIdMessages clientIdMessages;
 
     @PostConstruct
     private void init() {
-        this.clientIdsWithComponents = new ClientIds();
+        this.clientIds = new ClientIds();
         this.clientIdMessages = new ClientIdMessagesImpl();
     }
 
@@ -46,7 +46,7 @@ public class ErrorTooltipImpl implements ErrorTooltip {
     public void set(ClientIds clientIds, ClientIdMessages clientIdMessages) {
 
         Set<String> _clientIds = clientIdMessages.getClientIds();
-        this.clientIdsWithComponents = clientIds.filter(_clientIds);
+        this.clientIds = clientIds.filter(_clientIds);
         this.clientIdMessages = clientIdMessages;
     }
 
@@ -60,7 +60,7 @@ public class ErrorTooltipImpl implements ErrorTooltip {
      */
     @Override
     public String byId(String id) {
-        String clientId = this.clientIdsWithComponents.findFirstById(id).orElse("");
+        String clientId = this.clientIds.findFirstById(id).orElse("");
         return clientIdMessages.getMessage(clientId);
     }
 

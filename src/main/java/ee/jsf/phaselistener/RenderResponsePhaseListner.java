@@ -43,7 +43,7 @@ public class RenderResponsePhaseListner implements PhaseListener {
 
         InputFieldErrorStyleHandler inputFieldErrorStyleHandler = CDI.current().select(InputFieldErrorStyleHandler.class).get();
         ClientComplementManager clientComplementManager = CDI.current().select(ClientComplementManager.class).get();
-        inputFieldErrorStyleHandler.updateErrorFieldColor(context, clientComplementManager);
+        inputFieldErrorStyleHandler.updateErrorStyle(context, clientComplementManager);
     }
 
     @Override

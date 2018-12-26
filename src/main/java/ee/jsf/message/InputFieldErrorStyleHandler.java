@@ -39,7 +39,7 @@ public class InputFieldErrorStyleHandler {
         this.errorClass = "error-field";
     }
 
-    public void updateErrorFieldColor(FacesContext context, ClientComplementManager clientComplementManager) {
+    public void updateErrorStyle(FacesContext context, ClientComplementManager clientComplementManager) {
         this.clearErrorColor(context);
 
         if (context.isValidationFailed() == false) {

@@ -58,7 +58,7 @@ public class ErrorStyleImpl implements ErrorStyle {
      */
     @Override
     public String byId(String id) {
-        return this.clientIdsWithComponents.findFirstByIdOrNull(id) == null ? "" : errorStyle;
+        return this.clientIdsWithComponents.findFirstById(id).isPresent() ? errorStyle : "";
 
     }
 

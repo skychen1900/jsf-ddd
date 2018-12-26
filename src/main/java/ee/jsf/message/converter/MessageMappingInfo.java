@@ -64,7 +64,7 @@ class MessageMappingInfo {
     }
 
     String firstClientId() {
-        return clientIds.findFirstByClientIdOrNull(clientIds);
+        return clientIds.findFirstByClientId(clientIds).orElse(null);
     }
 
 }

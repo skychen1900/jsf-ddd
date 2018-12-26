@@ -20,6 +20,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -72,11 +73,11 @@ public class ClientIds {
      * @param id クライアントＩＤ（フルパスではない）
      * @return 指定のIDがxhtmlに指定されている場合はフルパスのクライアントＩＤ、存在しない場合は null を返却します.
      */
-    public String findFirstByIdOrNull(String id) {
+    public Optional<String> findFirstById(String id) {
         Set<String> _clientIds = this.map.getOrDefault(id, new HashSet<>());
         return _clientIds.isEmpty()
-               ? null
-               : _clientIds.iterator().next();
+               ? Optional.empty()
+               : Optional.of(_clientIds.iterator().next());
     }
 
     /**
@@ -88,9 +89,9 @@ public class ClientIds {
      * @param clientIds
      * @return 一致する項目ＩＤがあった場合は クライアントＩＤ（先頭）、無かった場合は {@code null}
      */
-    public String findFirstByClientIdOrNull(ClientIds clientIds) {
+    public Optional<String> findFirstByClientId(ClientIds clientIds) {
         String key = clientIds.map.entrySet().iterator().next().getKey();
-        return this.findFirstByIdOrNull(key);
+        return this.findFirstById(key);
     }
 
     /**

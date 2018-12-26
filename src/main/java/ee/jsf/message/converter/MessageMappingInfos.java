@@ -98,7 +98,7 @@ class MessageMappingInfos {
 
                     MessageMappingInfo messageMappingInfo = entry.getValue();
                     ClientIds _clientIdsWithComponents = messageMappingInfo.getClientIds();
-                    String replaceClientId = clientIds.findFirstByClientIdOrNull(_clientIdsWithComponents);
+                    String replaceClientId = clientIds.findFirstByClientId(_clientIdsWithComponents).orElse(null);
                     MessageMappingInfo replacedMessageMappingInfo = new MessageMappingInfo(message,
                                                                                            messageMappingInfo.getSortKey(),
                                                                                            replaceClientId);

@@ -75,7 +75,7 @@ public class BeanValidationExceptionInterceptor {
 
             ClientIdMessages clientIdMessages = this.componentErrorMessageWriter.getClientIdMessages();
 
-            clientComplementManager.setClientidMessages(clientIdMessages);
+            this.clientComplementManager.setClientidMessages(clientIdMessages);
             this.errorStyle.set(clientIdMessages);
             this.errorTooltip.set(clientIdMessages);
             return currentViewId;

@@ -18,7 +18,7 @@ package ee.jsf.message;
 
 import java.util.Set;
 import javax.enterprise.context.RequestScoped;
-import spec.message.validation.ClientIdMessages;
+import spec.message.ClientIdMessages;
 
 /**
  *

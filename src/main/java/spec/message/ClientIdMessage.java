@@ -14,7 +14,7 @@
  *
  *  Copyright ? 2018 Yamashita,Takahiro
  */
-package spec.message.validation;
+package spec.message;
 
 /**
  *

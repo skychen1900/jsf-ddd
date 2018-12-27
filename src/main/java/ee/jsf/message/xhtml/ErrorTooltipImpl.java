@@ -23,7 +23,7 @@ import java.util.Set;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import spec.message.validation.ClientIdMessages;
+import spec.message.ClientIdMessages;
 import spec.message.validation.ClientIds;
 
 /**

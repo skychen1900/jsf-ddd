@@ -24,8 +24,8 @@ import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-import spec.message.validation.ClientIdMessage;
-import spec.message.validation.ClientIdMessages;
+import spec.message.ClientIdMessage;
+import spec.message.ClientIdMessages;
 import spec.message.validation.ClientIds;
 
 /**

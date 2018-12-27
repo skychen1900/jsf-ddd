@@ -16,7 +16,7 @@
  */
 package base.xhtml.error;
 
-import spec.message.validation.ClientIdMessages;
+import spec.message.ClientIdMessages;
 
 /**
  *

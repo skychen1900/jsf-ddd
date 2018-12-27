@@ -22,7 +22,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import spec.message.MessageWriter;
-import spec.message.validation.ClientIdMessages;
+import spec.message.ClientIdMessages;
 
 /**
  * メッセージを出力する機能を提供します.

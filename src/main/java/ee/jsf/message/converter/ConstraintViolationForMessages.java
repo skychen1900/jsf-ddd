@@ -24,8 +24,8 @@ import java.util.function.Function;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 import javax.validation.ConstraintViolation;
-import spec.message.validation.ClientIdMessage;
-import spec.message.validation.ClientIdMessages;
+import spec.message.ClientIdMessage;
+import spec.message.ClientIdMessages;
 
 /**
  * {@link ConstraintViolationForMessage} の集約を扱う機能を提供します.

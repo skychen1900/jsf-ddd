@@ -14,11 +14,12 @@
  *
  *  Copyright ? 2018 Yamashita,Takahiro
  */
-package spec.message.validation;
+package spec.message;
 
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
+import spec.message.validation.ClientIds;
 
 /**
  *

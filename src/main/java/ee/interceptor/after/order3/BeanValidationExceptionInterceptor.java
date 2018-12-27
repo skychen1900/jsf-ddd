@@ -31,7 +31,7 @@ import javax.interceptor.InvocationContext;
 import spec.interfaces.infrastructure.CurrentViewContext;
 import spec.message.MessageConverter;
 import spec.message.MessageWriter;
-import spec.message.validation.ClientIdMessages;
+import spec.message.ClientIdMessages;
 import spec.validation.BeanValidationException;
 
 @Action

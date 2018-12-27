@@ -16,7 +16,7 @@
  */
 package ee.jsf.message.model;
 
-import spec.message.validation.ClientIdMessage;
+import spec.message.ClientIdMessage;
 
 /**
  * クライアントＩＤと 出力するメッセージのペアを扱う機能を提供します.

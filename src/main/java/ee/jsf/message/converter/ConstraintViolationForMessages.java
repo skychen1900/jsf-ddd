@@ -16,6 +16,8 @@
  */
 package ee.jsf.message.converter;
 
+import ee.jsf.message.model.ClientIdMessageImpl;
+import ee.jsf.message.model.ClientIdMessagesImpl;
 import static java.util.Comparator.comparing;
 import java.util.List;
 import java.util.function.Function;
@@ -23,9 +25,7 @@ import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 import javax.validation.ConstraintViolation;
 import spec.message.validation.ClientIdMessage;
-import spec.message.validation.ClientIdMessageImpl;
 import spec.message.validation.ClientIdMessages;
-import spec.message.validation.ClientIdMessagesImpl;
 
 /**
  * {@link ConstraintViolationForMessage} の集約を扱う機能を提供します.

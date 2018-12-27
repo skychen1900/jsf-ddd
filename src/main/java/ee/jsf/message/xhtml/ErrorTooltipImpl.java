@@ -17,14 +17,13 @@
 package ee.jsf.message.xhtml;
 
 import base.xhtml.error.ErrorTooltip;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import ee.jsf.context.InputComponentScanner;
 import java.util.Set;
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import spec.message.validation.ClientIdMessages;
-import spec.message.validation.ClientIdMessagesImpl;
 import spec.message.validation.ClientIds;
 
 /**
@@ -33,24 +32,20 @@ import spec.message.validation.ClientIds;
  */
 @Named("errorTooltip")
 @RequestScoped
+@SuppressFBWarnings("UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR")
 public class ErrorTooltipImpl implements ErrorTooltip {
 
     private InputComponentScanner inputComponentScanner;
+
     private ClientIds clientIds;
     private ClientIdMessages clientIdMessages;
 
-    private ErrorTooltipImpl() {
+    public ErrorTooltipImpl() {
     }
 
     @Inject
     public ErrorTooltipImpl(InputComponentScanner inputComponentScanner) {
         this.inputComponentScanner = inputComponentScanner;
-    }
-
-    @PostConstruct
-    private void init() {
-        this.clientIds = new ClientIds();
-        this.clientIdMessages = new ClientIdMessagesImpl();
     }
 
     @Override
@@ -70,6 +65,9 @@ public class ErrorTooltipImpl implements ErrorTooltip {
      */
     @Override
     public String byId(String id) {
+        if (this.clientIds == null) {
+            return "";
+        }
         String clientId = this.clientIds.findFirstById(id).orElse("");
         return clientIdMessages.getMessage(clientId);
     }
@@ -82,6 +80,9 @@ public class ErrorTooltipImpl implements ErrorTooltip {
      */
     @Override
     public String byClientId(String clientId) {
+        if (this.clientIdMessages == null) {
+            return "";
+        }
         return clientIdMessages.getMessage(clientId);
     }
 

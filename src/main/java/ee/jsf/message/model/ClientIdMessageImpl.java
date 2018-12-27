@@ -14,7 +14,9 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package spec.message.validation;
+package ee.jsf.message.model;
+
+import spec.message.validation.ClientIdMessage;
 
 /**
  * クライアントＩＤと 出力するメッセージのペアを扱う機能を提供します.

@@ -16,13 +16,13 @@
  */
 package ee.jsf.phaselistener;
 
-import ee.jsf.message.style.ClientComplementManager;
-import ee.jsf.message.style.InputFieldErrorStyleHandler;
 import javax.enterprise.inject.spi.CDI;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseEvent;
 import javax.faces.event.PhaseId;
 import javax.faces.event.PhaseListener;
+import spec.message.ClientComplementManager;
+import spec.message.InputFieldErrorStyleHandler;
 
 /**
  * 入力フィールドの背景色を変更するためのPhaseListnerです.

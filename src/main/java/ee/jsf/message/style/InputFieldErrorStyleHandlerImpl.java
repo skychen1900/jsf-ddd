@@ -16,6 +16,7 @@
  */
 package ee.jsf.message.style;
 
+import spec.message.InputFieldErrorStyleHandler;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -24,21 +25,23 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
+import spec.message.ClientComplementManager;
 
 /**
  *
  * @author Yamashita,Takahiro
  */
 @ApplicationScoped
-public class InputFieldErrorStyleHandler {
+public class InputFieldErrorStyleHandlerImpl implements InputFieldErrorStyleHandler {
 
     private String errorClass;
 
     @PostConstruct
-    public void init() {
+    private void init() {
         this.errorClass = "error-field";
     }
 
+    @Override
     public void updateErrorStyle(FacesContext context, ClientComplementManager clientComplementManager) {
         this.clearErrorStyle(context);
 

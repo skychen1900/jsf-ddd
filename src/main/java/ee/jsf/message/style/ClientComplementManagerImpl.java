@@ -16,8 +16,10 @@
  */
 package ee.jsf.message.style;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Set;
 import javax.enterprise.context.RequestScoped;
+import spec.message.ClientComplementManager;
 import spec.message.ClientIdMessages;
 
 /**
@@ -25,14 +27,17 @@ import spec.message.ClientIdMessages;
  * @author Yamashita,Takahiro
  */
 @RequestScoped
-public class ClientComplementManager {
+public class ClientComplementManagerImpl implements ClientComplementManager {
 
+    @SuppressFBWarnings("UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR")
     private ClientIdMessages clientidMessages;
 
+    @Override
     public void setClientidMessages(ClientIdMessages clientidMessages) {
         this.clientidMessages = clientidMessages;
     }
 
+    @Override
     public Set<String> clientIds() {
         return this.clientidMessages.getClientIds();
     }

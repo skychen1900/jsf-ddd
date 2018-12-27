@@ -16,12 +16,12 @@
  */
 package ee.jsf.exceptionhandler;
 
-import ee.jsf.scope.conversation.ConversationLifecycleManager;
 import java.util.Arrays;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.NavigationHandler;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import spec.scope.conversation.ConversationLifecycleManager;
 
 /**
  * エラー画面への遷移を行う機能を提供します.

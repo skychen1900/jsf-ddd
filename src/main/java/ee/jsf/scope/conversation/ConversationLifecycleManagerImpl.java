@@ -22,6 +22,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import spec.context.CurrentViewContext;
+import spec.scope.conversation.ConversationLifecycleManager;
 import spec.scope.conversation.IllegalConversationStartpathException;
 
 /**
@@ -29,18 +30,18 @@ import spec.scope.conversation.IllegalConversationStartpathException;
  *
  * @author Yamashita,Takahiro
  */
-@Named
+@Named("conversationLifecycleManager")
 @RequestScoped
-public class ConversationLifecycleManager {
+public class ConversationLifecycleManagerImpl implements ConversationLifecycleManager {
 
     private Conversation conversation;
     private CurrentViewContext context;
 
-    public ConversationLifecycleManager() {
+    public ConversationLifecycleManagerImpl() {
     }
 
     @Inject
-    public ConversationLifecycleManager(Conversation conversation, CurrentViewContext context) {
+    public ConversationLifecycleManagerImpl(Conversation conversation, CurrentViewContext context) {
         this.conversation = conversation;
         this.context = context;
     }
@@ -48,6 +49,7 @@ public class ConversationLifecycleManager {
     /**
      * 会話スコープを開始します
      */
+    @Override
     public void startConversation() {
         if (this.conversation.isTransient() == false) {
             return;
@@ -71,6 +73,7 @@ public class ConversationLifecycleManager {
      * @param currentViewId 現在の画面ＩＤ
      * @param resultViewId 遷移先の画面ＩＤ
      */
+    @Override
     public void endConversation(String currentViewId, String resultViewId) {
         if (shouldConversationEnd(currentViewId, resultViewId)) {
             this.conversation.end();
@@ -80,6 +83,7 @@ public class ConversationLifecycleManager {
     /**
      * 会話スコープを終了します.
      */
+    @Override
     public void endConversation() {
         if (this.conversation.isTransient()) {
             return;
@@ -92,6 +96,7 @@ public class ConversationLifecycleManager {
      *
      * @return 会話スコープID
      */
+    @Override
     public String conversationId() {
         return this.conversation.getId();
     }

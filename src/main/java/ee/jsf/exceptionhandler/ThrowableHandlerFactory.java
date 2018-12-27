@@ -16,7 +16,6 @@
  */
 package ee.jsf.exceptionhandler;
 
-import ee.jsf.scope.conversation.ConversationLifecycleManager;
 import ee.jsf.exceptionhandler.throwablehandler.BeanValidationExceptionHandler;
 import ee.jsf.exceptionhandler.throwablehandler.CanNotMappingHtmlMessagesExceptionHandler;
 import ee.jsf.exceptionhandler.throwablehandler.DefaultThrowableHandler;
@@ -31,6 +30,7 @@ import spec.exception.UnexpectedApplicationException;
 import spec.message.CanNotMappingHtmlMessagesException;
 import spec.message.MessageConverter;
 import spec.message.MessageWriter;
+import spec.scope.conversation.ConversationLifecycleManager;
 import spec.scope.conversation.IllegalConversationStartpathException;
 import spec.validation.BeanValidationException;
 

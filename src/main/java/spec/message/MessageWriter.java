@@ -17,7 +17,6 @@
 package spec.message;
 
 import java.util.List;
-import spec.message.validation.ClientIdMessages;
 
 /**
  * クライアントにメッセージを出力する機能を提供します

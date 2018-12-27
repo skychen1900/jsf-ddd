@@ -16,11 +16,9 @@
  */
 package ee.interceptor.after.order3;
 
-import ee.jsf.messages.ClientComplementManager;
-import ee.jsf.messages.ErrorStyle;
-import ee.jsf.messages.ErrorTooltip;
-import ee.jsf.messages.HtmlMessageScanner;
-import ee.jsf.messages.InputComponentScanner;
+import base.annotation.presentation.controller.Action;
+import base.xhtml.error.ErrorStyle;
+import base.xhtml.error.ErrorTooltip;
 import javax.annotation.Priority;
 import javax.enterprise.context.Dependent;
 import javax.faces.context.FacesContext;
@@ -28,12 +26,12 @@ import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
-import spec.annotation.presentation.controller.Action;
-import spec.interfaces.infrastructure.CurrentViewContext;
+import spec.context.CurrentViewContext;
+import spec.message.ClientComplementManager;
+import spec.message.ClientIdMessages;
+import spec.message.ComponentErrorMessageWriter;
 import spec.message.MessageConverter;
 import spec.message.MessageWriter;
-import spec.message.validation.ClientIdMessages;
-import spec.message.validation.ClientIdsWithComponents;
 import spec.validation.BeanValidationException;
 
 @Action
@@ -43,8 +41,8 @@ import spec.validation.BeanValidationException;
 public class BeanValidationExceptionInterceptor {
 
     private final CurrentViewContext context;
-    private final MessageConverter messageConverter;
-    private final MessageWriter messageWriter;
+
+    private final ComponentErrorMessageWriter componentErrorMessageWriter;
     private final ClientComplementManager clientComplementManager;
     private final ErrorStyle errorStyle;
     private final ErrorTooltip errorTooltip;
@@ -53,10 +51,10 @@ public class BeanValidationExceptionInterceptor {
     public BeanValidationExceptionInterceptor(CurrentViewContext context,
                                               MessageConverter messageConverter, MessageWriter messageWriter,
                                               ClientComplementManager clientComplementManager,
+                                              ComponentErrorMessageWriter componentErrorMessageWriter,
                                               ErrorStyle errorStyle, ErrorTooltip errorTooltip) {
         this.context = context;
-        this.messageConverter = messageConverter;
-        this.messageWriter = messageWriter;
+        this.componentErrorMessageWriter = componentErrorMessageWriter;
         this.clientComplementManager = clientComplementManager;
         this.errorStyle = errorStyle;
         this.errorTooltip = errorTooltip;
@@ -71,21 +69,15 @@ public class BeanValidationExceptionInterceptor {
             return ic.proceed();
         } catch (BeanValidationException ex) {
 
-            ClientIdsWithComponents clientIdsWithInputComponents = new InputComponentScanner().scan();
-
-            ClientIdMessages clientidMessages
-                             = messageConverter.toClientIdMessages(ex.getValidatedResults(),
-                                                                   ic.getTarget().getClass().getSuperclass(),
-                                                                   clientIdsWithInputComponents);
-
-            ClientIdsWithComponents clientIdsWithHtmlMessages = new HtmlMessageScanner().scan();
-            messageWriter.appendErrorMessageToComponent(clientidMessages.toClientIdMessagesForWriting(clientIdsWithHtmlMessages));
-
             FacesContext.getCurrentInstance().validationFailed();
-            clientComplementManager.setClientidMessages(clientidMessages);
 
-            this.errorStyle.set(clientIdsWithInputComponents, clientidMessages);
-            this.errorTooltip.set(clientIdsWithInputComponents, clientidMessages);
+            this.componentErrorMessageWriter.write(ex.getValidatedResults(), ic.getTarget().getClass().getSuperclass());
+
+            ClientIdMessages clientIdMessages = this.componentErrorMessageWriter.getClientIdMessages();
+
+            this.clientComplementManager.setClientidMessages(clientIdMessages);
+            this.errorStyle.set(clientIdMessages);
+            this.errorTooltip.set(clientIdMessages);
             return currentViewId;
         }
 

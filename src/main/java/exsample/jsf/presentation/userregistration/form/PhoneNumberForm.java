@@ -21,7 +21,7 @@ import java.io.Serializable;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import spec.interfaces.presentation.view.DefaultForm;
-import spec.validation.ValidationGroups;
+import base.validation.groups.ValidationGroups;
 
 /**
  *

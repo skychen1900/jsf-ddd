@@ -16,11 +16,11 @@
  */
 package exsample.jsf.application.service;
 
-import spec.interfaces.application.commnand.Command;
-import spec.validation.PostConditionValidationGroups.PostCondition;
-import spec.validation.PreConditionValidationGroups.PreCondition;
-import spec.validation.Validator;
-import spec.annotation.application.Service;
+import base.application.commnand.Command;
+import base.validation.groups.PostConditionValidationGroups.PostCondition;
+import base.validation.groups.PreConditionValidationGroups.PreCondition;
+import base.validation.Validator;
+import base.annotation.application.Service;
 import exsample.jsf.domain.model.user.User;
 import exsample.jsf.domain.model.user.UserRepository;
 import javax.inject.Inject;

@@ -18,7 +18,7 @@ package exsample.jsf.presentation.userregistration;
 
 import java.io.Serializable;
 import javax.inject.Inject;
-import spec.annotation.presentation.controller.Controller;
+import base.annotation.presentation.controller.Controller;
 
 @Controller
 public class UserRegistrationActionListener implements Serializable {

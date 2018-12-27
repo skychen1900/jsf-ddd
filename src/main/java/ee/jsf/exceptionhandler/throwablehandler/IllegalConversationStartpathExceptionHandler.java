@@ -16,13 +16,13 @@
  */
 package ee.jsf.exceptionhandler.throwablehandler;
 
-import ee.jsf.scope.conversation.ConversationLifecycleManager;
 import java.io.IOException;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
 import spec.exception.ThrowableHandler;
 import spec.exception.ThrowableHandlerException;
+import spec.scope.conversation.ConversationLifecycleManager;
 
 /**
  * {@link spec.scope.conversation.IllegalConversationStartpathException}の捕捉後の処理を行う機能を提供します.

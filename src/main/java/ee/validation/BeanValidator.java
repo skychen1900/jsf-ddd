@@ -16,16 +16,16 @@
  */
 package ee.validation;
 
-import ee.validation.priority.PostConditionValidationPriority;
-import ee.validation.priority.PreConditionValidationPriority;
-import ee.validation.priority.ValidationPriority;
+import base.validation.priority.PostConditionValidationPriority;
+import base.validation.priority.PreConditionValidationPriority;
+import base.validation.priority.ValidationPriority;
 import java.io.Serializable;
 import java.util.Set;
 import javax.enterprise.context.Dependent;
 import javax.validation.ConstraintViolation;
 import org.vermeerlab.beanvalidation.validator.GroupSequenceValidator;
 import spec.validation.BeanValidationException;
-import spec.validation.Validator;
+import base.validation.Validator;
 
 /**
  * BeanValidationを実行する機能を提供します

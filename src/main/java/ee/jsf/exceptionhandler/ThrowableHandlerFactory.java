@@ -16,13 +16,12 @@
  */
 package ee.jsf.exceptionhandler;
 
-import ee.jsf.scope.conversation.ConversationLifecycleManager;
 import ee.jsf.exceptionhandler.throwablehandler.BeanValidationExceptionHandler;
 import ee.jsf.exceptionhandler.throwablehandler.CanNotMappingHtmlMessagesExceptionHandler;
 import ee.jsf.exceptionhandler.throwablehandler.DefaultThrowableHandler;
 import ee.jsf.exceptionhandler.throwablehandler.IllegalConversationStartpathExceptionHandler;
 import ee.jsf.exceptionhandler.throwablehandler.UnexpectedApplicationExceptionHandler;
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ExceptionQueuedEventContext;
 import javax.inject.Inject;
@@ -31,6 +30,7 @@ import spec.exception.UnexpectedApplicationException;
 import spec.message.CanNotMappingHtmlMessagesException;
 import spec.message.MessageConverter;
 import spec.message.MessageWriter;
+import spec.scope.conversation.ConversationLifecycleManager;
 import spec.scope.conversation.IllegalConversationStartpathException;
 import spec.validation.BeanValidationException;
 
@@ -39,7 +39,7 @@ import spec.validation.BeanValidationException;
  *
  * @author Yamashita,Takahiro
  */
-@ApplicationScoped
+@RequestScoped
 public class ThrowableHandlerFactory {
 
     private MessageConverter messageConverter;

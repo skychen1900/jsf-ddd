@@ -16,13 +16,13 @@
  */
 package ee.interceptor.after.order2;
 
-import ee.jsf.scope.conversation.ConversationLifecycleManager;
+import base.annotation.presentation.controller.EndConversation;
 import javax.annotation.Priority;
 import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
-import spec.annotation.presentation.controller.EndConversation;
+import spec.scope.conversation.ConversationLifecycleManager;
 
 @EndConversation
 @Interceptor

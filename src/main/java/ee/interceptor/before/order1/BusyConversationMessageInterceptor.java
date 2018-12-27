@@ -16,13 +16,13 @@
  */
 package ee.interceptor.before.order1;
 
-import ee.jsf.scope.conversation.BusyConversationMessageManager;
+import base.annotation.presentation.controller.BusyConversationMessage;
 import javax.annotation.Priority;
 import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
-import spec.annotation.presentation.controller.BusyConversationMessage;
+import spec.scope.conversation.exception.BusyConversationMessageManager;
 
 @BusyConversationMessage
 @Interceptor
@@ -41,7 +41,7 @@ public class BusyConversationMessageInterceptor {
         BusyConversationMessage classMessage = ic.getTarget().getClass().getSuperclass().getAnnotation(BusyConversationMessage.class);
         BusyConversationMessage methodMessage = ic.getMethod().getAnnotation(BusyConversationMessage.class);
 
-        this.busyConversationManager.message(classMessage, methodMessage);
+        this.busyConversationManager.setMessage(classMessage, methodMessage);
         return ic.proceed();
     }
 }

@@ -30,10 +30,10 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.inject.Inject;
 import javax.validation.Valid;
-import spec.annotation.FieldOrder;
-import spec.annotation.presentation.view.InvalidMessageMapping;
-import spec.annotation.presentation.view.View;
-import spec.validation.Validator;
+import base.annotation.FieldOrder;
+import base.annotation.presentation.view.InvalidMessageMapping;
+import base.annotation.presentation.view.View;
+import base.validation.Validator;
 
 /**
  *

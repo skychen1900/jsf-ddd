@@ -16,19 +16,17 @@
  */
 package ee.jsf.scope.conversation;
 
-import spec.scope.conversation.DoubleSubmitState;
-import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ConversationScoped;
-import javax.inject.Named;
+import spec.scope.conversation.DoubleSubmitLifecycle;
+import spec.scope.conversation.DoubleSubmitState;
 
 /**
  *
  * @author Yamashita,Takahiro
  */
-@Named
 @ConversationScoped
-public class DoubleSubmitLifecycle implements Serializable {
+public class DoubleSubmitLifecycleImpl implements DoubleSubmitLifecycle {
 
     private static final long serialVersionUID = 1L;
 
@@ -39,10 +37,12 @@ public class DoubleSubmitLifecycle implements Serializable {
         this.doubleSubmitState = DoubleSubmitState.INIT;
     }
 
+    @Override
     public boolean isSubmitted() {
         return this.doubleSubmitState.isSubmitted();
     }
 
+    @Override
     public void nextState() {
         this.doubleSubmitState = this.doubleSubmitState.nextState();
     }

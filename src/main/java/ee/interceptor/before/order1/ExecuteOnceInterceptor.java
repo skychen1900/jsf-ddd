@@ -16,14 +16,14 @@
  */
 package ee.interceptor.before.order1;
 
-import ee.jsf.scope.conversation.DoubleSubmitLifecycle;
+import base.annotation.presentation.controller.ExecuteOnce;
+import spec.scope.conversation.DoubleSubmitLifecycle;
 import java.util.Objects;
 import javax.annotation.Priority;
 import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
-import base.annotation.presentation.controller.ExecuteOnce;
 import spec.context.CurrentViewContext;
 import spec.message.MessageWriter;
 

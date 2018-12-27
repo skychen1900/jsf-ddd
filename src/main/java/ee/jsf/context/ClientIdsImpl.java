@@ -14,7 +14,7 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package spec.message.validation;
+package ee.jsf.context;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -22,6 +22,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import spec.context.ClientIds;
 
 /**
  * 入力要素に付与されているクライアントＩＤ（項目名とフルパス）を扱う機能を提供します.
@@ -31,40 +32,44 @@ import java.util.Set;
  *
  * @author Yamashita,Takahiro
  */
-public class ClientIds {
+public class ClientIdsImpl implements ClientIds {
 
     /**
      * key:Id, value:clientIdのlist
      */
-    private final Map<String, Set<String>> map;
+    private final Map<String, Set<String>> clientIdMap;
     private final Set<String> clientIdSet;
 
-    public ClientIds() {
-        this.map = new HashMap<>();
+    public ClientIdsImpl() {
+        this.clientIdMap = new HashMap<>();
         this.clientIdSet = new HashSet<>();
     }
 
+    @Override
     public void put(String id) {
         this.put(id, id);
     }
 
+    @Override
     public void put(String id, String clientId) {
-        Set<String> _clientIds = map.getOrDefault(id, new HashSet<>());
+        Set<String> _clientIds = clientIdMap.getOrDefault(id, new HashSet<>());
         _clientIds.add(clientId);
-        this.map.put(id, _clientIds);
+        this.clientIdMap.put(id, _clientIds);
         this.clientIdSet.addAll(_clientIds);
     }
 
+    @Override
     public void put(String id, Set<String> clientIdSet) {
-        Set<String> _clientIds = this.map.getOrDefault(id, new HashSet<>());
+        Set<String> _clientIds = this.clientIdMap.getOrDefault(id, new HashSet<>());
         _clientIds.addAll(clientIdSet);
-        this.map.put(id, _clientIds);
+        this.clientIdMap.put(id, _clientIds);
         this.clientIdSet.addAll(clientIdSet);
     }
 
+    @Override
     public void putAll(ClientIds clientIds) {
-        this.map.putAll(clientIds.map);
-        this.clientIdSet.addAll(clientIds.clientIdSet);
+        this.clientIdMap.putAll(clientIds.getClientIdMap());
+        this.clientIdSet.addAll(clientIds.getClientIdSet());
     }
 
     /**
@@ -73,8 +78,9 @@ public class ClientIds {
      * @param id クライアントＩＤ（フルパスではない）
      * @return 指定のIDがxhtmlに指定されている場合はフルパスのクライアントＩＤ、存在しない場合は null を返却します.
      */
+    @Override
     public Optional<String> findFirstById(String id) {
-        Set<String> _clientIds = this.map.getOrDefault(id, new HashSet<>());
+        Set<String> _clientIds = this.clientIdMap.getOrDefault(id, new HashSet<>());
         return _clientIds.isEmpty()
                ? Optional.empty()
                : Optional.of(_clientIds.iterator().next());
@@ -89,8 +95,9 @@ public class ClientIds {
      * @param clientIds
      * @return 一致する項目ＩＤがあった場合は クライアントＩＤ（先頭）、無かった場合は {@code null}
      */
+    @Override
     public Optional<String> findFirstByClientId(ClientIds clientIds) {
-        String key = clientIds.map.entrySet().iterator().next().getKey();
+        String key = clientIds.getClientIdMap().entrySet().iterator().next().getKey();
         return this.findFirstById(key);
     }
 
@@ -100,6 +107,7 @@ public class ClientIds {
      * @param clientId
      * @return {@code h:message} のクライアントＩＤが存在する場合 {@code true}
      */
+    @Override
     public boolean contains(String clientId) {
         return this.clientIdSet.contains(clientId);
     }
@@ -109,6 +117,7 @@ public class ClientIds {
      *
      * @return フルパスのクライアントＩＤ
      */
+    @Override
     public Set<String> getClientIds() {
         return Collections.unmodifiableSet(clientIdSet);
     }
@@ -119,10 +128,11 @@ public class ClientIds {
      * @param clientIdSet 取得対象となるクライアントＩＤリスト
      * @return 新たなインスタンス
      */
+    @Override
     public ClientIds filter(Set<String> clientIdSet) {
-        ClientIds _clientIdsWithComponents = new ClientIds();
+        ClientIdsImpl _clientIdsWithComponents = new ClientIdsImpl();
 
-        this.map.forEach((_id, _clientIds) -> {
+        this.clientIdMap.forEach((_id, _clientIds) -> {
 
             clientIdSet.forEach(_clientId -> {
 
@@ -135,6 +145,16 @@ public class ClientIds {
         });
 
         return _clientIdsWithComponents;
+    }
+
+    @Override
+    public Map<String, Set<String>> getClientIdMap() {
+        return Collections.unmodifiableMap(clientIdMap);
+    }
+
+    @Override
+    public Set<String> getClientIdSet() {
+        return Collections.unmodifiableSet(clientIdSet);
     }
 
 }

@@ -16,7 +16,8 @@
  */
 package ee.jsf.message.converter;
 
-import spec.message.validation.ClientIds;
+import spec.context.ClientIds;
+import ee.jsf.context.ClientIdsImpl;
 
 /**
  * {@link spec.annotation.presentation.view.InvalidMessageMapping} でマークしたフィールドの情報を扱う機能を提供します.
@@ -36,7 +37,7 @@ class MessageMappingInfo {
         this.message = message;
         this.sortKey = sortKey;
 
-        ClientIds _clientIds = new ClientIds();
+        ClientIds _clientIds = new ClientIdsImpl();
         _clientIds.put(clientId);
         this.clientIds = _clientIds;
     }

@@ -24,7 +24,8 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import spec.message.ClientIdMessages;
-import spec.message.validation.ClientIds;
+import spec.context.ClientIds;
+import ee.jsf.context.ClientIdsImpl;
 
 /**
  *
@@ -50,7 +51,7 @@ public class ErrorStyleImpl implements ErrorStyle {
     @PostConstruct
     private void init() {
         this.errorStyle = "error";
-        this.filterdClientIds = new ClientIds();
+        this.filterdClientIds = new ClientIdsImpl();
     }
 
     @Override

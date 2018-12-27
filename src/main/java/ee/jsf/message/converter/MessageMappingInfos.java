@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import spec.message.validation.ClientIds;
+import spec.context.ClientIds;
 
 /**
  * {@link MessageMappingInfo} の集約を扱う機能を提供します.

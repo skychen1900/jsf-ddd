@@ -24,7 +24,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import spec.message.ClientIdMessages;
-import spec.message.validation.ClientIds;
+import spec.context.ClientIds;
 
 /**
  *

@@ -26,7 +26,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import spec.message.ClientIdMessage;
 import spec.message.ClientIdMessages;
-import spec.message.validation.ClientIds;
+import spec.context.ClientIds;
 
 /**
  * {@link ClientIdMessage}の集約を扱う機能を提供します.

@@ -25,7 +25,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import javax.validation.ConstraintViolation;
 import spec.exception.UnexpectedApplicationException;
-import spec.message.validation.ClientIds;
+import spec.context.ClientIds;
 
 /**
  * クライアントメッセージの出力に必要な情報をPresentation層から取得して

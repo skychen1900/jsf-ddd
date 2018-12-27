@@ -22,10 +22,10 @@ import java.util.Set;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.validation.ConstraintViolation;
+import spec.message.ClientIdMessages;
 import spec.message.MessageConverter;
 import spec.message.MessageWriter;
-import spec.message.ClientIdMessages;
-import spec.message.validation.ClientIds;
+import spec.context.ClientIds;
 
 /**
  *

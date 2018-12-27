@@ -22,7 +22,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
-import spec.message.validation.ClientIds;
+import spec.context.ClientIds;
 
 /**
  *
@@ -35,7 +35,7 @@ public class InputComponentScanner {
 
     @PostConstruct
     private void scan() {
-        this.clientIds = recursiveScan(FacesContext.getCurrentInstance().getViewRoot().getChildren(), new ClientIds());
+        this.clientIds = recursiveScan(FacesContext.getCurrentInstance().getViewRoot().getChildren(), new ClientIdsImpl());
     }
 
     private ClientIds recursiveScan(List<UIComponent> uiComponents, ClientIds clientIds) {

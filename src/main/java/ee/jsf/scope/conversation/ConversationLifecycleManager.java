@@ -21,7 +21,7 @@ import javax.enterprise.context.Conversation;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import spec.interfaces.infrastructure.CurrentViewContext;
+import spec.context.CurrentViewContext;
 import spec.scope.conversation.IllegalConversationStartpathException;
 
 /**

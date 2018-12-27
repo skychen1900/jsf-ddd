@@ -27,7 +27,7 @@ import javax.validation.ConstraintViolation;
 import org.vermeerlab.beanvalidation.messageinterpolator.MessageInterpolator;
 import org.vermeerlab.beanvalidation.messageinterpolator.MessageInterpolatorFactory;
 import org.vermeerlab.resourcebundle.CustomControl;
-import spec.interfaces.infrastructure.CurrentViewContext;
+import spec.context.CurrentViewContext;
 import spec.message.MessageConverter;
 
 /**

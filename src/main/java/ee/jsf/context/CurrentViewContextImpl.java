@@ -24,7 +24,7 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
-import spec.interfaces.infrastructure.CurrentViewContext;
+import spec.context.CurrentViewContext;
 
 /**
  * 現在のクライアントコンテキストを扱う機能を提供します.

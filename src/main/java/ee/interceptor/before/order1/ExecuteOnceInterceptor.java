@@ -24,7 +24,7 @@ import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
 import base.annotation.presentation.controller.ExecuteOnce;
-import spec.interfaces.infrastructure.CurrentViewContext;
+import spec.context.CurrentViewContext;
 import spec.message.MessageWriter;
 
 @ExecuteOnce

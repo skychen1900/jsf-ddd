@@ -16,6 +16,7 @@
  */
 package ee.jsf.scope.conversation;
 
+import spec.scope.conversation.ConversationExceptionHandler;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.ExternalContext;
@@ -29,9 +30,9 @@ import spec.scope.conversation.ConversationExceptionKey;
  *
  * @author Yamashita,Takahiro
  */
-@Named
+@Named("conversationExceptionHandler")
 @RequestScoped
-public class ConversationExceptionHandler {
+public class ConversationExceptionHandlerImpl implements ConversationExceptionHandler {
 
     private String forwardPage;
     private String exception;
@@ -42,27 +43,30 @@ public class ConversationExceptionHandler {
     private BusyConversationMessageHandler busyConversationMessageHandler;
     private NonExistentConversationMessageHandler nonExistentConversationMessageHandler;
 
-    public ConversationExceptionHandler() {
+    public ConversationExceptionHandlerImpl() {
     }
 
     @Inject
-    public ConversationExceptionHandler(BusyConversationMessageHandler busyConversationMessageHandler,
-                                        NonExistentConversationMessageHandler nonExistentConversationMessageHandler) {
+    public ConversationExceptionHandlerImpl(BusyConversationMessageHandler busyConversationMessageHandler,
+                                            NonExistentConversationMessageHandler nonExistentConversationMessageHandler) {
         this.busyConversationMessageHandler = busyConversationMessageHandler;
         this.nonExistentConversationMessageHandler = nonExistentConversationMessageHandler;
     }
 
     @PostConstruct
+    @Override
     public void init() {
         externalContext = FacesContext.getCurrentInstance().getExternalContext();
     }
 
+    @Override
     public String forwardCauseNonexistentConversationException() {
         externalContext.getFlash().putNow(ConversationExceptionKey.EXCEPTION, this.exception);
         externalContext.getFlash().putNow(ConversationExceptionKey.FROM_PATH, this.fromPath);
         return this.getForwardPage();
     }
 
+    @Override
     public void writeMessage() {
         String flashException = (String) externalContext.getFlash().get(ConversationExceptionKey.EXCEPTION);
         String requestParameterException = externalContext.getRequestParameterMap().get(ConversationExceptionKey.EXCEPTION);
@@ -85,26 +89,32 @@ public class ConversationExceptionHandler {
         externalContext.getFlash().setKeepMessages(false);
     }
 
+    @Override
     public String getException() {
         return exception;
     }
 
+    @Override
     public void setException(String exception) {
         this.exception = exception;
     }
 
+    @Override
     public String getForwardPage() {
         return forwardPage;
     }
 
+    @Override
     public void setForwardPage(String forwardPage) {
         this.forwardPage = forwardPage;
     }
 
+    @Override
     public String getFromPath() {
         return fromPath;
     }
 
+    @Override
     public void setFromPath(String fromPath) {
         this.fromPath = fromPath;
     }

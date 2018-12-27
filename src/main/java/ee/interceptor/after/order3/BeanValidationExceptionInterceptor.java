@@ -19,7 +19,7 @@ package ee.interceptor.after.order3;
 import base.annotation.presentation.controller.Action;
 import base.xhtml.error.ErrorStyle;
 import base.xhtml.error.ErrorTooltip;
-import ee.jsf.message.ClientComplementManager;
+import ee.jsf.message.style.ClientComplementManager;
 import ee.jsf.message.converter.ComponentErrorMessageWriter;
 import javax.annotation.Priority;
 import javax.enterprise.context.Dependent;

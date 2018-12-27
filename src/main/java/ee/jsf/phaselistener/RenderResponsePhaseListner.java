@@ -16,8 +16,8 @@
  */
 package ee.jsf.phaselistener;
 
-import ee.jsf.message.ClientComplementManager;
-import ee.jsf.message.InputFieldErrorStyleHandler;
+import ee.jsf.message.style.ClientComplementManager;
+import ee.jsf.message.style.InputFieldErrorStyleHandler;
 import javax.enterprise.inject.spi.CDI;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseEvent;

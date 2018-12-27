@@ -14,7 +14,7 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ee.jsf.message;
+package ee.jsf.message.style;
 
 import java.util.Set;
 import javax.enterprise.context.RequestScoped;

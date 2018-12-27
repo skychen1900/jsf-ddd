@@ -16,6 +16,7 @@
  */
 package ee.jsf.message.converter;
 
+import spec.message.ComponentErrorMessageWriter;
 import ee.jsf.context.HtmlMessageScanner;
 import ee.jsf.context.InputComponentScanner;
 import java.util.Set;
@@ -32,7 +33,7 @@ import spec.context.ClientIds;
  * @author Yamashita,Takahiro
  */
 @RequestScoped
-public class ComponentErrorMessageWriter {
+public class ComponentErrorMessageWriterImpl implements ComponentErrorMessageWriter {
 
     private ClientIdMessages clientIdMessages;
 
@@ -41,17 +42,18 @@ public class ComponentErrorMessageWriter {
     private InputComponentScanner inputComponentScanner;
     private HtmlMessageScanner htmlMessageScanner;
 
-    public ComponentErrorMessageWriter() {
+    public ComponentErrorMessageWriterImpl() {
     }
 
     @Inject
-    public ComponentErrorMessageWriter(MessageConverter messageConverter, MessageWriter messageWriter, InputComponentScanner inputComponentScanner, HtmlMessageScanner htmlMessageScanner) {
+    public ComponentErrorMessageWriterImpl(MessageConverter messageConverter, MessageWriter messageWriter, InputComponentScanner inputComponentScanner, HtmlMessageScanner htmlMessageScanner) {
         this.messageConverter = messageConverter;
         this.messageWriter = messageWriter;
         this.inputComponentScanner = inputComponentScanner;
         this.htmlMessageScanner = htmlMessageScanner;
     }
 
+    @Override
     public void write(Set<ConstraintViolation<?>> constraintViolationSet, Class<?> actionClass) {
         ClientIds _inputClientIds = this.inputComponentScanner.getClientIds();
         ClientIdMessages _clientIdMessages = this.toClientIdMessages(constraintViolationSet, actionClass, _inputClientIds);
@@ -80,6 +82,7 @@ public class ComponentErrorMessageWriter {
                 .toClientidMessages(c -> this.messageConverter.toMessageFromConstraintViolation(c));
     }
 
+    @Override
     public ClientIdMessages getClientIdMessages() {
         return clientIdMessages;
     }

@@ -17,9 +17,11 @@
 package ee.jsf.message.xhtml;
 
 import base.xhtml.error.ErrorTooltip;
+import ee.jsf.context.InputComponentScanner;
 import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import spec.message.validation.ClientIdMessages;
 import spec.message.validation.ClientIdMessagesImpl;
@@ -33,8 +35,17 @@ import spec.message.validation.ClientIds;
 @RequestScoped
 public class ErrorTooltipImpl implements ErrorTooltip {
 
+    private InputComponentScanner inputComponentScanner;
     private ClientIds clientIds;
     private ClientIdMessages clientIdMessages;
+
+    private ErrorTooltipImpl() {
+    }
+
+    @Inject
+    public ErrorTooltipImpl(InputComponentScanner inputComponentScanner) {
+        this.inputComponentScanner = inputComponentScanner;
+    }
 
     @PostConstruct
     private void init() {
@@ -43,10 +54,9 @@ public class ErrorTooltipImpl implements ErrorTooltip {
     }
 
     @Override
-    public void set(ClientIds clientIds, ClientIdMessages clientIdMessages) {
-
+    public void set(ClientIdMessages clientIdMessages) {
         Set<String> _clientIds = clientIdMessages.getClientIds();
-        this.clientIds = clientIds.filter(_clientIds);
+        this.clientIds = inputComponentScanner.getClientIds().filter(_clientIds);
         this.clientIdMessages = clientIdMessages;
     }
 

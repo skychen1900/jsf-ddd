@@ -18,6 +18,7 @@ package spec.message.validation;
 
 import java.util.Set;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 /**
  *
@@ -25,12 +26,13 @@ import java.util.function.Consumer;
  */
 public interface ClientIdMessages {
 
-    void forEachOrdered(Consumer<? super ClientIdMessage> action);
+    public void forEachOrdered(Consumer<? super ClientIdMessage> action);
 
-    Set<String> getClientIds();
+    public Set<String> getClientIds();
 
-    String getMessage(String clientId);
+    public String getMessage(String clientId);
 
-    ClientIdMessages toClientIdMessagesForWriting(ClientIds clientIds);
+    public ClientIdMessages toClientIdMessagesForWriting(ClientIds clientIds);
 
+    public ClientIdMessages filter(Predicate<String> predicate);
 }

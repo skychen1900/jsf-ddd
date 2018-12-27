@@ -17,7 +17,6 @@
 package base.xhtml.error;
 
 import spec.message.validation.ClientIdMessages;
-import spec.message.validation.ClientIds;
 
 /**
  *
@@ -38,11 +37,10 @@ public interface ErrorTooltip {
      * <P>
      * xhtmlでのパラメータ指定時には、シングルクウォートで値を指定してください.
      *
-     * @param id 対象となるコンポーネントのID（JSFのクライアントＩＤではありません）
      * @return 当該項目IDにエラーがない場合は 空文字を返却します.
      */
     String byId(String id);
 
-    void set(ClientIds clientIds, ClientIdMessages clientIdMessages);
+    void set(ClientIdMessages clientIdMessages);
 
 }

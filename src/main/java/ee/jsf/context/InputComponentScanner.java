@@ -14,11 +14,13 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ee.jsf.message;
+package ee.jsf.context;
 
 import java.util.List;
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.component.UIComponent;
-import javax.faces.component.html.HtmlMessage;
+import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import spec.message.validation.ClientIds;
 
@@ -26,27 +28,21 @@ import spec.message.validation.ClientIds;
  *
  * @author Yamashita,Takahiro
  */
-public class HtmlMessageScanner {
+@RequestScoped
+public class InputComponentScanner {
 
-    public ClientIds scan() {
-        return recursiveScan(FacesContext.getCurrentInstance().getViewRoot().getChildren(), new ClientIds());
+    private ClientIds clientIds;
+
+    @PostConstruct
+    private void scan() {
+        this.clientIds = recursiveScan(FacesContext.getCurrentInstance().getViewRoot().getChildren(), new ClientIds());
     }
 
     private ClientIds recursiveScan(List<UIComponent> uiComponents, ClientIds clientIds) {
         for (UIComponent uiComponent : uiComponents) {
 
-            /**
-             * h:message と対象要素が並列の構造の動作確認が出来ている状態です.
-             * 繰り返し領域の対応などをする場合には、改修が必要であると想定されますが 未対応です.
-             */
-            if (uiComponent instanceof HtmlMessage) {
-                Object obj = uiComponent.getAttributes().get("for");
-                if (obj != null) {
-                    String clientId = uiComponent.getClientId();
-                    String id = uiComponent.getId();
-                    String targetId = clientId.substring(0, clientId.length() - id.length()) + obj.toString();
-                    clientIds.put(obj.toString(), targetId);
-                }
+            if (uiComponent instanceof UIInput) {
+                clientIds.put(uiComponent.getId(), uiComponent.getClientId());
             }
 
             if (uiComponent.getChildren().isEmpty() == false) {
@@ -54,6 +50,10 @@ public class HtmlMessageScanner {
             }
 
         }
+        return clientIds;
+    }
+
+    public ClientIds getClientIds() {
         return clientIds;
     }
 

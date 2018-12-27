@@ -21,7 +21,9 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
+import javax.validation.ConstraintViolation;
 import spec.message.validation.ClientIdMessage;
+import spec.message.validation.ClientIdMessageImpl;
 import spec.message.validation.ClientIdMessages;
 import spec.message.validation.ClientIdMessagesImpl;
 
@@ -62,11 +64,31 @@ class ConstraintViolationForMessages {
      * @param function メッセージの出力変換を行う関数
      * @return 変換したクライアントＩＤとメッセージの組み合わせた情報
      */
-    ClientIdMessages toClientidMessages(Function<ConstraintViolationForMessage, ClientIdMessage> function) {
+    ClientIdMessages toClientidMessages3(Function<ConstraintViolationForMessage, ClientIdMessage> function) {
         List<ClientIdMessage> clientidMessages = this.items.stream()
                 .sorted(comparing(ConstraintViolationForMessage::getSortKey)
                         .thenComparing(s -> s.getConstraintViolation().getMessageTemplate()))
                 .map(c -> function.apply(c))
+                .collect(Collectors.toList());
+        return new ClientIdMessagesImpl(clientidMessages);
+    }
+
+    /**
+     * クライアントＩＤとメッセージの組み合わせた情報に変換した情報を返却します.
+     * <p>
+     * 出力順序は本メソッドで行い、メッセージの出力用変換は呼び出し側のクラスから関数によって編集を行います.
+     *
+     * @param messageConverterFunction メッセージの変換を行う関数
+     * @return 変換したクライアントＩＤとメッセージの組み合わせた情報
+     */
+    ClientIdMessages toClientidMessages(Function<ConstraintViolation<?>, String> messageConverterFunction) {
+        List<ClientIdMessage> clientidMessages = this.items.stream()
+                .sorted(comparing(ConstraintViolationForMessage::getSortKey)
+                        .thenComparing(s -> s.getConstraintViolation().getMessageTemplate()))
+                .map(c -> {
+                    String message = messageConverterFunction.apply(c.getConstraintViolation());
+                    return new ClientIdMessageImpl(c.geClientId(), message);
+                })
                 .collect(Collectors.toList());
         return new ClientIdMessagesImpl(clientidMessages);
     }

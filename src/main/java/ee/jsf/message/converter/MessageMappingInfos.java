@@ -124,7 +124,7 @@ class MessageMappingInfos {
 
         String _id = (messageMappingInfo != null)
                      ? messageMappingInfo.firstClientId()
-                     : constraintViolationForMessage.getId();
+                     : constraintViolationForMessage.geClientId();
 
         return new ConstraintViolationForMessage(_sortKey,
                                                  _id,

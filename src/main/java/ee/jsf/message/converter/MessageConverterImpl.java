@@ -19,7 +19,6 @@ package ee.jsf.message.converter;
 import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Set;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
@@ -30,10 +29,6 @@ import org.vermeerlab.beanvalidation.messageinterpolator.MessageInterpolatorFact
 import org.vermeerlab.resourcebundle.CustomControl;
 import spec.interfaces.infrastructure.CurrentViewContext;
 import spec.message.MessageConverter;
-import spec.message.validation.ClientIdMessage;
-import spec.message.validation.ClientIdMessageImpl;
-import spec.message.validation.ClientIdMessages;
-import spec.message.validation.ClientIds;
 
 /**
  *
@@ -89,28 +84,9 @@ public class MessageConverterImpl implements MessageConverter {
      * {@inheritDoc }
      */
     @Override
-    public ClientIdMessages toClientIdMessages(Set<ConstraintViolation<?>> constraintViolationSet, Class<?> actionClass, ClientIds clientIds) {
-
-        MessageMappingInfos messageMappingInfosNotYetReplaceClientId
-                            = ViewContextScanner.of(actionClass).messageMappingInfosNotYetReplaceClientId();
-
-        MessageMappingInfos messageMappingInfos
-                            = messageMappingInfosNotYetReplaceClientId.replacedClientIds(clientIds);
-
-        ConstraintViolationForMessages constraintViolationForMessages = PresentationConstraintViolationForMessages
-                .of(constraintViolationSet, clientIds)
-                .toConstraintViolationForMessages();
-
-        return constraintViolationForMessages
-                .update(c -> messageMappingInfos.updateConstraintViolationForMessage(c))
-                .toClientidMessages(c -> this.toClientidMessage(c));
-    }
-
-    private ClientIdMessage toClientidMessage(ConstraintViolationForMessage constraintViolationForMessage) {
+    public String toMessageFromConstraintViolation(ConstraintViolation<?> constraintViolation) {
         MessageInterpolator interpolator = interpolatorFactory.create(context.clientLocate());
-        String message = interpolator.toMessage(constraintViolationForMessage.getConstraintViolation());
-        String targetClientId = constraintViolationForMessage.getId();
-        return new ClientIdMessageImpl(targetClientId, message);
+        return interpolator.toMessage(constraintViolation);
     }
 
 }

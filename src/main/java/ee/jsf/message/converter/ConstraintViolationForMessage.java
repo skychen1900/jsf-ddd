@@ -26,12 +26,12 @@ import javax.validation.ConstraintViolation;
 class ConstraintViolationForMessage {
 
     private final String sortKey;
-    private final String id;
+    private final String clientId;
     private final ConstraintViolation<?> constraintViolation;
 
-    ConstraintViolationForMessage(String sortKey, String id, ConstraintViolation<?> constraintViolation) {
+    ConstraintViolationForMessage(String sortKey, String clientId, ConstraintViolation<?> constraintViolation) {
         this.sortKey = sortKey;
-        this.id = id;
+        this.clientId = clientId;
         this.constraintViolation = constraintViolation;
     }
 
@@ -39,8 +39,8 @@ class ConstraintViolationForMessage {
         return sortKey;
     }
 
-    String getId() {
-        return id;
+    String geClientId() {
+        return clientId;
     }
 
     ConstraintViolation<?> getConstraintViolation() {

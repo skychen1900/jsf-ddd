@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -90,6 +91,16 @@ public class ClientIdMessagesImpl implements ClientIdMessages {
         return messages.isEmpty()
                ? ""
                : String.join("\n", messages);
+    }
+
+    @Override
+    public ClientIdMessages filter(Predicate<String> predicate) {
+        List<ClientIdMessage> _clientidMessage = this.clientIdMessages.stream()
+                .map(c -> {
+                    String _clientId = predicate.test(c.getClientId()) ? c.getClientId() : null;
+                    return new ClientIdMessageImpl(_clientId, c.getMessage());
+                }).collect(Collectors.toList());
+        return new ClientIdMessagesImpl(_clientidMessage);
     }
 
 }

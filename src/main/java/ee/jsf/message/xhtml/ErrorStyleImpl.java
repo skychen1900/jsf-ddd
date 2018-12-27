@@ -17,9 +17,11 @@
 package ee.jsf.message.xhtml;
 
 import base.xhtml.error.ErrorStyle;
+import ee.jsf.context.InputComponentScanner;
 import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import spec.message.validation.ClientIdMessages;
 import spec.message.validation.ClientIds;
@@ -32,20 +34,29 @@ import spec.message.validation.ClientIds;
 @RequestScoped
 public class ErrorStyleImpl implements ErrorStyle {
 
-    private ClientIds clientIdsWithComponents;
+    private InputComponentScanner inputComponentScanner;
+    private ClientIds filterdClientIds;
 
     private String errorStyle;
+
+    private ErrorStyleImpl() {
+    }
+
+    @Inject
+    public ErrorStyleImpl(InputComponentScanner inputComponentScanner) {
+        this.inputComponentScanner = inputComponentScanner;
+    }
 
     @PostConstruct
     private void init() {
         this.errorStyle = "error";
-        this.clientIdsWithComponents = new ClientIds();
+        this.filterdClientIds = new ClientIds();
     }
 
     @Override
-    public void set(ClientIds clientIds, ClientIdMessages clientidMessages) {
+    public void set(ClientIdMessages clientidMessages) {
         Set<String> _clientIds = clientidMessages.getClientIds();
-        this.clientIdsWithComponents = clientIds.filter(_clientIds);
+        this.filterdClientIds = this.inputComponentScanner.getClientIds().filter(_clientIds);
     }
 
     /**
@@ -58,7 +69,7 @@ public class ErrorStyleImpl implements ErrorStyle {
      */
     @Override
     public String byId(String id) {
-        return this.clientIdsWithComponents.findFirstById(id).isPresent() ? errorStyle : "";
+        return this.filterdClientIds.findFirstById(id).isPresent() ? errorStyle : "";
 
     }
 

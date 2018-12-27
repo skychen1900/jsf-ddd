@@ -30,7 +30,7 @@ public interface ErrorTooltip {
      * @param clientId 対象となるコンポーネントのID（JSFのクライアントＩＤではありません）
      * @return 当該項目IDにエラーがない場合は 空文字を返却します.
      */
-    String byClientId(String clientId);
+    public String byClientId(String clientId);
 
     /**
      * 指定したIDの項目が検証不正だった場合に適用する メッセージ を返却します.
@@ -39,8 +39,8 @@ public interface ErrorTooltip {
      *
      * @return 当該項目IDにエラーがない場合は 空文字を返却します.
      */
-    String byId(String id);
+    public String byId(String id);
 
-    void set(ClientIdMessages clientIdMessages);
+    public void set(ClientIdMessages clientIdMessages);
 
 }

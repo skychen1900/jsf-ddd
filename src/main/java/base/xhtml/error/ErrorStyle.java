@@ -31,8 +31,8 @@ public interface ErrorStyle {
      *
      * @return 当該項目IDにエラーがない場合は 空文字を返却します.
      */
-    String byId(String id);
+    public String byId(String id);
 
-    void set(ClientIdMessages clientidMessages);
+    public void set(ClientIdMessages clientidMessages);
 
 }

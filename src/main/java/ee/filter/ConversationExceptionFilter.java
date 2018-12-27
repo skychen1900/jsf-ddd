@@ -26,8 +26,8 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import spec.scope.conversation.ConversationExceptionKey;
-import spec.scope.conversation.ConversationExceptionValue;
+import spec.scope.conversation.exception.ConversationExceptionKey;
+import spec.scope.conversation.exception.ConversationExceptionValue;
 
 /**
  * Conversationに関する例外を扱うフィルターです.

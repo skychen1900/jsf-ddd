@@ -1,7 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<%@ page import="spec.scope.conversation.ConversationExceptionKey"%>
+<%@ page import="spec.scope.conversation.exception.ConversationExceptionKey"%>
 
 <%
     String forwardPage = (String) request.getAttribute(ConversationExceptionKey.FORWARD_PAGE);

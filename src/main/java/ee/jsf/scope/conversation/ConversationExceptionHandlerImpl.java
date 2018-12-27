@@ -16,14 +16,16 @@
  */
 package ee.jsf.scope.conversation;
 
-import spec.scope.conversation.ConversationExceptionHandler;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import spec.scope.conversation.ConversationExceptionKey;
+import spec.scope.conversation.exception.BusyConversationMessageHandler;
+import spec.scope.conversation.exception.ConversationExceptionHandler;
+import spec.scope.conversation.exception.ConversationExceptionKey;
+import spec.scope.conversation.exception.NonExistentConversationMessageHandler;
 
 /**
  * ConversationExceptionが発生した際に画面遷移とメッセージ出力を行う機能を提供します.

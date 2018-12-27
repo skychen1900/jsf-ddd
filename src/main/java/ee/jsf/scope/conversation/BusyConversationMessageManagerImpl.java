@@ -16,8 +16,8 @@
  */
 package ee.jsf.scope.conversation;
 
+import spec.scope.conversation.exception.BusyConversationMessageManager;
 import base.annotation.presentation.controller.BusyConversationMessage;
-import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.BusyConversationException;
 import javax.enterprise.context.ConversationScoped;
@@ -27,7 +27,7 @@ import javax.enterprise.context.ConversationScoped;
  * @author Yamashita,Takahiro
  */
 @ConversationScoped
-public class BusyConversationMessageManager implements Serializable {
+public class BusyConversationMessageManagerImpl implements BusyConversationMessageManager {
 
     private static final long serialVersionUID = 1L;
 
@@ -38,10 +38,12 @@ public class BusyConversationMessageManager implements Serializable {
         this.message = BusyConversationException.class.getName();
     }
 
+    @Override
     public String getMessage() {
         return message;
     }
 
+    @Override
     public void setMessage(BusyConversationMessage classMessage, BusyConversationMessage methodMessage) {
         String _message = methodMessage != null
                           ? methodMessage.value()

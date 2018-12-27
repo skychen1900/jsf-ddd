@@ -14,33 +14,16 @@
  *
  *  Copyright ? 2018 Yamashita,Takahiro
  */
-package spec.scope.conversation;
-
-import javax.annotation.PostConstruct;
+package spec.scope.conversation.exception;
 
 /**
  *
  * @author Yamashita,Takahiro
  */
-public interface ConversationExceptionHandler {
+public interface BusyConversationMessageHandler {
 
-    String forwardCauseNonexistentConversationException();
+    boolean isBusyConversationException(String flashException, String requestParameterException);
 
-    String getException();
-
-    String getForwardPage();
-
-    String getFromPath();
-
-    @PostConstruct
-    void init();
-
-    void setException(String exception);
-
-    void setForwardPage(String forwardPage);
-
-    void setFromPath(String fromPath);
-
-    void writeMessage();
+    void write();
 
 }

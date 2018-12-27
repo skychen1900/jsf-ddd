@@ -14,7 +14,7 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package spec.scope.conversation;
+package spec.scope.conversation.exception;
 
 /**
  *

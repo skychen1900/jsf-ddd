@@ -16,13 +16,13 @@
  */
 package ee.interceptor.before.order1;
 
-import ee.jsf.scope.conversation.BusyConversationMessageManager;
+import base.annotation.presentation.controller.BusyConversationMessage;
 import javax.annotation.Priority;
 import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
-import base.annotation.presentation.controller.BusyConversationMessage;
+import spec.scope.conversation.exception.BusyConversationMessageManager;
 
 @BusyConversationMessage
 @Interceptor

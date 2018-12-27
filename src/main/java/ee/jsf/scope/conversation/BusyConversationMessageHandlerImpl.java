@@ -16,31 +16,32 @@
  */
 package ee.jsf.scope.conversation;
 
+import spec.scope.conversation.exception.BusyConversationMessageHandler;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import spec.message.MessageConverter;
 import spec.message.MessageWriter;
-import spec.scope.conversation.ConversationExceptionValue;
+import spec.scope.conversation.exception.ConversationExceptionValue;
 
 /**
  *
  * @author Yamashita,Takahiro
  */
 @RequestScoped
-public class BusyConversationMessageHandler {
+public class BusyConversationMessageHandlerImpl implements BusyConversationMessageHandler {
 
-    private BusyConversationMessageManager busyConversationMessageManager;
+    private BusyConversationMessageManagerImpl busyConversationMessageManager;
 
     private MessageConverter messageConverter;
     private MessageWriter messageWriter;
     private Conversation conversation;
 
-    public BusyConversationMessageHandler() {
+    public BusyConversationMessageHandlerImpl() {
     }
 
     @Inject
-    public BusyConversationMessageHandler(BusyConversationMessageManager busyConversationMessageManager,
+    public BusyConversationMessageHandlerImpl(BusyConversationMessageManagerImpl busyConversationMessageManager,
                                           MessageConverter messageConverter, MessageWriter messageWriter, Conversation conversation) {
         this.busyConversationMessageManager = busyConversationMessageManager;
         this.messageConverter = messageConverter;
@@ -48,12 +49,14 @@ public class BusyConversationMessageHandler {
         this.conversation = conversation;
     }
 
+    @Override
     public boolean isBusyConversationException(String flashException, String requestParameterException) {
         return (flashException == null || flashException.equals(""))
                && (requestParameterException != null && requestParameterException.equals(ConversationExceptionValue.BUSY))
                && this.conversation.isTransient() == false;
     }
 
+    @Override
     public void write() {
         String message = messageConverter.toMessage(this.busyConversationMessageManager.getMessage());
         messageWriter.appendErrorMessage(message);

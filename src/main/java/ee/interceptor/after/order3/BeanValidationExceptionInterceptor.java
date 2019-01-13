@@ -36,7 +36,7 @@ import spec.validation.BeanValidationException;
 
 @Action
 @Interceptor
-@Priority(Interceptor.Priority.APPLICATION)
+@Priority(Interceptor.Priority.APPLICATION + 5)
 @Dependent
 public class BeanValidationExceptionInterceptor {
 

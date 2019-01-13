@@ -17,7 +17,6 @@
 package ee.interceptor.before.order1;
 
 import javax.annotation.Priority;
-import javax.enterprise.context.Dependent;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
@@ -26,7 +25,6 @@ import base.annotation.presentation.controller.Action;
 @Action
 @Interceptor
 @Priority(Interceptor.Priority.APPLICATION + 5)
-@Dependent
 public class ActionInterceptor {
 
     @AroundInvoke

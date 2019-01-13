@@ -18,7 +18,6 @@ package ee.interceptor.after.order2;
 
 import base.annotation.presentation.controller.Action;
 import javax.annotation.Priority;
-import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
@@ -29,7 +28,6 @@ import spec.scope.conversation.ConversationLifecycleManager;
 @Action
 @Interceptor
 @Priority(Interceptor.Priority.APPLICATION + 10)
-@Dependent
 public class ConversationInterceptor {
 
     private final ConversationLifecycleManager conversationLifecycleManager;

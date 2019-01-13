@@ -20,7 +20,6 @@ import base.annotation.presentation.controller.Action;
 import base.xhtml.error.ErrorStyle;
 import base.xhtml.error.ErrorTooltip;
 import javax.annotation.Priority;
-import javax.enterprise.context.Dependent;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
@@ -36,8 +35,7 @@ import spec.validation.BeanValidationException;
 
 @Action
 @Interceptor
-@Priority(Interceptor.Priority.APPLICATION)
-@Dependent
+@Priority(Interceptor.Priority.APPLICATION + 5)
 public class BeanValidationExceptionInterceptor {
 
     private final CurrentViewContext context;

@@ -17,7 +17,6 @@
 package ee.interceptor.after.order1;
 
 import javax.annotation.Priority;
-import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
@@ -28,7 +27,6 @@ import spec.context.CurrentViewContext;
 @Action
 @Interceptor
 @Priority(Interceptor.Priority.APPLICATION + 100)
-@Dependent
 public class ForceRedirectInterceptor {
 
     @Inject

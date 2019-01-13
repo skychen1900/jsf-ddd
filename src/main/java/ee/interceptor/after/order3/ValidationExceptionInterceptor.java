@@ -18,7 +18,6 @@ package ee.interceptor.after.order3;
 
 import base.annotation.presentation.controller.Action;
 import javax.annotation.Priority;
-import javax.enterprise.context.Dependent;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
@@ -34,7 +33,6 @@ import spec.validation.BeanValidationException;
 @Action
 @Interceptor
 @Priority(Interceptor.Priority.APPLICATION + 5)
-@Dependent
 public class ValidationExceptionInterceptor {
 
     @AroundInvoke

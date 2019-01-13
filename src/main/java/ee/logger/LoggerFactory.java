@@ -14,7 +14,7 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ee.logging;
+package ee.logger;
 
 import java.util.logging.Logger;
 

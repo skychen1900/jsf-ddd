@@ -22,11 +22,14 @@ import ee.logging.LogFileCloser;
 import ee.logging.LogFileFormatter;
 import ee.logging.LogFileHandler;
 import ee.logging.LoggerInitializer;
+import java.util.Collections;
+import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Destroyed;
 import javax.enterprise.context.Initialized;
 import javax.enterprise.event.Observes;
+import spec.logger.LoggerName;
 
 /**
  * Loggerの生成と破棄を扱う機能を提供します.
@@ -36,7 +39,7 @@ import javax.enterprise.event.Observes;
 @ApplicationScoped
 public class LoggerLifecycleHandler {
 
-    private static final Logger rootLogger = Logger.getLogger("root");
+    private static final Logger rootLogger = Logger.getLogger(LoggerName.ROOT_NAME);
 
     public void startUp(@Observes @Initialized(ApplicationScoped.class) Object event) {
         System.out.println(">> Startup:Initialize RootLogger >>");
@@ -50,7 +53,11 @@ public class LoggerLifecycleHandler {
 
     public void shutdown(@Observes @Destroyed(ApplicationScoped.class) Object event) {
         System.out.println("<< Cleanup:Closing logging file <<");
-        new LogFileCloser().close("root");
+        LogFileCloser logFileCloser = new LogFileCloser();
+
+        Collections.list(LogManager.getLogManager().getLoggerNames())
+                .forEach(logFileCloser::close);
+
     }
 
 }

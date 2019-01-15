@@ -22,6 +22,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -39,19 +40,21 @@ public class LogFileFormatter extends Formatter {
 
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss.SSS");
 
-    private static final Map<Level, String> levelMsgMap = new HashMap<>();
+    private static final Map<Level, String> levelMsgMap = Collections.unmodifiableMap(new HashMap<Level, String>() {
+        private static final long serialVersionUID = 1L;
+
+        {
+            put(Level.SEVERE, "SEVERE");
+            put(Level.WARNING, "WARN");
+            put(Level.INFO, "INFO");
+            put(Level.CONFIG, "CONF");
+            put(Level.FINE, "FINE");
+            put(Level.FINER, "FINE");
+            put(Level.FINEST, "FINE");
+        }
+    });
 
     private final AtomicInteger nameColumnWidth = new AtomicInteger(16);
-
-    static {
-        levelMsgMap.put(Level.SEVERE, "SEVERE");
-        levelMsgMap.put(Level.WARNING, "WARN");
-        levelMsgMap.put(Level.INFO, "INFO");
-        levelMsgMap.put(Level.CONFIG, "CONF");
-        levelMsgMap.put(Level.FINE, "FINE");
-        levelMsgMap.put(Level.FINER, "FINE");
-        levelMsgMap.put(Level.FINEST, "FINE");
-    }
 
     @Override
     public String format(LogRecord record) {

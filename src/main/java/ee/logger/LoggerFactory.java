@@ -17,6 +17,7 @@
 package ee.logger;
 
 import java.util.logging.Logger;
+import spec.logger.LoggerName;
 
 /**
  * Logger(JUL)Factory
@@ -31,7 +32,7 @@ public class LoggerFactory {
     }
 
     public static Logger getLogger(String name) {
-        return Logger.getLogger("root." + name);
+        return Logger.getLogger(LoggerName.ROOT_NAME + "." + name);
     }
 
 }

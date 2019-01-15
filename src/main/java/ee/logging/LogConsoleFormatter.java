@@ -16,6 +16,8 @@
  */
 package ee.logging;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -70,7 +72,15 @@ public class LogConsoleFormatter extends Formatter {
         this.updateNameColumnWidth(width, category.length());
 
         sb.append(super.formatMessage(record));
+        if (record.getThrown() != null) {
+            sb.append(System.lineSeparator());
 
+            StringWriter sw = new StringWriter();
+            try (PrintWriter pw = new PrintWriter(sw)) {
+                record.getThrown().printStackTrace(pw);
+            }
+            sb.append(sw.toString());
+        }
         return sb.toString();
     }
 

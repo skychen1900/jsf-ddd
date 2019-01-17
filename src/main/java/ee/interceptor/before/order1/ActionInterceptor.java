@@ -16,11 +16,12 @@
  */
 package ee.interceptor.before.order1;
 
+import base.annotation.presentation.controller.Action;
+import ee.logger.InvocationContextLogger;
 import javax.annotation.Priority;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
-import base.annotation.presentation.controller.Action;
 
 @Action
 @Interceptor
@@ -30,15 +31,17 @@ public class ActionInterceptor {
     @AroundInvoke
     public Object invoke(InvocationContext ic) throws Exception {
         Action action = ic.getMethod().getAnnotation(Action.class);
-        if (action == null) {
-            return ic.proceed();
+        if (action != null && action.value().equals(Action.Ignore.ON)) {
+            return null;
         }
 
-        if (action.value().equals(Action.Ignore.OFF)) {
+        InvocationContextLogger logger = InvocationContextLogger.getLogger(ic);
+        try {
+            logger.info("start");
             return ic.proceed();
-
+        } finally {
+            logger.info("end");
         }
 
-        return null;
     }
 }

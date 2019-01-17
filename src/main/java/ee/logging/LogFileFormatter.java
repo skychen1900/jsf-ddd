@@ -40,10 +40,6 @@ public class LogFileFormatter extends Formatter {
      */
     @Override
     public String format(LogRecord record) {
-        if (LogRecordConverter.isLogRecordAtInterceptor(record.getLoggerName())) {
-            return record.getMessage();
-        }
-
         Instant instant = Instant.ofEpochMilli(record.getMillis());
         LocalDateTime ldt = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
 

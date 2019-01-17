@@ -26,7 +26,6 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.regex.Pattern;
-import spec.logger.LoggerName;
 
 /**
  *
@@ -50,7 +49,7 @@ public class LogRecordConverter {
         }
     });
 
-    private static final AtomicInteger nameColumnWidth = new AtomicInteger(16);
+    private static final AtomicInteger nameColumnWidth = new AtomicInteger(32);
 
     private final LocalDateTime dateTime;
     private final Level logLevel;
@@ -74,10 +73,6 @@ public class LogRecordConverter {
 
     public static LogRecordConverter of(LocalDateTime dateTime, Level logLevel, String className, String methodName, String message) {
         return new LogRecordConverter(dateTime, logLevel, className, methodName, null, message);
-    }
-
-    public static boolean isLogRecordAtInterceptor(String loggerName) {
-        return loggerName.startsWith(LoggerName.ROOT_NAME + "." + LoggerName.INTERCEPTOR_SUB_NAME);
     }
 
     public String toConsole() {

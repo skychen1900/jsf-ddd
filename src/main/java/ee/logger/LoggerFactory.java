@@ -26,12 +26,12 @@ import spec.logger.LoggerName;
  *
  * @author Yamashita,Takahiro
  */
-public class LoggerFactory {
+class LoggerFactory {
 
     private LoggerFactory() {
     }
 
-    public static Logger getLogger(String name) {
+    static Logger getLogger(String name) {
         return Logger.getLogger(LoggerName.ROOT_NAME + "." + name);
     }
 

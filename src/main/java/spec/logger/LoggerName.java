@@ -25,9 +25,4 @@ public class LoggerName {
 
     public static final String ROOT_NAME = "root";
 
-    /**
-     * 予約語である{@code class} を使用することで クラス名で作成することを一般的とするLoggerの名前との衝突が起きないようにしています.
-     */
-    public static final String INTERCEPTOR_SUB_NAME = "class";
-
 }

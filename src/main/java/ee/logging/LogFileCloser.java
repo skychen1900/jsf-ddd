@@ -29,6 +29,7 @@ public class LogFileCloser {
         Logger logger = Logger.getLogger(rootLoggerName);
         for (Handler h : logger.getHandlers()) {
             h.close();
+            logger.removeHandler(h);
         }
     }
 }

@@ -16,6 +16,7 @@
  */
 package ee.jsf.exceptionhandler;
 
+import ee.logger.LoggerStore;
 import javax.faces.context.ExceptionHandler;
 import javax.faces.context.ExceptionHandlerFactory;
 import javax.inject.Inject;
@@ -37,13 +38,17 @@ public class CustomExceptionHandlerFactory extends ExceptionHandlerFactory {
     @Inject
     private ErrorPageNavigator errorPageNavigator;
 
+    @Inject
+    private LoggerStore loggerStore;
+
     public CustomExceptionHandlerFactory(ExceptionHandlerFactory parent) {
         this.parent = parent;
     }
 
     @Override
     public ExceptionHandler getExceptionHandler() {
-        ExceptionHandler handler = new CustomExceptionHandler(parent.getExceptionHandler(), throwableHandlerFactory, errorPageNavigator);
+        ExceptionHandler handler
+                         = new CustomExceptionHandler(parent.getExceptionHandler(), throwableHandlerFactory, errorPageNavigator, loggerStore);
         return handler;
     }
 }

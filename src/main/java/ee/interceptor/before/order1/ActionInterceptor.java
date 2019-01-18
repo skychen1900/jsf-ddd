@@ -18,7 +18,9 @@ package ee.interceptor.before.order1;
 
 import base.annotation.presentation.controller.Action;
 import ee.logger.InvocationContextLogger;
+import ee.logger.LoggerStore;
 import javax.annotation.Priority;
+import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
@@ -28,9 +30,15 @@ import javax.interceptor.InvocationContext;
 @Priority(Interceptor.Priority.APPLICATION + 5)
 public class ActionInterceptor {
 
+    @Inject
+    private LoggerStore loggerStore;
+
     @AroundInvoke
     public Object invoke(InvocationContext ic) throws Exception {
         Action action = ic.getMethod().getAnnotation(Action.class);
+
+        loggerStore.setUp(ic);
+
         if (action != null && action.value().equals(Action.Ignore.ON)) {
             return null;
         }

@@ -16,6 +16,7 @@
  */
 package ee.jsf.exceptionhandler;
 
+import ee.logger.LoggerStore;
 import java.util.Iterator;
 import javax.faces.context.ExceptionHandler;
 import javax.faces.context.ExceptionHandlerWrapper;
@@ -33,11 +34,14 @@ public class CustomExceptionHandler extends ExceptionHandlerWrapper {
     private final ExceptionHandler exceptionHandler;
     private final ThrowableHandlerFactory throwableHandlerFactory;
     private final ErrorPageNavigator errorPageNavigator;
+    private final LoggerStore loggerStore;
 
-    CustomExceptionHandler(ExceptionHandler exceptionHandler, ThrowableHandlerFactory throwableHandlerFactory, ErrorPageNavigator errorPageNavigator) {
+    CustomExceptionHandler(ExceptionHandler exceptionHandler, ThrowableHandlerFactory throwableHandlerFactory,
+                           ErrorPageNavigator errorPageNavigator, LoggerStore loggerStore) {
         this.exceptionHandler = exceptionHandler;
         this.throwableHandlerFactory = throwableHandlerFactory;
         this.errorPageNavigator = errorPageNavigator;
+        this.loggerStore = loggerStore;
     }
 
     @Override
@@ -60,7 +64,6 @@ public class CustomExceptionHandler extends ExceptionHandlerWrapper {
                                   : eventContext.getException().getCause();
 
             ThrowableHandler throwableHandler = this.throwableHandlerFactory.createThrowableHandler(throwable, eventContext);
-
             try {
                 throwableHandler.execute();
 
@@ -68,6 +71,8 @@ public class CustomExceptionHandler extends ExceptionHandlerWrapper {
                 this.errorPageNavigator.navigate(ex);
 
             } finally {
+                this.loggerStore.tearDown(throwable);
+
                 // 未ハンドリングキューから削除する
                 it.remove();
             }

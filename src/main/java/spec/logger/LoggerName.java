@@ -24,5 +24,6 @@ package spec.logger;
 public class LoggerName {
 
     public static final String ROOT_NAME = "root";
+    public static final String LOGGER_STORE_SUB_NAME = "loggerstore";
 
 }

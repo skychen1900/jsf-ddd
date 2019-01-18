@@ -45,10 +45,10 @@ public class ActionInterceptor {
 
         InvocationContextLogger logger = InvocationContextLogger.getLogger(ic);
         try {
-            logger.info("start");
+            logger.fine("start");
             return ic.proceed();
         } finally {
-            logger.info("end");
+            logger.fine("end");
         }
 
     }

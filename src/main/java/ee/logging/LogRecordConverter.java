@@ -71,10 +71,6 @@ public class LogRecordConverter {
         return new LogRecordConverter(dateTime, logLevel, className, methodName, throwable, message);
     }
 
-    public static LogRecordConverter of(LocalDateTime dateTime, Level logLevel, String className, String methodName, String message) {
-        return new LogRecordConverter(dateTime, logLevel, className, methodName, null, message);
-    }
-
     public String toConsole() {
         StringBuilder sb = new StringBuilder(300);
         this.appendCommonRecordAndUpdateNameColumnWidth(sb);

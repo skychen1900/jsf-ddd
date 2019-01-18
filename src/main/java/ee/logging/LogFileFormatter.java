@@ -48,6 +48,7 @@ public class LogFileFormatter extends Formatter {
                     record.getLevel(),
                     record.getSourceClassName(),
                     record.getSourceMethodName(),
+                    record.getThrown(),
                     super.formatMessage(record))
                 .toFile();
     }

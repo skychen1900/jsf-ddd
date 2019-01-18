@@ -73,7 +73,9 @@ public class LogRecordConverter {
 
     public String toConsole() {
         StringBuilder sb = new StringBuilder(300);
-        this.appendCommonRecordAndUpdateNameColumnWidth(sb);
+        this.appendCommonRecord(sb);
+        this.appendShorteningCategoryAndMessage(sb);
+
         if (this.throwable != null) {
             sb.append(System.lineSeparator());
             this.appendThrown(sb);
@@ -83,12 +85,48 @@ public class LogRecordConverter {
 
     public String toFile() {
         StringBuilder sb = new StringBuilder(300);
-        this.appendCommonRecordAndUpdateNameColumnWidth(sb);
+        this.appendCommonRecord(sb);
+        this.appendCategoryAndMessage(sb);
+
         sb.append(System.lineSeparator());
         if (this.throwable != null) {
             this.appendThrown(sb);
         }
         return sb.toString();
+    }
+
+    private void appendCommonRecord(StringBuilder sb) {
+        sb.append(this.timeStamp());
+        sb.append(" ");
+
+        sb.append(levelMsgMap.get(this.logLevel));
+        sb.append(" ");
+    }
+
+    private void appendShorteningCategoryAndMessage(StringBuilder sb) {
+        int width = nameColumnWidth.intValue();
+        String category = adjustCategoryLength(baseCategory(), width);
+        sb.append("[[");
+        sb.append(category);
+        sb.append("]] ");
+        this.updateNameColumnWidth(width, category.length());
+
+        sb.append(message);
+    }
+
+    private void appendCategoryAndMessage(StringBuilder sb) {
+        sb.append("[[");
+        sb.append(baseCategory());
+        sb.append("]] ");
+        sb.append(message);
+    }
+
+    private void appendThrown(StringBuilder sb) {
+        StringWriter sw = new StringWriter();
+        try (PrintWriter pw = new PrintWriter(sw)) {
+            this.throwable.printStackTrace(pw);
+        }
+        sb.append(sw.toString());
     }
 
     private String timeStamp() {
@@ -134,32 +172,4 @@ public class LogRecordConverter {
             nameColumnWidth.compareAndSet(width, categoryLength);
         }
     }
-
-    private void appendCommonRecordAndUpdateNameColumnWidth(StringBuilder sb) {
-
-        sb.append(this.timeStamp());
-        sb.append(" ");
-
-        sb.append(levelMsgMap.get(this.logLevel));
-        sb.append(" ");
-
-        int width = nameColumnWidth.intValue();
-        String category = adjustCategoryLength(baseCategory(), width);
-        sb.append("[[");
-        sb.append(category);
-        sb.append("]] ");
-
-        this.updateNameColumnWidth(width, category.length());
-
-        sb.append(message);
-    }
-
-    private void appendThrown(StringBuilder sb) {
-        StringWriter sw = new StringWriter();
-        try (PrintWriter pw = new PrintWriter(sw)) {
-            this.throwable.printStackTrace(pw);
-        }
-        sb.append(sw.toString());
-    }
-
 }

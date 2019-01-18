@@ -30,19 +30,19 @@ import spec.exception.ThrowableHandler;
  */
 public class CustomExceptionHandler extends ExceptionHandlerWrapper {
 
-    private final ExceptionHandler wrapped;
+    private final ExceptionHandler exceptionHandler;
     private final ThrowableHandlerFactory throwableHandlerFactory;
     private final ErrorPageNavigator errorPageNavigator;
 
-    CustomExceptionHandler(ExceptionHandler exception, ThrowableHandlerFactory throwableHandlerFactory, ErrorPageNavigator errorPageNavigator) {
-        this.wrapped = exception;
+    CustomExceptionHandler(ExceptionHandler exceptionHandler, ThrowableHandlerFactory throwableHandlerFactory, ErrorPageNavigator errorPageNavigator) {
+        this.exceptionHandler = exceptionHandler;
         this.throwableHandlerFactory = throwableHandlerFactory;
         this.errorPageNavigator = errorPageNavigator;
     }
 
     @Override
     public ExceptionHandler getWrapped() {
-        return this.wrapped;
+        return this.exceptionHandler;
     }
 
     @Override

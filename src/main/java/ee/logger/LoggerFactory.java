@@ -12,24 +12,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- *  Copyright © 2019 Yamashita,Takahiro
+ *  Copyright © 2018 Yamashita,Takahiro
  */
-package ee.logging;
+package ee.logger;
 
-import java.util.logging.Handler;
 import java.util.logging.Logger;
+import spec.logger.LoggerName;
 
 /**
+ * Logger(JUL)Factory
+ * <p>
+ * ルートとなるLogger配下に属するLoggerとすることで統一的な制御を行えるようにしています.
  *
  * @author Yamashita,Takahiro
  */
-public class LogFileCloser {
+class LoggerFactory {
 
-    public void close(String rootLoggerName) {
-        Logger logger = Logger.getLogger(rootLoggerName);
-        for (Handler h : logger.getHandlers()) {
-            h.close();
-            logger.removeHandler(h);
-        }
+    private LoggerFactory() {
     }
+
+    static Logger getLogger(String name) {
+        return Logger.getLogger(LoggerName.ROOT_NAME + "." + name);
+    }
+
 }

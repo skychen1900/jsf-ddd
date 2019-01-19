@@ -14,22 +14,32 @@
  *
  *  Copyright © 2019 Yamashita,Takahiro
  */
-package ee.logging;
+package ee.logger;
 
-import java.util.logging.Handler;
+import java.lang.reflect.Method;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Logger;
 
 /**
  *
  * @author Yamashita,Takahiro
  */
-public class LogFileCloser {
+class LoggerStoreItems {
 
-    public void close(String rootLoggerName) {
-        Logger logger = Logger.getLogger(rootLoggerName);
-        for (Handler h : logger.getHandlers()) {
-            h.close();
-            logger.removeHandler(h);
-        }
+    private final List<LoggerStoreItem> items;
+
+    LoggerStoreItems() {
+        this.items = new CopyOnWriteArrayList<>();
     }
+
+    void add(Class<?> actionClass, Method actionMethod, Throwable throwable, String message) {
+        LoggerStoreItem loggerStoreItem = new LoggerStoreItem(actionClass, actionMethod, throwable, message);
+        this.items.add(loggerStoreItem);
+    }
+
+    void logBy(Logger logger) {
+        this.items.forEach(item -> item.write(logRecord -> logger.log(logRecord)));
+    }
+
 }

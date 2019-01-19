@@ -12,26 +12,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- *  Copyright © 2018 Yamashita,Takahiro
+ *  Copyright © 2019 Yamashita,Takahiro
  */
-package ee.logging;
-
-import java.util.logging.Logger;
+package spec.logger;
 
 /**
- * Logger(JUL)Factory
- * <p>
- * ルートとなるLogger配下に属するLoggerとすることで統一的な制御を行えるようにしています.
+ * Loggerの名前を管理する定数クラスです.
  *
  * @author Yamashita,Takahiro
  */
-public class LoggerFactory {
+public class LoggerName {
 
-    private LoggerFactory() {
-    }
-
-    public static Logger getLogger(String name) {
-        return Logger.getLogger("root." + name);
-    }
+    public static final String ROOT_NAME = "root";
+    public static final String LOGGER_STORE_SUB_NAME = "loggerstore";
 
 }

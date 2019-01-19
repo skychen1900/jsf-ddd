@@ -19,14 +19,8 @@ package ee.logging;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Formatter;
-import java.util.logging.Level;
 import java.util.logging.LogRecord;
-import java.util.regex.Pattern;
 
 /**
  * ConsoleLog出力時のフォーマットを扱うクラスです.
@@ -35,95 +29,27 @@ import java.util.regex.Pattern;
  */
 public class LogConsoleFormatter extends Formatter {
 
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss.SSS");
-
-    private static final Map<Level, String> levelMsgMap = new HashMap<>();
-
-    private final AtomicInteger nameColumnWidth = new AtomicInteger(16);
-
-    static {
-        levelMsgMap.put(Level.SEVERE, "SEVERE");
-        levelMsgMap.put(Level.WARNING, "WARN");
-        levelMsgMap.put(Level.INFO, "INFO");
-        levelMsgMap.put(Level.CONFIG, "CONF");
-        levelMsgMap.put(Level.FINE, "FINE");
-        levelMsgMap.put(Level.FINER, "FINE");
-        levelMsgMap.put(Level.FINEST, "FINE");
-    }
-
+    /**
+     * {@inheritDoc }
+     * <P>
+     * Interceptor内で生成したLoggerについては、
+     * 出力内容については、messageを設定する際に事前に指定しているという前提として messageに設定した値を そのまま出力します.
+     *
+     * @param record the log record to be formatted.
+     * @return the formatted log record, or log message.
+     */
     @Override
     public String format(LogRecord record) {
-        StringBuilder sb = new StringBuilder(200);
-
-        sb.append(this.timeStamp(record));
-        sb.append(" ");
-
-        sb.append(levelMsgMap.get(record.getLevel()));
-        sb.append(" ");
-
-        int width = nameColumnWidth.intValue();
-        String category = adjustCategoryLength(baseCategory(record), width);
-        sb.append("[[");
-        sb.append(category);
-        sb.append("]] ");
-
-        this.updateNameColumnWidth(width, category.length());
-
-        sb.append(super.formatMessage(record));
-
-        return sb.toString();
-    }
-
-    private String timeStamp(LogRecord record) {
         Instant instant = Instant.ofEpochMilli(record.getMillis());
         LocalDateTime ldt = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
-        return formatter.format(ldt);
+
+        return LogRecordConverter
+                .of(ldt,
+                    record.getLevel(),
+                    record.getSourceClassName(),
+                    record.getSourceMethodName(),
+                    record.getThrown(),
+                    super.formatMessage(record))
+                .toConsole();
     }
-
-    private String baseCategory(LogRecord record) {
-        if (record.getSourceClassName() == null) {
-            return record.getLoggerName();
-        }
-
-        String className = record.getSourceClassName();
-        if (record.getSourceMethodName() == null) {
-            return className;
-        }
-
-        return className + "#" + record.getSourceMethodName();
-    }
-
-    private String adjustCategoryLength(String packageName, int aimLength) {
-
-        int overflowWidth = packageName.length() - aimLength;
-
-        String[] fragment = packageName.split(Pattern.quote("."));
-        for (int i = 0; i < fragment.length - 1; i++) {
-            if (1 < fragment[i].length() && 0 < overflowWidth) {
-
-                int cutting = (fragment[i].length() - 1) - overflowWidth;
-                cutting = (cutting < 0) ? (fragment[i].length() - 1) : overflowWidth;
-
-                fragment[i] = fragment[i].substring(0, fragment[i].length() - cutting);
-                overflowWidth -= cutting;
-            }
-        }
-
-        String result = String.join(".", fragment);
-
-        int cnt = aimLength - result.length();
-        if (cnt <= 0) {
-            return result;
-        }
-        String blank = new String(new char[cnt]).replace("\0", " ");
-        return result + blank;
-    }
-
-    private void updateNameColumnWidth(int width, int categoryLength) {
-        if (width < categoryLength) {
-            nameColumnWidth.compareAndSet(width, categoryLength);
-        }
-
-    }
-
 }

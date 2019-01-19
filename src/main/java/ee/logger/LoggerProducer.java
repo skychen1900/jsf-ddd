@@ -16,7 +16,6 @@
  */
 package ee.logger;
 
-import ee.logging.LoggerFactory;
 import java.util.logging.Logger;
 import javax.enterprise.context.Dependent;
 import javax.enterprise.inject.Produces;

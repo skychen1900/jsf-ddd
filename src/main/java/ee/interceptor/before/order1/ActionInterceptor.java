@@ -16,29 +16,40 @@
  */
 package ee.interceptor.before.order1;
 
+import base.annotation.presentation.controller.Action;
+import ee.logger.InvocationContextLogger;
+import ee.logger.LoggerStore;
 import javax.annotation.Priority;
+import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
-import base.annotation.presentation.controller.Action;
 
 @Action
 @Interceptor
 @Priority(Interceptor.Priority.APPLICATION + 5)
 public class ActionInterceptor {
 
+    @Inject
+    private LoggerStore loggerStore;
+
     @AroundInvoke
     public Object invoke(InvocationContext ic) throws Exception {
         Action action = ic.getMethod().getAnnotation(Action.class);
-        if (action == null) {
-            return ic.proceed();
+
+        loggerStore.setUp(ic);
+
+        if (action != null && action.value().equals(Action.Ignore.ON)) {
+            return null;
         }
 
-        if (action.value().equals(Action.Ignore.OFF)) {
+        InvocationContextLogger logger = InvocationContextLogger.getLogger(ic);
+        try {
+            logger.fine(() -> "start");
             return ic.proceed();
-
+        } finally {
+            logger.fine(() -> "end");
         }
 
-        return null;
     }
 }

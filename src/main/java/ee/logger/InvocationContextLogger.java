@@ -45,56 +45,28 @@ public class InvocationContextLogger {
         return new InvocationContextLogger(logger, actionClass, actionMethod);
     }
 
-    public void severe(String msg) {
-        logger.logp(Level.SEVERE, actionClass, actionMethod, msg);
-    }
-
     public void severe(Supplier<String> msgSupplier) {
         logger.logp(Level.SEVERE, actionClass, actionMethod, msgSupplier);
-    }
-
-    public void warning(String msg) {
-        logger.logp(Level.WARNING, actionClass, actionMethod, msg);
     }
 
     public void warning(Supplier<String> msgSupplier) {
         logger.logp(Level.WARNING, actionClass, actionMethod, msgSupplier);
     }
 
-    public void info(String msg) {
-        logger.logp(Level.INFO, actionClass, actionMethod, msg);
-    }
-
     public void info(Supplier<String> msgSupplier) {
         logger.logp(Level.INFO, actionClass, actionMethod, msgSupplier);
-    }
-
-    public void config(String msg) {
-        logger.logp(Level.CONFIG, actionClass, actionMethod, msg);
     }
 
     public void config(Supplier<String> msgSupplier) {
         logger.logp(Level.CONFIG, actionClass, actionMethod, msgSupplier);
     }
 
-    public void fine(String msg) {
-        logger.logp(Level.FINE, actionClass, actionMethod, msg);
-    }
-
     public void fine(Supplier<String> msgSupplier) {
         logger.logp(Level.FINE, actionClass, actionMethod, msgSupplier);
     }
 
-    public void finer(String msg) {
-        logger.logp(Level.FINER, actionClass, actionMethod, msg);
-    }
-
     public void finer(Supplier<String> msgSupplier) {
         logger.logp(Level.FINER, actionClass, actionMethod, msgSupplier);
-    }
-
-    public void finest(String msg) {
-        logger.logp(Level.FINEST, actionClass, actionMethod, msg);
     }
 
     public void finest(Supplier<String> msgSupplier) {

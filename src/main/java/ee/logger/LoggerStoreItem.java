@@ -48,7 +48,9 @@ class LoggerStoreItem {
         logRecord.setSourceMethodName(this.actionMethod != null ? this.actionMethod.getName() : null);
         logRecord.setThrown(this.throwable);
 
-        logger.accept(logRecord);
+        if (logger != null) {
+            logger.accept(logRecord);
+        }
 
     }
 

@@ -28,7 +28,7 @@ public enum GenderType {
     private final Integer code;
     private final String value;
 
-    private GenderType(int code, String value) {
+    private GenderType(Integer code, String value) {
         this.code = code;
         this.value = value;
     }

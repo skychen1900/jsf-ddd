@@ -60,7 +60,7 @@
                                     <f:passThroughAttributes value="#{userRegistrationPage.checked(0)}"/>
                                     <f:ajax event="click"  listener="#{userRegistrationActionListener.changeGender(0)}"/>
                                 </input>
-                                <label for="#{userRegistrationPage.targetFor(component.clientId,'gender0')}">男性</label>
+                                <label for="#{userRegistrationPage.targetFor(component.clientId,'gender0')}">#{userRegistrationPage.genderTypeValue(0)}</label>
                             </div>
                         </div>
                         <div class="field">
@@ -69,7 +69,7 @@
                                     <f:passThroughAttributes value="#{userRegistrationPage.checked(1)}"/>
                                     <f:ajax event="click"  listener="#{userRegistrationActionListener.changeGender(1)}"/>
                                 </input>
-                                <label for="#{userRegistrationPage.targetFor(component.clientId,'gender1')}">女性</label>
+                                <label for="#{userRegistrationPage.targetFor(component.clientId,'gender1')}">#{userRegistrationPage.genderTypeValue(1)}</label>
                             </div>
                         </div>
                         <div class="field">
@@ -78,7 +78,7 @@
                                     <f:passThroughAttributes value="#{userRegistrationPage.checked(2)}"/>
                                     <f:ajax event="click"  listener="#{userRegistrationActionListener.changeGender(2)}"/>
                                 </input>
-                                <label for="#{userRegistrationPage.targetFor(component.clientId,'gender2')}">その他</label>
+                                <label for="#{userRegistrationPage.targetFor(component.clientId,'gender2')}">#{userRegistrationPage.genderTypeValue(2)}</label>
                             </div>
                         </div>
 

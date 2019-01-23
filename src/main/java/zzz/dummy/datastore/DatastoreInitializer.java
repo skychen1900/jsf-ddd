@@ -24,7 +24,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Initialized;
 import javax.enterprise.event.Observes;
@@ -48,10 +47,6 @@ public class DatastoreInitializer {
         System.out.println(">> Startup:Initialize Dummy Datastore >>");
         this.createTable();
         this.init();
-        List<Users> users = em.createNativeQuery("select * from users", Users.class).getResultList();
-        System.err.println("::users::isEmpty::" + (users.isEmpty() ? "empty" : String.valueOf(users.size())));
-
-        users.forEach(System.err::println);
     }
 
     private void createTable() throws SQLException, ClassNotFoundException {

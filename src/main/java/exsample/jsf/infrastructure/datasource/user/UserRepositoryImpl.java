@@ -84,7 +84,7 @@ public class UserRepositoryImpl implements UserRepository {
     public void register(User user) {
         Users entity = user.getUserId().getValue() == null
                        ? new Users()
-                       : em.find(Users.class, user.getUserId().getValue());
+                       : em.find(Users.class, user.getUserId().getValue(), LockModeType.PESSIMISTIC_FORCE_INCREMENT);
 
         this.merge(entity, user);
         em.merge(entity);

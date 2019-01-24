@@ -17,18 +17,13 @@
 package zzz.dummy.datastore;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import exsample.jsf.domain.model.user.GenderType;
-import exsample.jsf.infrastructure.datasource.user.Users;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Initialized;
 import javax.enterprise.event.Observes;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 /**
@@ -37,12 +32,9 @@ import javax.transaction.Transactional;
  */
 @ApplicationScoped
 @Transactional
+@SuppressFBWarnings({"DMI_EMPTY_DB_PASSWORD"})
 public class DatastoreInitializer {
 
-    @PersistenceContext
-    EntityManager em;
-
-    @SuppressFBWarnings({"DMI_EMPTY_DB_PASSWORD"})
     public void startUp(@Observes @Initialized(ApplicationScoped.class) Object event) throws SQLException, ClassNotFoundException {
         System.out.println(">> Startup:Initialize Dummy Datastore >>");
         this.createTable();
@@ -61,7 +53,8 @@ public class DatastoreInitializer {
                  + "  NAME VARCHAR(40) NOT NULL,\n"
                  + "  PHONE_NUMBER VARCHAR(13) NOT NULL,\n"
                  + "  DATE_OF_BIRTH DATE NOT NULL,\n"
-                 + "  GENDER INTEGER NOT NULL\n"
+                 + "  GENDER INTEGER NOT NULL,\n"
+                 + "  VERSION INTEGER NOT NULL\n"
                  + ");\n"
                  + "\n"
                  + "COMMENT ON TABLE PUBLIC.USERS IS '利用者';\n"
@@ -81,33 +74,24 @@ public class DatastoreInitializer {
 
     }
 
-    private void init() {
-        Users users1 = new Users();
-        users1.setId(1);
-        users1.setEmail("aaaaaa@example.com");
-        users1.setUserName("ＡＡ　ＡＡ");
-        users1.setDateOfBirth(LocalDate.of(1980, 4, 1));
-        users1.setPhoneNumber("03-1234-5678");
-        users1.setGender(GenderType.MAN);
-        em.persist(users1);
+    private void init() throws SQLException {
 
-        Users users2 = new Users();
-        users2.setId(2);
-        users2.setEmail("bbbbbb@example.com");
-        users2.setUserName("ＢＢ　ＢＢ");
-        users2.setDateOfBirth(LocalDate.of(2000, 5, 1));
-        users2.setPhoneNumber("03-2345-6789");
-        users2.setGender(GenderType.WOMAN);
-        em.persist(users2);
+        String prefixDml = "INSERT INTO USERS (ID,EMAIL,NAME,PHONE_NUMBER,DATE_OF_BIRTH,GENDER,VERSION) VALUES";
 
-        Users users3 = new Users();
-        users3.setId(3);
-        users3.setEmail("cccccc@example.com");
-        users3.setUserName("ＣＣ　ＣＣ");
-        users3.setDateOfBirth(LocalDate.of(1990, 8, 31));
-        users3.setPhoneNumber("03-3456-7890");
-        users3.setGender(GenderType.OTHER);
-        em.persist(users3);
+        String sql1 = prefixDml + "(1,'aaaaaa@example.com','ＡＡ　ＡＡ','03-1234-5678','1980-04-01',0,1); ";
+        String sql2 = prefixDml + "(2,'bbbbbb@example.com','ＢＢ　ＢＢ','03-2345-6789','2000-05-01',1,1); ";
+        String sql3 = prefixDml + "(3,'cccccc@example.com','ＣＣ　ＣＣ','03-3456-7890','1990-08-31',2,1); ";
+
+        try (Connection connection = DriverManager.getConnection("jdbc:h2:~/ddd", "sa", "");
+             PreparedStatement statement1 = connection.prepareStatement(sql1);
+             PreparedStatement statement2 = connection.prepareStatement(sql2);
+             PreparedStatement statement3 = connection.prepareStatement(sql3);) {
+
+            statement1.executeUpdate();
+            statement2.executeUpdate();
+            statement3.executeUpdate();
+            connection.commit();
+        }
 
     }
 

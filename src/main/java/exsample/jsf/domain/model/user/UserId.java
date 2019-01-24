@@ -27,17 +27,17 @@ public class UserId implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private final String value;
+    private final Integer value;
 
     public UserId() {
         this.value = null;
     }
 
-    public UserId(String value) {
+    public UserId(Integer value) {
         this.value = value;
     }
 
-    public String getValue() {
+    public Integer getValue() {
         return value;
     }
 

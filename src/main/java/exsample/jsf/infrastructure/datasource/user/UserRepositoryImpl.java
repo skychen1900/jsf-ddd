@@ -16,8 +16,13 @@
  */
 package exsample.jsf.infrastructure.datasource.user;
 
-import zzz.dummy.datastore.UserTable;
+import exsample.jsf.domain.model.user.DateOfBirth;
+import exsample.jsf.domain.model.user.Gender;
+import exsample.jsf.domain.model.user.PhoneNumber;
 import exsample.jsf.domain.model.user.User;
+import exsample.jsf.domain.model.user.UserEmail;
+import exsample.jsf.domain.model.user.UserId;
+import exsample.jsf.domain.model.user.UserName;
 import exsample.jsf.domain.model.user.UserRepository;
 import java.util.Comparator;
 import java.util.List;
@@ -25,37 +30,93 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.LockModeType;
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
 
 @RequestScoped
 public class UserRepositoryImpl implements UserRepository {
 
-    //DB風ののもの仮に準備したもの
+    @PersistenceContext
+    private EntityManager em;
+
+    private UserIdGenerator iDgenerator;
+
+    UserRepositoryImpl() {
+    }
+
     @Inject
-    UserTable userTable;
+    UserRepositoryImpl(UserIdGenerator iDgenerator) {
+        this.iDgenerator = iDgenerator;
+    }
 
     @Override
     public List<User> findAll() {
-        return userTable.list().stream().sorted(Comparator.comparing(user -> user.getUserId().getValue())).collect(Collectors.toList());
+        List<Users> entities = em.createNamedQuery("Users.findAll", Users.class).getResultList();
+        return entities.stream()
+                .sorted(Comparator.comparing(entity -> entity.getId()))
+                .map(this::toUser)
+                .collect(Collectors.toList());
     }
 
     @Override
     public Optional<User> findById(User user) {
-        return this.userTable.findById(user);
+        Users entity = em.find(Users.class, user.getUserId().getValue());
+        return Optional.ofNullable(entity == null
+                                   ? null
+                                   : toUser(entity));
     }
 
     @Override
     public Optional<User> findByEmail(User user) {
-        return this.userTable.findByKey(user);
+        try {
+            Users entity = em.createNamedQuery("Users.findByEmail", Users.class)
+                    .setParameter("email", user.getUserEmail().getValue())
+                    .getSingleResult();
+            return Optional.of(toUser(entity));
+        } catch (NoResultException ex) {
+            return Optional.empty();
+        }
     }
 
     @Override
     public void register(User user) {
-        this.userTable.put(user);
+        Users entity = user.getUserId().getValue() == null
+                       ? new Users()
+                       : em.find(Users.class, user.getUserId().getValue());
+
+        this.merge(entity, user);
+        em.merge(entity);
     }
 
     @Override
     public void remove(User user) {
-        this.userTable.remove(user);
+        Users entity = em.find(Users.class, user.getUserId().getValue(), LockModeType.PESSIMISTIC_FORCE_INCREMENT);
+        em.remove(entity);
     }
 
+    private User toUser(Users entity) {
+        return new User(new UserId(entity.getId()),
+                        new UserEmail(entity.getEmail()),
+                        new UserName(entity.getUserName()),
+                        new DateOfBirth(entity.getDateOfBirth()),
+                        new PhoneNumber(entity.getPhoneNumber()),
+                        new Gender(entity.getGender()));
+    }
+
+    private void merge(Users entity, User user) {
+        entity.setId(toId(user.getUserId().getValue()));
+        entity.setEmail(user.getUserEmail().getValue());
+        entity.setUserName(user.getName().getValue());
+        entity.setDateOfBirth(user.getDateOfBirth().date());
+        entity.setPhoneNumber(user.getPhoneNumber().getValue());
+        entity.setGender(user.getGender().getValue());
+    }
+
+    private Integer toId(Integer currentId) {
+        return currentId != null
+               ? currentId
+               : iDgenerator.nextId();
+    }
 }

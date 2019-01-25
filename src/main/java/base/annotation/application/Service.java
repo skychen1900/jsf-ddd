@@ -24,6 +24,7 @@ import java.lang.annotation.Target;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Stereotype;
 import javax.inject.Named;
+import javax.transaction.Transactional;
 
 /**
  * このアノテーションは Serviceの コンポーネントを表すために使用します.
@@ -34,6 +35,7 @@ import javax.inject.Named;
 @Stereotype
 @Named
 @RequestScoped
+@Transactional
 @Target(value = {ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Service {

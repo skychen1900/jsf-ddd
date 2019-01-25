@@ -16,13 +16,13 @@
  */
 package exsample.jsf.presentation.userregistration;
 
+import base.annotation.presentation.controller.Controller;
+import base.annotation.presentation.controller.EndConversation;
 import exsample.jsf.application.service.RemoveUser;
 import exsample.jsf.application.service.UserService;
 import exsample.jsf.domain.model.user.User;
 import exsample.jsf.domain.model.user.UserId;
 import javax.inject.Inject;
-import base.annotation.presentation.controller.Controller;
-import base.annotation.presentation.controller.EndConversation;
 
 @Controller
 public class UserRemovalAction {
@@ -43,7 +43,7 @@ public class UserRemovalAction {
         this.removeUser = removeUser;
     }
 
-    public String fwRemove(String userId) {
+    public String fwRemove(Integer userId) {
         User user = new User(new UserId(userId));
         User requestUser = userService.registeredUser(user);
         this.registrationForm.update(requestUser);

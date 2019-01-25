@@ -21,18 +21,29 @@ package exsample.jsf.domain.model.user;
  * @author Yamashita,Takahiro
  */
 public enum GenderType {
-    MAN("男性"),
-    WOMAN("女性"),
-    OTHER("その他");
+    MAN(0, "男性"),
+    WOMAN(1, "女性"),
+    OTHER(2, "その他");
 
+    private final Integer code;
     private final String value;
 
-    private GenderType(String value) {
+    private GenderType(Integer code, String value) {
+        this.code = code;
         this.value = value;
     }
 
-    public static GenderType find(Integer index) {
-        return GenderType.values()[index];
+    public static GenderType findBy(Integer code) {
+        for (GenderType type : GenderType.values()) {
+            if (type.getCode().equals(code)) {
+                return type;
+            }
+        }
+        throw new IllegalStateException("GenderType does not exist.");
+    }
+
+    public Integer getCode() {
+        return this.code;
     }
 
     public String getValue() {

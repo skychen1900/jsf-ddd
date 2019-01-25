@@ -16,6 +16,10 @@
  */
 package exsample.jsf.presentation.userregistration;
 
+import base.annotation.FieldOrder;
+import base.annotation.presentation.view.InvalidMessageMapping;
+import base.annotation.presentation.view.View;
+import base.validation.Validator;
 import exsample.jsf.application.service.RegisterUser;
 import exsample.jsf.domain.model.user.GenderType;
 import exsample.jsf.domain.model.user.User;
@@ -30,10 +34,6 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.inject.Inject;
 import javax.validation.Valid;
-import base.annotation.FieldOrder;
-import base.annotation.presentation.view.InvalidMessageMapping;
-import base.annotation.presentation.view.View;
-import base.validation.Validator;
 
 /**
  *
@@ -100,8 +100,8 @@ public class UserRegistrationPage implements Serializable {
         return new User(this.userId, email.getValue(), name.getValue(), dateOfBirth.getValue(), phoneNumber.getValue(), gender.getValue());
     }
 
-    public Map<String, String> checked(Integer index) {
-        GenderType genderType = GenderType.find(index);
+    public Map<String, String> checked(Integer code) {
+        GenderType genderType = GenderType.findBy(code);
         Map<String, String> map = new HashMap<>();
         if (this.gender.isSameType(genderType)) {
             map.put("checked", "checked");
@@ -113,8 +113,13 @@ public class UserRegistrationPage implements Serializable {
         return clientId + "-" + targetName;
     }
 
-    public void setGender(Integer index) {
-        this.gender = new GenderForm(GenderType.find(index));
+    public String genderTypeValue(Integer code) {
+        GenderType genderType = GenderType.findBy(code);
+        return genderType.getValue();
+    }
+
+    public void setGender(Integer code) {
+        this.gender = new GenderForm(GenderType.findBy(code));
     }
 
     public void setEmail(String email) {

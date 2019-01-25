@@ -16,14 +16,14 @@
  */
 package exsample.jsf.presentation.userregistration;
 
+import base.annotation.presentation.controller.Controller;
+import base.annotation.presentation.controller.EndConversation;
+import base.annotation.presentation.controller.ViewContext;
 import exsample.jsf.application.service.UpdateUser;
 import exsample.jsf.application.service.UserService;
 import exsample.jsf.domain.model.user.User;
 import exsample.jsf.domain.model.user.UserId;
 import javax.inject.Inject;
-import base.annotation.presentation.controller.Controller;
-import base.annotation.presentation.controller.EndConversation;
-import base.annotation.presentation.controller.ViewContext;
 
 @Controller
 public class UserUpdateAction {
@@ -45,7 +45,7 @@ public class UserUpdateAction {
         this.updateUser = updateUser;
     }
 
-    public String fwUpdate(String userId) {
+    public String fwUpdate(Integer userId) {
         User user = new User(new UserId(userId));
 
         User requestUser = this.userService.registeredUser(user);

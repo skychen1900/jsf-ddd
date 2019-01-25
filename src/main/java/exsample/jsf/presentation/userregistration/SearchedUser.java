@@ -42,7 +42,7 @@ public class SearchedUser implements Serializable {
         this.age = user.getAge();
     }
 
-    public String getUserId() {
+    public Integer getUserId() {
         return this.userId.getValue();
     }
 

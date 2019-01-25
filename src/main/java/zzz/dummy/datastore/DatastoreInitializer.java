@@ -21,6 +21,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Initialized;
 import javax.enterprise.event.Observes;
@@ -78,18 +80,18 @@ public class DatastoreInitializer {
 
         String prefixDml = "INSERT INTO USERS (ID,EMAIL,NAME,PHONE_NUMBER,DATE_OF_BIRTH,GENDER,VERSION) VALUES";
 
-        String sql1 = prefixDml + "(1,'aaaaaa@example.com','ＡＡ　ＡＡ','03-1234-5678','1980-04-01',0,1); ";
-        String sql2 = prefixDml + "(2,'bbbbbb@example.com','ＢＢ　ＢＢ','03-2345-6789','2000-05-01',1,1); ";
-        String sql3 = prefixDml + "(3,'cccccc@example.com','ＣＣ　ＣＣ','03-3456-7890','1990-08-31',2,1); ";
+        try (Connection connection = DriverManager.getConnection("jdbc:h2:~/ddd", "sa", "")) {
 
-        try (Connection connection = DriverManager.getConnection("jdbc:h2:~/ddd", "sa", "");
-             PreparedStatement statement1 = connection.prepareStatement(sql1);
-             PreparedStatement statement2 = connection.prepareStatement(sql2);
-             PreparedStatement statement3 = connection.prepareStatement(sql3);) {
+            List<String> sqls = new ArrayList<>();
+            sqls.add(prefixDml + "(1,'aaaaaa@example.com','ＡＡ　ＡＡ','03-1234-5678','1980-04-01',0,1); ");
+            sqls.add(prefixDml + "(2,'bbbbbb@example.com','ＢＢ　ＢＢ','03-2345-6789','2000-05-01',1,1); ");
+            sqls.add(prefixDml + "(3,'cccccc@example.com','ＣＣ　ＣＣ','03-3456-7890','1990-08-31',2,1); ");
 
-            statement1.executeUpdate();
-            statement2.executeUpdate();
-            statement3.executeUpdate();
+            for (String sql : sqls) {
+                try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                    statement.executeUpdate();
+                }
+            }
             connection.commit();
         }
 

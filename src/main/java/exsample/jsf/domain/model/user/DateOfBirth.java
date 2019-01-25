@@ -21,6 +21,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import javax.annotation.Nonnull;
+import javax.validation.constraints.AssertTrue;
 
 /**
  *
@@ -46,6 +47,13 @@ public class DateOfBirth {
 
     public LocalDate date() {
         return LocalDate.parse(value, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+    }
+
+    @AssertTrue(message = "{is.not.birth.message}")
+    private boolean isNotBirth() {
+        LocalDate date = this.date();
+        LocalDate currentDate = LocalDate.now();
+        return (0 < currentDate.compareTo(date));
     }
 
     @Override

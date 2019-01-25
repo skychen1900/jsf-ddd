@@ -19,6 +19,7 @@ package exsample.jsf.domain.model.user;
 import java.util.Objects;
 import javax.annotation.Nonnull;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -28,6 +29,7 @@ public class UserEmail {
 
     @Nonnull
     @Email
+    @Size(max = 124)
     private final String value;
 
     public UserEmail(String value) {

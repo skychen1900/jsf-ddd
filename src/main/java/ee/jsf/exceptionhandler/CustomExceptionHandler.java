@@ -16,7 +16,7 @@
  */
 package ee.jsf.exceptionhandler;
 
-import ee.logger.LoggerStore;
+import base.logger.LoggerStore;
 import java.util.Iterator;
 import javax.faces.context.ExceptionHandler;
 import javax.faces.context.ExceptionHandlerWrapper;

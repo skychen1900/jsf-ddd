@@ -16,6 +16,7 @@
  */
 package ee.logger;
 
+import base.logger.LoggerStore;
 import java.lang.reflect.Method;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -41,7 +42,7 @@ import spec.logger.LoggerName;
  * @author Yamashita,Takahiro
  */
 @RequestScoped
-public class LoggerStore {
+public class LoggerStoreImpl implements LoggerStore {
 
     private Logger logger;
     private LoggerStoreItems items;
@@ -50,12 +51,14 @@ public class LoggerStore {
     private String tearDownTitle;
 
     @PostConstruct
+    @Override
     public void init() {
         this.items = new LoggerStoreItems();
         this.startTitle = ">> Trace Logging Start >>";
         this.tearDownTitle = "<< Trace Logging  End  <<";
     }
 
+    @Override
     public void setUp(InvocationContext ic) {
         this.triggerActionClass = ic.getTarget().getClass().getSuperclass();
         this.logger = LoggerFactory.getLogger(LoggerName.LOGGER_STORE_SUB_NAME + "." + triggerActionClass.getName());
@@ -63,6 +66,7 @@ public class LoggerStore {
         this.append(ic, ic.getTarget().toString());
     }
 
+    @Override
     public void tearDown(Throwable throwable) {
         if (throwable != null) {
             Class<?> throwableClass = throwable.getClass();
@@ -72,6 +76,7 @@ public class LoggerStore {
         this.items.logBy(logger);
     }
 
+    @Override
     public void append(InvocationContext ic, String message) {
         Class<?> actionClass = ic.getTarget().getClass().getSuperclass();
         Method actionMethod = ic.getMethod();

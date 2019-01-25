@@ -14,7 +14,7 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ee.jsf.scope.conversation;
+package ee.scope.conversation;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;

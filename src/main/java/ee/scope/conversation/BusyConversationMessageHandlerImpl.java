@@ -14,7 +14,7 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ee.jsf.scope.conversation;
+package ee.scope.conversation;
 
 import spec.scope.conversation.exception.BusyConversationMessageHandler;
 import javax.enterprise.context.Conversation;

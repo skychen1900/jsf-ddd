@@ -14,7 +14,7 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ee.filter;
+package ee.scope.conversation;
 
 import java.io.IOException;
 import javax.enterprise.context.BusyConversationException;

@@ -14,7 +14,7 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ee.jsf.message.style;
+package ee.jsf.message.errorstyle;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Set;

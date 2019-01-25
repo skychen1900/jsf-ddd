@@ -14,7 +14,7 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ee.jsf.message.xhtml;
+package ee.jsf.message.errorstyle;
 
 import base.xhtml.error.ErrorTooltip;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;

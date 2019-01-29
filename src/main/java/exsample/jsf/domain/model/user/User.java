@@ -16,12 +16,15 @@
  */
 package exsample.jsf.domain.model.user;
 
+import base.annotation.domain.EntityIdentifier;
+
 /**
  *
  * @author Yamashita,Takahiro
  */
 public class User {
 
+    @EntityIdentifier
     private final UserId userId;
 
     private final UserEmail userEmail;

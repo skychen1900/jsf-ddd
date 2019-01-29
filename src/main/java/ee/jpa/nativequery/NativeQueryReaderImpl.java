@@ -14,7 +14,7 @@
  *
  *  Copyright © 2019 Yamashita,Takahiro
  */
-package ee.jpa;
+package ee.jpa.nativequery;
 
 import base.jpa.NativeQueryReader;
 import java.io.IOException;

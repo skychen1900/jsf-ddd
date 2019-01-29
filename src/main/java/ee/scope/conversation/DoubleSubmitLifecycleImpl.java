@@ -14,46 +14,37 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ee.jsf.scope.conversation;
+package ee.scope.conversation;
 
-import spec.scope.conversation.exception.BusyConversationMessageManager;
-import base.annotation.presentation.controller.BusyConversationMessage;
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.BusyConversationException;
 import javax.enterprise.context.ConversationScoped;
+import spec.scope.conversation.DoubleSubmitLifecycle;
+import spec.scope.conversation.DoubleSubmitState;
 
 /**
  *
  * @author Yamashita,Takahiro
  */
 @ConversationScoped
-public class BusyConversationMessageManagerImpl implements BusyConversationMessageManager {
+public class DoubleSubmitLifecycleImpl implements DoubleSubmitLifecycle {
 
     private static final long serialVersionUID = 1L;
 
-    private String message;
+    private DoubleSubmitState doubleSubmitState;
 
     @PostConstruct
     void init() {
-        this.message = BusyConversationException.class.getName();
+        this.doubleSubmitState = DoubleSubmitState.INIT;
     }
 
     @Override
-    public String getMessage() {
-        return message;
+    public boolean isSubmitted() {
+        return this.doubleSubmitState.isSubmitted();
     }
 
     @Override
-    public void setMessage(BusyConversationMessage classMessage, BusyConversationMessage methodMessage) {
-        String _message = methodMessage != null
-                          ? methodMessage.value()
-                          : classMessage != null
-                            ? classMessage.value()
-                            : "";
-
-        if (_message.equals("")) {
-            return;
-        }
-        this.message = _message;
+    public void nextState() {
+        this.doubleSubmitState = this.doubleSubmitState.nextState();
     }
+
 }

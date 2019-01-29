@@ -16,9 +16,11 @@
  */
 package exsample.jsf.infrastructure.datasource.user;
 
+import base.jpa.NativeQueryReader;
 import java.util.concurrent.atomic.AtomicInteger;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -31,12 +33,21 @@ class UserIdGenerator {
 
     @PersistenceContext
     private EntityManager em;
-
     private final AtomicInteger id = new AtomicInteger();
+
+    private NativeQueryReader nativeQueryReader;
+
+    UserIdGenerator() {
+    }
+
+    @Inject
+    UserIdGenerator(NativeQueryReader nativeQueryReader) {
+        this.nativeQueryReader = nativeQueryReader;
+    }
 
     @PostConstruct
     void init() {
-        this.id.set((Integer) em.createNativeQuery("SELECT MAX(ID) FROM USERS").getSingleResult());
+        this.id.set((Integer) em.createNativeQuery(nativeQueryReader.read("UsersMaxId.sql")).getSingleResult());
     }
 
     int nextId() {

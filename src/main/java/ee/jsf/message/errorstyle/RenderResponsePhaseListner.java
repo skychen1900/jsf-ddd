@@ -14,7 +14,7 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ee.jsf.phaselistener;
+package ee.jsf.message.errorstyle;
 
 import javax.enterprise.inject.spi.CDI;
 import javax.faces.context.FacesContext;

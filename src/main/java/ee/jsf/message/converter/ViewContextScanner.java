@@ -16,7 +16,7 @@
  */
 package ee.jsf.message.converter;
 
-import base.annotation.FieldOrder;
+import base.annotation.domain.FieldOrder;
 import base.annotation.presentation.controller.ViewContext;
 import base.annotation.presentation.view.InvalidMessageMapping;
 import java.lang.reflect.Field;
@@ -25,7 +25,7 @@ import java.lang.reflect.Field;
  * Controllerと関連付くViewクラス（{@link base.annotation.presentation.controller.ViewContext}で特定したクラス）から
  * {@link base.annotation.presentation.view.InvalidMessageMapping}が付与されたフィールド情報を取得する機能を提供します.
  * <p>
- * {@link base.annotation.FieldOrder} により 出力するメッセージの順序を指定します。
+ * {@link base.annotation.domain.FieldOrder} により 出力するメッセージの順序を指定します。
  *
  * @author Yamashita,Takahiro
  */

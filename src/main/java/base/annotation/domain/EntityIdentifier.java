@@ -14,7 +14,7 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package base.annotation;
+package base.annotation.domain;
 
 import static java.lang.annotation.ElementType.FIELD;
 import java.lang.annotation.Retention;
@@ -22,15 +22,13 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * ClassのFieldの順序を指定します.
- * <p>
- * Javaの仕様としてFieldの順序は保証されないため、ClassのFiled順序を指定するためのAnnotationです.
+ * EntityのIdentifierへ指定するアノテーションです.
+ * <P>
+ * 実際の値は、本アノテーションで指定したクラスの {@link EntityIdentifierValue}を対象とします.
  *
  * @author Yamashita,Takahiro
  */
 @Target({FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface FieldOrder {
-
-    short value() default Short.MAX_VALUE;
+public @interface EntityIdentifier {
 }

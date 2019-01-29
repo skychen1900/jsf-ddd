@@ -16,6 +16,7 @@
  */
 package exsample.jsf.domain.model.user;
 
+import base.annotation.domain.EntityIdentifierValue;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -27,6 +28,7 @@ public class UserId implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @EntityIdentifierValue
     private final Integer value;
 
     public UserId() {

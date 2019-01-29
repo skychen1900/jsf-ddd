@@ -17,8 +17,8 @@
 package ee.interceptor.before.order1;
 
 import base.annotation.presentation.controller.Action;
+import base.logger.LoggerStore;
 import ee.logger.InvocationContextLogger;
-import ee.logger.LoggerStore;
 import javax.annotation.Priority;
 import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;

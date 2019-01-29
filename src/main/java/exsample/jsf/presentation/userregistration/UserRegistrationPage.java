@@ -16,7 +16,7 @@
  */
 package exsample.jsf.presentation.userregistration;
 
-import base.annotation.FieldOrder;
+import base.annotation.domain.FieldOrder;
 import base.annotation.presentation.view.InvalidMessageMapping;
 import base.annotation.presentation.view.View;
 import base.validation.Validator;

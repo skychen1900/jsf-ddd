@@ -14,37 +14,33 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package ee.jsf.scope.conversation;
-
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.ConversationScoped;
-import spec.scope.conversation.DoubleSubmitLifecycle;
-import spec.scope.conversation.DoubleSubmitState;
+package ee.jpa.domain;
 
 /**
  *
  * @author Yamashita,Takahiro
  */
-@ConversationScoped
-public class DoubleSubmitLifecycleImpl implements DoubleSubmitLifecycle {
+public class EntityIdentifierException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
-    private DoubleSubmitState doubleSubmitState;
-
-    @PostConstruct
-    void init() {
-        this.doubleSubmitState = DoubleSubmitState.INIT;
+    public EntityIdentifierException() {
     }
 
-    @Override
-    public boolean isSubmitted() {
-        return this.doubleSubmitState.isSubmitted();
+    public EntityIdentifierException(String message) {
+        super(message);
     }
 
-    @Override
-    public void nextState() {
-        this.doubleSubmitState = this.doubleSubmitState.nextState();
+    public EntityIdentifierException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public EntityIdentifierException(Throwable cause) {
+        super(cause);
+    }
+
+    public EntityIdentifierException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+        super(message, cause, enableSuppression, writableStackTrace);
     }
 
 }

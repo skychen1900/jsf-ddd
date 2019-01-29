@@ -16,7 +16,7 @@
  */
 package ee.jsf.message.converter;
 
-import base.annotation.FieldOrder;
+import base.annotation.domain.FieldOrder;
 import base.annotation.presentation.view.View;
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -32,7 +32,7 @@ import spec.context.ClientIds;
  * ConstraintViolationと関連付ける機能を提供します.
  * <P>
  * <ul>
- * <li>{@link base.annotation.FieldOrder} で指定したソート情報を付与します</li>
+ * <li>{@link base.annotation.domain.FieldOrder} で指定したソート情報を付与します</li>
  * <li>UIComponentで指定した{@code for} で指定した情報がある場合は その項目を対象に、出力対象にない場合は 全体メッセージの対象にします</li>
  * </ul>
  *

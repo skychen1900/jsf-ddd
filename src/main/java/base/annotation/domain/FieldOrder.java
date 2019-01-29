@@ -14,7 +14,7 @@
  *
  *  Copyright © 2018 Yamashita,Takahiro
  */
-package base.annotation;
+package base.annotation.domain;
 
 import static java.lang.annotation.ElementType.FIELD;
 import java.lang.annotation.Retention;
